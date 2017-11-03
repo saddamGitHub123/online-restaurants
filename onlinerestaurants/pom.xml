@@ -16,17 +16,17 @@
 
 
 	<dependencies>
-	
-	<!-- Link with backend project -->
-	
-	<dependency>
-	
-	<groupId>net.saddam</groupId>
-	<artifactId>restaurantsbackend</artifactId>
-	<version>0.0.1-SNAPSHOT</version>
-	
-	
-	</dependency>
+
+		<!-- Link with backend project -->
+
+		<dependency>
+
+			<groupId>net.saddam</groupId>
+			<artifactId>restaurantsbackend</artifactId>
+			<version>0.0.1-SNAPSHOT</version>
+
+
+		</dependency>
 
 		<!-- Java EE API -->
 		<dependency>
@@ -36,7 +36,7 @@
 			<scope>provided</scope>
 		</dependency>
 
-     <!-- JSTL -->
+		<!-- JSTL -->
 
 		<dependency>
 			<groupId>jstl</groupId>
@@ -53,8 +53,8 @@
 			<version>3.8.1</version>
 			<scope>test</scope>
 		</dependency>
-		
-		
+
+
 		<!-- SPRING -->
 
 		<dependency>
@@ -62,23 +62,37 @@
 			<artifactId>spring-webmvc</artifactId>
 			<version>${spring.version}</version>
 		</dependency>
-		
+
+		<dependency>
+			<groupId>org.springframework</groupId>
+			<artifactId>spring-core</artifactId>
+			<version>${spring.version}</version>
+
+			<exclusions>
+				<exclusion>
+					<groupId>commons-logging</groupId>
+					<artifactId>commons-logging</artifactId>
+				</exclusion>
+			</exclusions>
+
+		</dependency>
+
 	</dependencies>
 	<build>
-	<plugins>
-	 <!-- Update to latest version of JAVA -->
-	    <plugin>
-        <artifactId>maven-compiler-plugin</artifactId>
-        <version>3.1</version>
-        <configuration>
-        <source>1.8</source>
-        <target>1.8</target>
-        </configuration>
-        
-       </plugin>
-	
-	</plugins>
-	
+		<plugins>
+			<!-- Update to latest version of JAVA -->
+			<plugin>
+				<artifactId>maven-compiler-plugin</artifactId>
+				<version>3.1</version>
+				<configuration>
+					<source>1.8</source>
+					<target>1.8</target>
+				</configuration>
+
+			</plugin>
+
+		</plugins>
+
 		<finalName>onlinerestaurants</finalName>
 	</build>
 </project>

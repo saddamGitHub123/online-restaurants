@@ -1,89 +1,133 @@
 package net.saddam.restaurantsbackend.dto;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 @Entity
-@Table(name="users")
+@Table(name="usershopkeeper")
 public class User {
 	
-	/**
-	 * private fields for user
-	 * 
-	 * */
-	@Id
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	
-	private int id;
-	
-	private String username;
-	private String password;
-	
-	private String firstname;
-	private String lastname;
-	private String email;
-	private String address;
-	private int phone;
-	@Override
-	public String toString() {
-		return "User [id=" + id + ", username=" + username + ", password=" + password + ", firstname=" + firstname
-				+ ", lastname=" + lastname + ", email=" + email + ", address=" + address + ", phone=" + phone + "]";
-	}
-	public int getId() {
-		return id;
-	}
-	public void setId(int id) {
-		this.id = id;
-	}
-	public String getUsername() {
-		return username;
-	}
-	public void setUsername(String username) {
-		this.username = username;
-	}
-	public String getPassword() {
-		return password;
-	}
-	public void setPassword(String password) {
-		this.password = password;
-	}
-	public String getFirstname() {
-		return firstname;
-	}
-	public void setFirstname(String firstname) {
-		this.firstname = firstname;
-	}
-	public String getLastname() {
-		return lastname;
-	}
-	public void setLastname(String lastname) {
-		this.lastname = lastname;
-	}
-	public String getEmail() {
-		return email;
-	}
-	public void setEmail(String email) {
-		this.email = email;
-	}
-	public String getAddress() {
-		return address;
-	}
-	public void setAddress(String address) {
-		this.address = address;
-	}
-	public int getPhone() {
-		return phone;
-	}
-	public void setPhone(int phone) {
-		this.phone = phone;
-	}
-	
+   @Id
+   @GeneratedValue(strategy = GenerationType.IDENTITY)
+   @JsonIgnore
+   private int id;
+   
+   @Column(name="shop_id")
+   private String Shop_ID;
+   
+   @Column(name="user_id")
+   private String User_Id;
+   
+   @Column(name="name")
+   private String Name;
+   
+   @Column(name="username")
+   private String Username;
+   
+   @Column(name="password")
+   private int Password;
+   @Column(name="contact")
+   private int Contact;
+   @Column(name="email")
+   private String Email;
+   
+   @JsonIgnore
+   @Column(name="is_active")
+   private boolean active=true;
 
-	
-	
+     
+   
+   
 
+
+@Override
+public String toString() {
+	return "User [id=" + id + ", Shop_ID=" + Shop_ID + ", User_Id=" + User_Id + ", Name=" + Name + ", Username="
+			+ Username + ", Password=" + Password + ", Contact=" + Contact + ", Email=" + Email + ", active=" + active
+			+ "]";
+}
+
+public int getId() {
+	return id;
+}
+
+public void setId(int id) {
+	this.id = id;
+}
+
+public String getShop_ID() {
+	return Shop_ID;
+}
+
+public void setShop_ID(String shop_ID) {
+	Shop_ID = shop_ID;
+}
+
+public String getUser_Id() {
+	return User_Id;
+}
+
+public void setUser_Id(String user_Id) {
+	User_Id = user_Id;
+}
+
+public String getName() {
+	return Name;
+}
+
+public void setName(String name) {
+	Name = name;
+}
+
+public String getUsername() {
+	return Username;
+}
+
+public void setUsername(String username) {
+	Username = username;
+}
+
+public int getPassword() {
+	return Password;
+}
+
+public void setPassword(int password) {
+	Password = password;
+}
+
+public int getContact() {
+	return Contact;
+}
+
+public void setContact(int contact) {
+	Contact = contact;
+}
+
+public String getEmail() {
+	return Email;
+}
+
+public void setEmail(String email) {
+	Email = email;
+}
+
+public boolean isActive() {
+	return active;
+}
+
+public void setActive(boolean active) {
+	this.active = active;
+}
+ 
+	
+   
+   
+   
 
 }

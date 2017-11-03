@@ -1,5 +1,7 @@
 package net.saddam.restaurantsbackend.daoimpl;
 
+import java.util.List;
+
 import org.hibernate.SessionFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
@@ -28,5 +30,18 @@ public class UserDAOImpl implements UserDAO {
 			return false;
 		}
 	}
+	
+	
+
+	@Override
+	public List<User> list() {
+		
+			return sessionFactory
+					.getCurrentSession()
+						.createQuery("FROM User" , User.class)
+							.getResultList();
+		
+	}
+
 
 }

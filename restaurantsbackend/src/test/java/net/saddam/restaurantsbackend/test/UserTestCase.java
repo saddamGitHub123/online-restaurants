@@ -24,20 +24,35 @@ public class UserTestCase {
 		userDAO =(UserDAO) context.getBean("userDAO");
 	}
 	
+/*	@Test
+	public void testAddCategory(){
+		
+		user  = new User();
+		
+		user.setName("TouchCor4");
+		user.setUserid("abc3");
+		user.setShopid("bbc3");
+		user.setUsername("newo3");
+		user.setPassword(123123);
+		user.setContact(234123);
+		user.setEmail("sss@gmail.com");
+
+		
+		assertEquals("Successfully assed a category inside the table",true,userDAO.register(user));
+		
+		
+	}*/
+	
+	
 	@Test
-	public void testAdd(){
-		user = new User();
-		user.setUsername("sa");;
-		user.setPassword("12345");
-		user.setFirstname("sk");;
-		user.setLastname("Hos");;
-		user.setEmail("sa@fg");
-		user.setAddress("Marathalla");
-		user.setPhone(123456);
+	public void testListCategory(){
+		//get the category by its id
 		
-		//add the user
+		/*category = categoryDAO.get(34);
 		
-		assertEquals("Faild to add user!!",true,userDAO.register(user));
+		category.setName("TV");*/
+		assertEquals("Successfully fatch the list of category from the table",3,userDAO.list().size());
+		
 	}
 
 }
