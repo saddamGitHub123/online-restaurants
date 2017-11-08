@@ -4,31 +4,23 @@ import java.io.Serializable;
 
 public class Child implements Serializable {
 	
-	private String sub;
-    private String amount;
-    
-    
-    
-    
-	@Override
-	public String toString() {
-		return "Child [sub=" + sub + ", amount=" + amount + "]";
+	private int number;
+
+	public int getNumber() {
+		return number;
+	}
+
+	public void setNumber(int number) {
+		this.number = number;
+	}
+
+	public Child() {
+		super();
+		// TODO Auto-generated constructor stub
 	}
 	
-	public String getSub() {
-		return sub;
-	}
-	public void setSub(String sub) {
-		this.sub = sub;
-	}
-	public String getAmount() {
-		return amount;
-	}
-	public void setAmount(String amount) {
-		this.amount = amount;
-	}
-    
-    
-    
+	
+	
 
 }
+

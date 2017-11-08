@@ -10,18 +10,31 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.config.annotation.EnableWebMvc;
 
+import net.saddam.restaurantsbackend.common.ApiErrors;
+import net.saddam.restaurantsbackend.common.JsonResponse;
 import net.saddam.restaurantsbackend.dao.UserDAO;
+import net.saddam.restaurantsbackend.dto.AllProduct;
+import net.saddam.restaurantsbackend.dto.Child;
+import net.saddam.restaurantsbackend.dto.Product;
 import net.saddam.restaurantsbackend.dto.User;
 import net.saddam.restaurantsbackend.dto.UserALL;
 
+/**
+ * 
+ * @author saddam
+ *
+ */
 @Controller
 @EnableWebMvc
+
 public class PageController {
 	
 	 private static final Logger logger = LoggerFactory.getLogger(PageController.class);
@@ -31,6 +44,7 @@ public class PageController {
 	@Autowired
 	public UserDAO userDAO;
 
+	//This is for home page 
 	
 	@RequestMapping(value = { "/", "/home", "/index" })
 	public ModelAndView index() {
@@ -71,7 +85,7 @@ public class PageController {
 	 
 	 /**
 	  * 
-	  * This Api for the hard coded value
+	  * Api for the hard coded value
 	  * **/
 	 
 	 @RequestMapping("/all/person")
@@ -135,6 +149,85 @@ public class PageController {
 		 return userAll;
 		 
 	  }
+	 
+	 /***
+	  * 
+	  * Tested url for testing 
+	  * *****/
+	 
+	 @RequestMapping("/all/test")
+	  public @ResponseBody Child getTest(HttpServletRequest request) {
+		 
+		 logger.info("Inside PageController Single JSON   - INFO");
+		 logger.debug("Inside PageController For testing JSON - DEBUG");
+		 
+		 Child ch = new Child();
+		 ch.setNumber(2);
+		 
+		 return ch;
+		 
+	  }
+	 
+	 
+	 
+	 
+	 /**
+	  * Using shopID to get all product list
+	  * 
+	  * **
+	  */
+
+	    @RequestMapping(value = "/list/product/shop/{shopId}/{userId}", method = RequestMethod.GET)
+	    public @ResponseBody
+	    AllProduct listOfProductByShopId(HttpServletRequest request,@PathVariable("shopId")String shopId,
+	    		                                                   @PathVariable("userId")String userId )
+	            								 
+	    {
+	        logger.info("Entered listOfProductByShopId()  - Get a Product list from shopId");	        
+	        AllProduct allProduct = new AllProduct();
+	        
+
+	        try
+			{
+				
+				if (userId == null) {
+				    //** no products exist, error message *//
+				    allProduct.setStatus_Code(JsonResponse.CODE__EMPTY);
+				    allProduct.setStatus_Message(JsonResponse.CODE__ERROR);
+				    logger.error(ApiErrors.ERROR__NO_USER_ID_EXIST);
+				    return allProduct;
+				}
+				
+				List<Product> listOfSimpleEntities = userDAO.productsByShopId(shopId);
+				allProduct.setProduct(listOfSimpleEntities);
+				 
+				if (listOfSimpleEntities == null || listOfSimpleEntities.size()== 0 ) {
+				    //** no products exist, error message *//
+				    allProduct.setStatus_Code(JsonResponse.CODE__EMPTY);
+				    allProduct.setStatus_Message(ApiErrors.ERROR__NO_PRODUCTS_EXIST);
+				    logger.error(ApiErrors.ERROR__NO_PRODUCTS_EXIST);
+				    return allProduct;
+				}
+				
+				
+				
+				//** set status OK *//*
+				allProduct.setStatus_Code(JsonResponse.CODE__OK);
+				allProduct.setStatus_Message("Successfully Authenticated");
+				
+			}
+			catch (Exception e)
+			{
+				logger.error("listOfProductByShopId(): Error - " + e);
+				allProduct.setStatus_Code(JsonResponse.CODE__UNKNOWN_ERROR);
+				allProduct.setStatus_Message(JsonResponse.CODE__UNKNOWN_ERROR);
+	            return allProduct;
+			}
+	        logger.info("Returning listOfProductByShopId()");
+
+	        return allProduct;
+	    }
+
 
 
 }

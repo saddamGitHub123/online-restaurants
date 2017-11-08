@@ -9,7 +9,7 @@ public class Person implements Serializable {
 	  private int id;
 	  private String name;
 	  
-	  List<Child> list;
+	 // List<Child> list;
 	    
 	  
 	  
@@ -19,12 +19,7 @@ public class Person implements Serializable {
 		super();
 		// TODO Auto-generated constructor stub
 	}
-	public List<Child> getList() {
-		return list;
-	}
-	public void setList(List<Child> list) {
-		this.list = list;
-	}
+	
 	@Override
 	public String toString() {
 		return "Person [id=" + id + ", name=" + name + "]";

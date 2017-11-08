@@ -9,6 +9,11 @@ import org.springframework.context.annotation.AnnotationConfigApplicationContext
 import net.saddam.restaurantsbackend.dao.UserDAO;
 import net.saddam.restaurantsbackend.dto.User;
 
+/**
+ * 
+ * @author saddam
+ *
+ */
 public class UserTestCase {
 	
 	private static AnnotationConfigApplicationContext context;
@@ -44,15 +49,23 @@ public class UserTestCase {
 	}*/
 	
 	
-	@Test
+	/*@Test
 	public void testListCategory(){
 		//get the category by its id
 		
-		/*category = categoryDAO.get(34);
+		category = categoryDAO.get(34);
 		
-		category.setName("TV");*/
+		category.setName("TV");
 		assertEquals("Successfully fatch the list of category from the table",3,userDAO.list().size());
 		
+	}*/
+	
+	//Product list for usig shopId
+	
+	@Test
+	public void testListActiveProductsByCategory() {
+		assertEquals("Something went wrong while fetching the list of products!",
+				3,userDAO.productsByShopId("shop001").size());
 	}
 
 }
