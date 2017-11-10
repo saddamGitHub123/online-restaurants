@@ -31,7 +31,7 @@ public class User {
    private String Username;
    
    @Column(name="password")
-   private int Password;
+   private String Password;
    @Column(name="contact")
    private int Contact;
    @Column(name="email")
@@ -93,11 +93,11 @@ public void setUsername(String username) {
 	Username = username;
 }
 
-public int getPassword() {
+public String getPassword() {
 	return Password;
 }
 
-public void setPassword(int password) {
+public void setPassword(String password) {
 	Password = password;
 }
 

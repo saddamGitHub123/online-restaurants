@@ -13,6 +13,10 @@ CREATE TABLE usershopkeeper (
 	CONSTRAINT pk_category_id PRIMARY KEY (id) 
 
 );
+INSERT INTO Productlist (shop_id, user_id, name, username, password, contact,email,is_active)
+VALUES ('shop001', 'Sadda', 'shop001','sad', '720','s@',true);
+
+
 CREATE TABLE Productlist (
     ID IDENTITY,
     Shop_ID VARCHAR(20)NOT NULL,

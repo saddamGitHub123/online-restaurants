@@ -107,7 +107,7 @@ public class PageController {
 		 users.setShop_ID("shop1");
 		 users.setUsername("TouchCor");
 		 users.setName("Mr. TouchCor");
-		 users.setPassword(12345);
+		 users.setPassword("rr");
 		 users.setContact(2);
 		 users.setEmail("tochCore@gmail.com");
 		 

@@ -13,6 +13,9 @@ import org.springframework.transaction.annotation.Transactional;
 
 import net.saddam.restaurantsbackend.dao.LoginDAO;
 import net.saddam.restaurantsbackend.dto.LoginUser;
+import net.saddam.restaurantsbackend.dto.Product;
+import net.saddam.restaurantsbackend.dto.ShopKeeper;
+import net.saddam.restaurantsbackend.dto.User;
 /**
  * 
  * @author saddam
@@ -29,18 +32,22 @@ public class LoginDAOImpl implements LoginDAO {
 	@Autowired
 	private SessionFactory sessionFactory;
 	
+	
+	/**
+	 * 
+	 * login dao implement class for user only
+	 * **/
+	
 	@Override
-	public List<LoginUser> checkLogin(String Username, int Password) {
+	public LoginUser checkLogin(String Username, String Password) {
 		
 		
 		System.out.println("In Check login");
-		//Session session = sessionFactory.openSession();
-		//boolean userFound = false;
-		//Query using Hibernate Query Language
-		//String SQL_QUERY =" from Users as o where o.userName=? and o.userPassword=?";
-		//Query query = sessionFactory.createQuery(SQL_QUERY);
+		log.debug("LoginDAOImple() -- getting User name and password for user");
 		
-		
+		try
+		{
+			LoginUser loginUser = null;
 		String selectActiveCategory = "FROM LoginUser WHERE Username = ? AND Password = ?";
 			Query query = sessionFactory.getCurrentSession().createQuery(selectActiveCategory);
 		
@@ -51,12 +58,129 @@ public class LoginDAOImpl implements LoginDAO {
 
 		if ((list != null) && (list.size() > 0)) {
 			//userFound= true;
+			log.debug("get successful,User Name and Password found");
+			loginUser = list.get(0);
+			return loginUser;
+		}
+		else {
+			log.debug("get successful,No User Name and Password found ");
+			
+		 }
+
+		//session.close();
+		return loginUser; 
+		}
+		catch (RuntimeException re)
+		{
+			log.error("get failed", re);
+			throw re;
+		}
+		/*finally
+		{
+			if (sessionFactory != null)
+			{
+				sessionFactory.close();
+			}
+		}
+*/		
+	}
+	
+	@Override
+	public ShopKeeper shopKeeperModel(String Shop_ID) {
+		
+		ShopKeeper shopKeeper = null;
+
+		try{
+			
+			String selectProductsByShopId = "FROM ShopKeeper WHERE Shop_ID = :Shop_ID AND active = :active";
+			
+			List<ShopKeeper> list=  sessionFactory
+					.getCurrentSession()
+						.createQuery(selectProductsByShopId, ShopKeeper.class)
+							.setParameter("Shop_ID", Shop_ID)
+							.setParameter("active", true)
+								.getResultList();
+			
+			if ((list != null) && (list.size() > 0)) {
+				//userFound= true;
+				log.debug("get successful,User Name and Password found");
+				shopKeeper = list.get(0);
+				return shopKeeper;
+			}
+			else {
+				log.debug("get successful,No User Name and Password found ");
+				
+			 }
+			 
+			 
+			
+		}
+		catch(Exception ex){
+			ex.printStackTrace();
+		}
+		
+		return null;
+	}
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	/**
+	 * 
+	 * login dao implement class for user and shopkeeper
+	 * **/
+
+	@Override
+	public List<User> checkLoginBoth(String username, String password) {
+	
+		
+		System.out.println("In Check login");
+		log.debug("LoginDAOImple() -- getting User name and password for user");
+		
+		try
+		{
+		String selectActiveCategory = "FROM User WHERE Username = ? AND Password = ?";
+			Query query = sessionFactory.getCurrentSession().createQuery(selectActiveCategory);
+		
+		
+		query.setParameter(0,username);
+		query.setParameter(1,password);
+		List <User> list= query.getResultList();
+
+		if ((list != null) && (list.size() > 0)) {
+			//userFound= true;
+			log.debug("get successful,User Name and Password found");
 			return list;
 		}
+		else {
+			log.debug("get successful,No User Name and Password found ");
+			
+		 }
 
 		//session.close();
 		return list; 
+		}
+		catch (RuntimeException re)
+		{
+			log.error("get failed", re);
+			throw re;
+		}
+		finally
+		{
+			if (sessionFactory != null)
+			{
+				sessionFactory.close();
+			}
 		
 	}
 
 }
+	
+	
+}
+	

@@ -18,19 +18,47 @@ public class LoginUser {
 	@JsonIgnore
 	private int id;
 
-	@JsonIgnore
-	@Column(name = "username")
-	private String userName;
 	
-    @JsonIgnore
-	@Column(name = "password")
-	private int password;
+	@Column(name = "username")
+	@JsonIgnore
+	private String username;
 
-	/*@Column(name = "shop_id")
+    
+	@Column(name = "password")
+    @JsonIgnore
+	private String User_password;
+
+	@Column(name = "shop_id")
 	private String Shop_ID;
 
 	@Column(name = "user_id")
 	private String User_Id;
+
+	 @Column(name="name")
+	   private String Name;
+	 @Column(name="contact")
+	   private int Contact;
+
+	
+	   
+	
+
+	public String getName() {
+		return Name;
+	}
+
+	public void setName(String name) {
+		Name = name;
+	}
+
+	public int getContact() {
+		return Contact;
+	}
+
+	public void setContact(int contact) {
+		Contact = contact;
+	}
+
 
 	public String getShop_ID() {
 		return Shop_ID;
@@ -46,7 +74,7 @@ public class LoginUser {
 
 	public void setUser_Id(String user_Id) {
 		User_Id = user_Id;
-	}*/
+	}
 
 	public int getId() {
 		return id;
@@ -56,20 +84,23 @@ public class LoginUser {
 		this.id = id;
 	}
 
+	@JsonIgnore
 	public String getUserName() {
-		return userName;
+		return username;
 	}
 
 	public void setUserName(String userName) {
-		this.userName = userName;
+		this.username = userName;
+	}
+     
+	
+	@JsonIgnore
+	public String getUser_password() {
+		return User_password;
 	}
 
-	public int getPassword() {
-		return password;
-	}
-
-	public void setPassword(int password) {
-		this.password = password;
+	public void setUser_password(String user_password) {
+		User_password = user_password;
 	}
 
 	public LoginUser() {

@@ -27,6 +27,7 @@ public interface ApiErrors {
     public static final String ERROR_AUTHORIZATION_FAILED = "The authorization failed, phone cell or password may be invalid";
     public static final String ERROR_INVALID_PASSWORD = "The current password doesn't match";
     public static final String ERROR__UNABLE_TO_UPDATE_CONTENT = "Unable to update the metadata of the content";
+    public static final String ERRORE_STATUS_MESSAGE = "Invalid_Credentials";
 
     public static final String ERROR__PRODUCT_DOES_NOT_EXIST = "Product does not exist";
     public static final String ERROR__UUID_DOES_NOT_EXIST_BACKEND = "UUID does not exist on the backend server";
@@ -52,6 +53,8 @@ public interface ApiErrors {
     
     public static final String ERROR__NO_CATEGORIES_EXIST = "No Categories exist";
     public static final String ERROR__NO_PRODUCTS_EXIST = "No Products exist";
+    public static final String ERROR__NO_USERS_EXIST = "No Users exist";
+    
     public static final String ERROR__MISSING_CATEGORY_ID = "Category Id is missing";
     public static final String ERROR__MISSING_START_INDEX = "Start Index is missing";
     public static final String ERROR__INVALID_END_INDEX = "Invalid End Index";
@@ -69,6 +72,7 @@ public interface ApiErrors {
 
     public static final String SUCCESS__VALID_SUBSCRIBER = "Valid Kiora Subscriber";
     public static final String SUCCESS__LICENSE_GEN = "Successfully generated the license";
+    public static final String SUCCESS__LOGIN_STATUS = "Successfully Login”";
 
     public static final String ERROR__INVALID_OPERATOR = "Not a valid operator";
     public static final String ERROR__INVALID_VIDEOCON_RTN = "Not a valid Videocon RTN";

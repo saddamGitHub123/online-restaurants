@@ -15,8 +15,14 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.config.annotation.EnableWebMvc;
 
+import net.saddam.restaurantsbackend.common.ApiErrors;
+import net.saddam.restaurantsbackend.common.JsonResponse;
 import net.saddam.restaurantsbackend.dao.LoginDAO;
+import net.saddam.restaurantsbackend.dto.LoginJsonResponse;
 import net.saddam.restaurantsbackend.dto.LoginUser;
+import net.saddam.restaurantsbackend.dto.LoginUserResponse;
+import net.saddam.restaurantsbackend.dto.ShopKeeper;
+import net.saddam.restaurantsbackend.dto.User;
 
 
 /**
@@ -40,51 +46,18 @@ public class LoginController {
 	public String processForm(@Valid LoginForm loginForm, BindingResult result,
 			Map model) {*/
 		
-	@RequestMapping(value = "/user/{userName}/password/{password}",method = RequestMethod.POST,consumes = "application/json")
+	@RequestMapping(value = "/user/{userName}/password/{password}",method = RequestMethod.POST)
 		 public @ResponseBody
 		    List<LoginUser> loginUser(HttpServletRequest request,@PathVariable("userName")String userName,
-		    		                                                   @PathVariable("password")int password ) {
+		    		                                                   @PathVariable("password")String password ) {
 
-		
-		/*if (result.hasErrors()) {
-			return "loginform";
-		}*/
-		
-		
-	//String Username = userName;
-	//	int Password = password;
-		
-	//	User user = new User();
-		  /*user.setUsername(Username);
-		  user.setPassword(Password);*/
 		  
-		List<LoginUser> listOfProduct=loginDAO.checkLogin(userName, password);
+		//List<LoginUser> listOfProduct=loginDAO.checkLogin(userName, password);
 		  
 		  
-		  return listOfProduct;
-		  
+		 // return listOfProduct;
 		
-		
-		
-		
-		
-		
-		/*loginForm = (LoginForm) model.get("loginForm");
-		if (!loginForm.getUserName().equals(userName)
-				|| !loginForm.getPassword().equals(password)) {
-			return "loginform";
-		}
-		*/
-		/*boolean userExists = loginService.checkLogin(loginForm.getUserName(),
-                loginForm.getPassword());
-		if(userExists){
-			model.put("loginForm", loginForm);
-			return "loginsuccess";
-		}else{
-			result.rejectValue("userName","invaliduser");
-			return "loginform";
-		}*/
-
+		return null;
 	}
 	
 	
@@ -92,27 +65,144 @@ public class LoginController {
 	 * accept JSON value
 	 * **/
 	
-	@RequestMapping(value = "/user/password/loginuser",method = RequestMethod.POST)
-	 //public @ResponseBody
-	 //   List<LoginUser> loginUserJson(HttpServletRequest request,@PathVariable("userName")String userName,
-	  //  		                                                   @PathVariable("password")int password ) {
-		 public  @ResponseBody List<LoginUser>  loginUserJson(@RequestBody LoginUser loginuser, HttpServletRequest request) {
+	@RequestMapping(value = "/postUser",method = RequestMethod.POST) 		                                                  
+		 public  @ResponseBody List<LoginUser>  loginUserJson(@RequestBody LoginUser loginuser,HttpServletRequest request) {
 		
-/*	public @ResponseBody List<LoginUser> addPost(@RequestBody @Valid LoginUser loginuser, BindingResult bindingResult,
-		        UriComponentsBuilder ucBuilder){*/
-	
-	/*public @ResponseBody List<LoginUser> processForm(@RequestBody @Valid LoginUser loginuser, BindingResult result,
-			Map model){*/
-			   System.out.println("Inside json user");
-	  String userName = loginuser.getUserName() ;
-	  int password = loginuser.getPassword() ;
-		
-	List<LoginUser> listOfProduct=loginDAO.checkLogin(userName, password);
+		 try {
+			    System.out.println(loginuser.getUserName()+" "+ loginuser.getUser_password());
+			 
+	             //String userName = loginuser.getUserName();
+	             // String userPassword = loginuser.getUser_password();		
+	        // List<LoginUser> listOfProduct=loginDAO.checkLogin(loginuser.getUserName(), loginuser.getUser_password());
 	  
-	  
-	  return listOfProduct;
-	  
+	          //return listOfProduct;
+			    return null;
 
+	
+	        } catch (Exception e) {
+	            
+	            e.printStackTrace();
+	            return null;
+	        }
+	
+		  
+
+}
+	/**
+	 * User Login API only for user 
+	 * **/
+	
+	@RequestMapping(value = "/addUser",method = RequestMethod.POST) 		                                                  
+	 public  @ResponseBody  LoginUserResponse loginUser(@RequestBody LoginJsonResponse loginuser) {
+		
+		logger.info("User Entered loginUser() in LoginController  - Post username and password for USER");
+	
+		try {
+			// Create main class Object
+			LoginUserResponse loginUseRes = new LoginUserResponse();
+
+			// set data to the parent class
+			//loginUseRes.setStatus_code(JsonResponse.CODE__OK);
+			//loginUseRes.setStatus_message(ApiErrors.SUCCESS__LOGIN_STATUS);
+
+			// String userName = loginuser.getUsername();
+			// String userPassword = loginuser.getUser_password();
+			//LoginUser user = new LoginUser();
+			LoginUser listOfUser = loginDAO.checkLogin(loginuser.getUsername(), loginuser.getUser_password());	
+			
+			//System.out.println(listOfUser.getUser_Id());
+			
+			//loginUseRes.setLoginUser(listOfUser);
+			System.out.println(listOfUser.getUser_Id());
+			
+			/*if (listOfUser == null  ) {
+			    // no products exist, error message
+				loginUseRes.setStatus_code(JsonResponse.CODE__EMPTY);
+				loginUseRes.setStatus_message(ApiErrors.ERRORE_STATUS_MESSAGE);
+			    logger.error(ApiErrors.ERROR__NO_USERS_EXIST);
+			    loginUseRes.setLoginUser(listOfUser);
+			    return loginUseRes;
+			}*/
+			
+			if(listOfUser.getUser_Id()== null) {
+				// set data to the parent class
+				System.out.println("shopkeeper");
+				loginUseRes.setStatus_code(JsonResponse.CODE__OK);
+				loginUseRes.setStatus_message(ApiErrors.SUCCESS__LOGIN_STATUS);
+				
+				ShopKeeper shopKeeper = loginDAO.shopKeeperModel(listOfUser.getShop_ID());
+				
+
+				loginUseRes.setShopKeeper(shopKeeper);
+				return loginUseRes;
+				
+			}
+			else {
+				
+				System.out.println("User");
+				loginUseRes.setStatus_code(JsonResponse.CODE__OK);
+				loginUseRes.setStatus_message(ApiErrors.SUCCESS__LOGIN_STATUS);
+				loginUseRes.setLoginUser(listOfUser);
+				return loginUseRes;
+				
+			}
+			
+			
+
+		} catch (Exception e) {
+           // TODO Auto-generated catch block
+           e.printStackTrace();
+           return null;
+       }
+	}
+		
+		
+		
+		/**
+		 * Login API for the user and shopkeeper 
+		 * **/
+		
+		@RequestMapping(value = "/addUserAndShopkeeper",method = RequestMethod.POST) 		                                                  
+		 public  @ResponseBody  User loginUserAndShopkeeper(@RequestBody LoginJsonResponse loginuser) {
+			
+			logger.info("User and shopkeeper Entered loginUserAndShopkeeper() - Post username and password for Both");
+		
+			try {
+				// Create main class Object
+				//LoginUserResponse loginUseRes = new LoginUserResponse();
+
+				// set data to the parent class
+				//loginUseRes.setStatus(JsonResponse.CODE__OK);
+				//loginUseRes.setStatus_message(ApiErrors.SUCCESS__LOGIN_STATUS);
+
+				 String userName = loginuser.getUsername();
+				 String userPassword = loginuser.getUser_password();
+				//User user = new User();
+				User loginUseRes = new User();
+				List<User> listOfUser = loginDAO.checkLoginBoth(loginuser.getUsername(),loginuser.getUser_password());
+                 
+                 
+                 System.out.println(loginUseRes.getUser_Id());
+				
+				//loginUseRes.setLoginUser(listOfUser);
+				
+				
+				if (listOfUser == null || listOfUser.size()== 0 ) {
+				    //** no products exist, error message /
+					//loginUseRes.setStatus(JsonResponse.CODE__EMPTY);
+					//loginUseRes.setStatus_message(ApiErrors.ERRORE_STATUS_MESSAGE);
+				   // logger.error(ApiErrors.ERROR__NO_USERS_EXIST);
+				   // return loginUseRes;
+				}
+				return loginUseRes;
+
+			} catch (Exception e) {
+	           // TODO Auto-generated catch block
+	           e.printStackTrace();
+	           return null;
+	       }
+
+	  
 
 }
 
