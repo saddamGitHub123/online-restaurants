@@ -60,21 +60,21 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 		public void setID(int iD) {
 			ID = iD;
 		}
-		@JsonIgnore
+		
 		public String getProduct_Name() {
 			return Product_Name;
 		}
 		public void setProduct_Name(String product_Name) {
 			Product_Name = product_Name;
 		}
-		@JsonIgnore
+		
 		public int getProduct_Price() {
 			return Product_Price;
 		}
 		public void setProduct_Price(int product_Price) {
 			Product_Price = product_Price;
 		}
-		@JsonIgnore
+		
 		public String getProduct_Image() {
 			return Product_Image;
 		}
@@ -93,21 +93,21 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 		public void setProduct_Image(String product_Image) {
 			Product_Image = product_Image;
 		}
-		@JsonIgnore
+		
 		public String getProduct_Category() {
 			return Product_Category;
 		}
 		public void setProduct_Category(String product_Category) {
 			Product_Category = product_Category;
 		}
-		@JsonIgnore
+		
 		public String getProduct_Type() {
 			return Product_Type;
 		}
 		public void setProduct_Type(String product_Type) {
 			Product_Type = product_Type;
 		}
-		@JsonIgnore
+		
 		public boolean isAvailability() {
 			return Availability;
 		}

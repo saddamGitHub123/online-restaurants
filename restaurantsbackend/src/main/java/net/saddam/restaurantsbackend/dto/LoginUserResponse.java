@@ -1,26 +1,17 @@
 package net.saddam.restaurantsbackend.dto;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
+
 public class LoginUserResponse extends Response{
 
 	   
 	  // this is child class as a list
 	
 	
+	  @JsonProperty("Data")
 	  private  LoginUser loginUser;
 	  
-	  private ShopKeeper shopKeeper;
-	  
-	  
 
-
-
-	public ShopKeeper getShopKeeper() {
-		return shopKeeper;
-	}
-
-	public void setShopKeeper(ShopKeeper shopKeeper) {
-		this.shopKeeper = shopKeeper;
-	}
 
 	public LoginUser getLoginUser() {
 		return loginUser;

@@ -19,7 +19,7 @@ public interface UserDAO {
 			List<User> list();
 			
 			
-	     //for get list of product
+	     //Get list of product by shopid 
 			
 			List<Product> productsByShopId(String Shop_ID);
 

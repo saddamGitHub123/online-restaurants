@@ -13,8 +13,6 @@ import org.springframework.transaction.annotation.Transactional;
 
 import net.saddam.restaurantsbackend.dao.LoginDAO;
 import net.saddam.restaurantsbackend.dto.LoginUser;
-import net.saddam.restaurantsbackend.dto.Product;
-import net.saddam.restaurantsbackend.dto.ShopKeeper;
 import net.saddam.restaurantsbackend.dto.User;
 /**
  * 
@@ -75,53 +73,15 @@ public class LoginDAOImpl implements LoginDAO {
 			log.error("get failed", re);
 			throw re;
 		}
-		/*finally
+		finally
 		{
-			if (sessionFactory != null)
+			/*if (sessionFactory != null)
 			{
 				sessionFactory.close();
-			}
-		}
-*/		
-	}
-	
-	@Override
-	public ShopKeeper shopKeeperModel(String Shop_ID) {
-		
-		ShopKeeper shopKeeper = null;
-
-		try{
-			
-			String selectProductsByShopId = "FROM ShopKeeper WHERE Shop_ID = :Shop_ID AND active = :active";
-			
-			List<ShopKeeper> list=  sessionFactory
-					.getCurrentSession()
-						.createQuery(selectProductsByShopId, ShopKeeper.class)
-							.setParameter("Shop_ID", Shop_ID)
-							.setParameter("active", true)
-								.getResultList();
-			
-			if ((list != null) && (list.size() > 0)) {
-				//userFound= true;
-				log.debug("get successful,User Name and Password found");
-				shopKeeper = list.get(0);
-				return shopKeeper;
-			}
-			else {
-				log.debug("get successful,No User Name and Password found ");
-				
-			 }
-			 
-			 
-			
-		}
-		catch(Exception ex){
-			ex.printStackTrace();
+			}*/
 		}
 		
-		return null;
 	}
-	
 	
 	
 	
@@ -172,10 +132,10 @@ public class LoginDAOImpl implements LoginDAO {
 		}
 		finally
 		{
-			if (sessionFactory != null)
+			/*if (sessionFactory != null)
 			{
 				sessionFactory.close();
-			}
+			}*/
 		
 	}
 

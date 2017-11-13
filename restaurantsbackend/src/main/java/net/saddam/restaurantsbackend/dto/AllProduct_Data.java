@@ -1,17 +1,39 @@
 package net.saddam.restaurantsbackend.dto;
 
-import java.util.List;
-
-public class AllProduct_Data {
+public class AllProduct_Data extends Response {
 	
 
-	private String Status_Code;
-	private String Status_Message;
 	private String Request_Type;
+	private String Shop_ID;
 	
-	List<Product_Data> productData;
+	Product_Data productData;
 	
 	
+	
+	
+
+
+	
+
+
+    
+	public String getShop_ID() {
+		return Shop_ID;
+	}
+
+
+	public void setShop_ID(String shop_ID) {
+		Shop_ID = shop_ID;
+	}
+
+
+	public Product_Data getProductData() {
+		return productData;
+	}
+
+	public void setProductData(Product_Data productData) {
+		this.productData = productData;
+	}
 
 	public String getRequest_Type() {
 		return Request_Type;
@@ -21,29 +43,9 @@ public class AllProduct_Data {
 		Request_Type = request_Type;
 	}
 
-	public String getStatus_Code() {
-		return Status_Code;
-	}
 
-	public void setStatus_Code(String status_Code) {
-		Status_Code = status_Code;
-	}
 
-	public String getStatus_Message() {
-		return Status_Message;
-	}
 
-	public void setStatus_Message(String status_Message) {
-		Status_Message = status_Message;
-	}
-
-	public List<Product_Data> getProductData() {
-		return productData;
-	}
-
-	public void setProductData(List<Product_Data> productData) {
-		this.productData = productData;
-	}
 
 	public AllProduct_Data() {
 		super();

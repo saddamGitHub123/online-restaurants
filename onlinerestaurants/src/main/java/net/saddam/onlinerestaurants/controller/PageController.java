@@ -192,8 +192,8 @@ public class PageController {
 				
 				if (userId == null) {
 				    //** no products exist, error message *//
-				    allProduct.setStatus_Code(JsonResponse.CODE__EMPTY);
-				    allProduct.setStatus_Message(JsonResponse.CODE__ERROR);
+				    allProduct.setStatus_code(JsonResponse.CODE__EMPTY);
+				    allProduct.setStatus_message(JsonResponse.CODE__ERROR);
 				    logger.error(ApiErrors.ERROR__NO_USER_ID_EXIST);
 				    return allProduct;
 				}
@@ -203,8 +203,8 @@ public class PageController {
 				 
 				if (listOfSimpleEntities == null || listOfSimpleEntities.size()== 0 ) {
 				    //** no products exist, error message *//
-				    allProduct.setStatus_Code(JsonResponse.CODE__EMPTY);
-				    allProduct.setStatus_Message(ApiErrors.ERROR__NO_PRODUCTS_EXIST);
+				    allProduct.setStatus_code(JsonResponse.CODE__EMPTY);
+				    allProduct.setStatus_message(ApiErrors.ERROR__NO_PRODUCTS_EXIST);
 				    logger.error(ApiErrors.ERROR__NO_PRODUCTS_EXIST);
 				    return allProduct;
 				}
@@ -212,15 +212,15 @@ public class PageController {
 				
 				
 				//** set status OK *//*
-				allProduct.setStatus_Code(JsonResponse.CODE__OK);
-				allProduct.setStatus_Message("Successfully Authenticated");
+				allProduct.setStatus_code(JsonResponse.CODE__OK);
+				allProduct.setStatus_message("Successfully Authenticated");
 				
 			}
 			catch (Exception e)
 			{
 				logger.error("listOfProductByShopId(): Error - " + e);
-				allProduct.setStatus_Code(JsonResponse.CODE__UNKNOWN_ERROR);
-				allProduct.setStatus_Message(JsonResponse.CODE__UNKNOWN_ERROR);
+				allProduct.setStatus_code(JsonResponse.CODE__UNKNOWN_ERROR);
+				allProduct.setStatus_message(JsonResponse.CODE__UNKNOWN_ERROR);
 	            return allProduct;
 			}
 	        logger.info("Returning listOfProductByShopId()");

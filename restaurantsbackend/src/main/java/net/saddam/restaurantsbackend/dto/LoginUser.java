@@ -8,6 +8,7 @@ import javax.persistence.Id;
 import javax.persistence.Table;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonProperty;
 
 @Entity
 @Table(name = "usershopkeeper")
@@ -20,12 +21,12 @@ public class LoginUser {
 
 	
 	@Column(name = "username")
-	@JsonIgnore
+	
 	private String username;
 
     
 	@Column(name = "password")
-    @JsonIgnore
+    
 	private String User_password;
 
 	@Column(name = "shop_id")
@@ -39,9 +40,6 @@ public class LoginUser {
 	 @Column(name="contact")
 	   private int Contact;
 
-	
-	   
-	
 
 	public String getName() {
 		return Name;
@@ -84,7 +82,7 @@ public class LoginUser {
 		this.id = id;
 	}
 
-	@JsonIgnore
+	
 	public String getUserName() {
 		return username;
 	}
@@ -94,7 +92,7 @@ public class LoginUser {
 	}
      
 	
-	@JsonIgnore
+	
 	public String getUser_password() {
 		return User_password;
 	}

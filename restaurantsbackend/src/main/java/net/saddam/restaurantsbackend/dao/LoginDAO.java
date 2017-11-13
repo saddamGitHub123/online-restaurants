@@ -3,7 +3,7 @@ package net.saddam.restaurantsbackend.dao;
 import java.util.List;
 
 import net.saddam.restaurantsbackend.dto.LoginUser;
-import net.saddam.restaurantsbackend.dto.ShopKeeper;
+
 import net.saddam.restaurantsbackend.dto.User;
 
 /**
@@ -26,7 +26,6 @@ public interface LoginDAO {
     List<User> checkLoginBoth(String userName, String userPassword);
 
 
-	ShopKeeper shopKeeperModel(String shop_ID);
 
 
 }
