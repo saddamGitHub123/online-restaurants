@@ -1,10 +1,13 @@
-package net.saddam.restaurantsbackend.dto;
+package net.saddam.restaurantsbackend.model;
+
+import net.saddam.restaurantsbackend.dto.Product_Data;
+import net.saddam.restaurantsbackend.dto.Response;
 
 public class AllProduct_Data extends Response {
 	
 
 	private String Request_Type;
-	private String Shop_ID;
+	//private String Shop_ID;
 	
 	Product_Data productData;
 	
@@ -17,14 +20,14 @@ public class AllProduct_Data extends Response {
 
 
     
-	public String getShop_ID() {
+/*	public String getShop_ID() {
 		return Shop_ID;
 	}
 
 
 	public void setShop_ID(String shop_ID) {
 		Shop_ID = shop_ID;
-	}
+	}*/
 
 
 	public Product_Data getProductData() {

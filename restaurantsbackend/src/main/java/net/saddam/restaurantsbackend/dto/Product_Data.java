@@ -1,6 +1,8 @@
 	package net.saddam.restaurantsbackend.dto;
 
-	import javax.persistence.Entity;
+	import java.io.Serializable;
+
+import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -11,8 +13,12 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 
 	@Entity
 	@Table(name = "Productlist")
-	public class Product_Data {
+	public class Product_Data implements Serializable {
 		
+		/**
+		 * 
+		 */
+		private static final long serialVersionUID = 1L;
 		@Id
 		@GeneratedValue(strategy = GenerationType.IDENTITY)
 		@JsonIgnore
@@ -47,6 +53,26 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 		
 			
 		
+		
+		
+		public Product_Data(int iD, String product_Name, String product_ID, String shop_ID, int product_Price,
+				String product_Image, String product_Category, String product_Type, boolean availability) {
+			super();
+			ID = iD;
+			Product_Name = product_Name;
+			Product_ID = product_ID;
+			Shop_ID = shop_ID;
+			Product_Price = product_Price;
+			Product_Image = product_Image;
+			Product_Category = product_Category;
+			Product_Type = product_Type;
+			Availability = availability;
+		}
+
+
+
+
+
 		public Product_Data() {
 			super();
 			// TODO Auto-generated constructor stub

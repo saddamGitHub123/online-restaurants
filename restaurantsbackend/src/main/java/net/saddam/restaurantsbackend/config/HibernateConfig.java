@@ -21,17 +21,17 @@ public class HibernateConfig {
 	
 	     //Change the below based on the DBMS you choose
 		//for H2 database
-	/*private final static String DATABASE_URL = "jdbc:mysql://localhost:3306/onlinerestaurants";
+	private final static String DATABASE_URL = "jdbc:mysql://localhost:3306/groceriesproduct";
 	private final static String DATABASE_DRIVER = "com.mysql.jdbc.Driver";
 	private final static String DATABASE_DIALECT = "org.hibernate.dialect.MySQLDialect";
 	private final static String DATABASE_USERNAME = "root";
-	private final static String DATABASE_PASSWORD = "root";*/
+	private final static String DATABASE_PASSWORD = "root";
 	
-	private final static String DATABASE_URL = "jdbc:h2:tcp://localhost/~/groceriesproduct";
+	/*private final static String DATABASE_URL = "jdbc:h2:tcp://localhost/~/groceriesproduct";
 	private final static String DATABASE_DRIVER = "org.h2.Driver";
 	private final static String DATABASE_DIALECT = "org.hibernate.dialect.H2Dialect";
 	private final static String DATABASE_USERNAME = "sa";
-	private final static String DATABASE_PASSWORD = "";
+	private final static String DATABASE_PASSWORD = "";*/
 		
 		//dataSource bean are available
 		@Bean

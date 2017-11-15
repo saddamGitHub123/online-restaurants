@@ -1,6 +1,9 @@
-package net.saddam.restaurantsbackend.dto;
+package net.saddam.restaurantsbackend.model;
 
 import java.util.List;
+
+import net.saddam.restaurantsbackend.dto.Product;
+import net.saddam.restaurantsbackend.dto.Response;
 
 public class AllProduct extends Response{
 

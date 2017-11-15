@@ -21,11 +21,11 @@ import org.springframework.web.servlet.config.annotation.EnableWebMvc;
 import net.saddam.restaurantsbackend.common.ApiErrors;
 import net.saddam.restaurantsbackend.common.JsonResponse;
 import net.saddam.restaurantsbackend.dao.UserDAO;
-import net.saddam.restaurantsbackend.dto.AllProduct;
 import net.saddam.restaurantsbackend.dto.Child;
 import net.saddam.restaurantsbackend.dto.Product;
 import net.saddam.restaurantsbackend.dto.User;
 import net.saddam.restaurantsbackend.dto.UserALL;
+import net.saddam.restaurantsbackend.model.AllProduct;
 
 /**
  * 

@@ -1,3 +1,7 @@
+
+Create database groceriesproduct;
+
+//For H2 DATABASE
 CREATE TABLE usershopkeeper (
 	
 	id IDENTITY,
@@ -13,12 +17,45 @@ CREATE TABLE usershopkeeper (
 	CONSTRAINT pk_category_id PRIMARY KEY (id) 
 
 );
-INSERT INTO Productlist (shop_id, user_id, name, username, password, contact,email,is_active)
-VALUES ('shop001', 'Sadda', 'shop001','sad', '720','s@',true);
+//For MySQL
+
+CREATE TABLE usershopkeeper (
+	
+	id INT NOT NULL AUTO_INCREMENT,
+	shop_id VARCHAR(20),
+	user_id VARCHAR(20),
+	name VARCHAR(50),
+	username VARCHAR(20),
+	password VARCHAR(20),
+	contact VARCHAR(20),
+	email VARCHAR(20),
+	is_active BOOLEAN,
+	
+	CONSTRAINT pk_category_id PRIMARY KEY (id) 
+
+);
+INSERT INTO usershopkeeper (shop_id, user_id, name, username, password, contact,email,is_active)
+VALUES ('shop001', 'Sadda','sad', 'shop001','sad', '720','s@',true);
+
+INSERT INTO usershopkeeper (shop_id, user_id, name, username, password, contact,email,is_active)
+VALUES ('shop002', 'user1','sad', 'TouchCor1','touchcor1', '123','s@',true);
+
+INSERT INTO usershopkeeper (shop_id, user_id, name, username, password, contact,email,is_active)
+VALUES ('shop003', 'user2', 'sad','TouchCor2','touchcor2', '1234','s@',true);
+
+INSERT INTO usershopkeeper (shop_id, user_id, name, username, password, contact,email,is_active)
+VALUES ('shop004', 'user3','sad', 'TouchCor3','123', '720','s@',true);
+
+INSERT INTO usershopkeeper (shop_id, user_id, name, username, password, contact,email,is_active)
+VALUES ('shop005', 'user4','sad', 'TouchCor4','1234', '720','s@',true);
+
+INSERT INTO usershopkeeper (shop_id, user_id, name, username, password, contact,email,is_active)
+VALUES ('shop006', 'user5','sad', 'TouchCor5','12345', '720','s@',true);
+
 
 
 CREATE TABLE Productlist (
-    ID IDENTITY,
+    ID INT NOT NULL AUTO_INCREMENT,
     Shop_ID VARCHAR(20)NOT NULL,
     Product_ID VARCHAR(20)NOT NULL,
     Product_Name VARCHAR(20),
@@ -62,4 +99,20 @@ CREATE TABLE  userjson (
 );
 
 INSERT INTO USERJSON  (status_code,status_message) VALUES ('OK ', 'successfull');
+
+
+/**
+ * for the orderlist table
+ * **/
+
+CREATE TABLE OrderList (
+    ID INT NOT NULL AUTO_INCREMENT,
+    Shop_ID VARCHAR(20)NOT NULL,
+    User_ID VARCHAR (20) NOT NULL,
+    Ordered_List VARCHAR(MAX),
+    Address VARCHAR(200),
+    TimeStamp TIMESTAMP()
+    CONSTRAINT pk_order_id PRIMARY KEY (ID),
+
+);
 

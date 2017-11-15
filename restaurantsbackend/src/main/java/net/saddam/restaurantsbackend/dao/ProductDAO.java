@@ -18,6 +18,11 @@ public interface ProductDAO {
 	 * **/
 	boolean addProduct(Product_Data product);
 	
+	
+	/**
+	 * List all product using shopId
+	 * **/
+	
 	List<Product_Data> addProductByShopId(String Shop_ID);
 	
 /**
@@ -25,7 +30,23 @@ public interface ProductDAO {
  * **/
 	
 	List<Product> productsByShopId(String Shop_ID);
+	
+	
 
-Product_Data addProductUsingShopId(String shop_ID);
+    Product_Data addProductUsingShopId(String shop_ID);
+    
+    /**
+     * Update product using shopid
+     * **/
+    
+    
+    Product_Data updateProduct(String shop_ID,Product_Data productData);
+    
+    
+    
+    
+    
+    
+    
 
 }
