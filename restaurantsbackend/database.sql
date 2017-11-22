@@ -56,6 +56,7 @@ VALUES ('shop006', 'user5','sad', 'TouchCor5','12345', '720','s@',true);
 
 CREATE TABLE Productlist (
     ID INT NOT NULL AUTO_INCREMENT,
+    code varchar(20),
     Shop_ID VARCHAR(20)NOT NULL,
     Product_ID VARCHAR(20)NOT NULL,
     Product_Name VARCHAR(20),
@@ -115,4 +116,55 @@ CREATE TABLE OrderList (
     CONSTRAINT pk_order_id PRIMARY KEY (ID),
 
 );
+
+/**
+ * Unique ProductList Table
+ * **/
+
+CREATE TABLE Productlist (
+    ID INT NOT NULL AUTO_INCREMENT,
+    Product_Name VARCHAR(20),
+    Product_Price int,
+    Product_Image VARCHAR(20),
+    Product_Category VARCHAR(20),
+    Product_Type VARCHAR(20),
+    Product_Qty VARCHAR(10),
+    CONSTRAINT pk_product_id PRIMARY KEY (ID),
+);
+
+
+/**
+ * Address Table for all user 
+ * ***/
+
+CREATE TABLE Address (
+    ID INT NOT NULL AUTO_INCREMENT,
+    user_ID VARCHAR(20),
+    House_No VARCHAR(20),
+    Locality VARCHAR(20),
+    Landmark VARCHAR(20),
+    PinCode VARCHAR(20),
+    Area VARCHAR(10),
+    City VARCHAR(10),
+    CONSTRAINT pk_address_id PRIMARY KEY (ID),
+    CONSTRAINT fk_UserOrder FOREIGN KEY (user_id)
+    REFERENCES usershopkeeper(user_id)
+);
+
+
+CREATE TABLE groceriesproduct.Address (
+    ID INT NOT NULL AUTO_INCREMENT,
+    user_id VARCHAR(20) NOT NULL,
+    House_No VARCHAR(20),
+    Locality VARCHAR(20),
+    Landmark VARCHAR(20),
+    PinCode VARCHAR(20),
+    Area VARCHAR(10),
+    City VARCHAR(10),
+    CONSTRAINT pk_address_id PRIMARY KEY (ID),
+       // FOREIGN KEY (id) REFERENCES usershopkeeper(id)
+);
+INSERT INTO `groceriesproduct`.`address` (`ID`, `user_id`, `House_No`, `Locality`, `Landmark`, `PinCode`, `Area`, `City`) 
+VALUES ('1', 'Sadda', 'ee', 'ww', 'tt', '33', 'dd', 'rr');
+
 

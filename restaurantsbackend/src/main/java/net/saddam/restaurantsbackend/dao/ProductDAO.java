@@ -4,6 +4,7 @@ import java.util.List;
 
 import net.saddam.restaurantsbackend.dto.Product;
 import net.saddam.restaurantsbackend.dto.Product_Data;
+import net.saddam.restaurantsbackend.dto.UniqueProductResponse;
 
 /**
  * 
@@ -43,6 +44,12 @@ public interface ProductDAO {
     Product_Data updateProduct(String shop_ID,Product_Data productData);
     
     
+    
+    /**
+     * Get all unique productList
+     * ****/
+    
+   List< UniqueProductResponse> uniqueProductList();
     
     
     

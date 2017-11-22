@@ -2,8 +2,6 @@ package net.saddam.restaurantsbackend.daoimpl;
 
 import java.util.List;
 
-
-
 import org.hibernate.SessionFactory;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -12,9 +10,9 @@ import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
 import net.saddam.restaurantsbackend.dao.ProductDAO;
-
 import net.saddam.restaurantsbackend.dto.Product;
 import net.saddam.restaurantsbackend.dto.Product_Data;
+import net.saddam.restaurantsbackend.dto.UniqueProductResponse;
 
 /**
  * 
@@ -63,13 +61,19 @@ public class ProductDAOImpl implements ProductDAO {
 		    log.debug("Add all the product ProductDAOImpl class");	
             String selectProductsByShopId = "FROM Product_Data WHERE Shop_ID = :Shop_ID AND Availability = :Availability";
 			
-            return sessionFactory
+           /* return sessionFactory
 					.getCurrentSession()
 						.createQuery(selectProductsByShopId, Product_Data.class)
 							.setParameter("Shop_ID", Shop_ID)
 							.setParameter("Availability", true)
-								.getResultList();
-/*
+								.getResultList();*/
+            List<Product_Data> list= sessionFactory
+					.getCurrentSession()
+					.createQuery(selectProductsByShopId, Product_Data.class)
+						.setParameter("Shop_ID", Shop_ID)
+						.setParameter("Availability", true)
+							.getResultList();
+
 		if ((list != null) && (list.size() > 0)) {
 			//userFound= true;
 			log.debug("get successful,Product list is found");
@@ -81,7 +85,7 @@ public class ProductDAOImpl implements ProductDAO {
 		 }
 
 		//session.close();
-		return list; */
+		return list; 
 		
 		}catch (RuntimeException re)
 		{
@@ -107,13 +111,12 @@ public class ProductDAOImpl implements ProductDAO {
 
 		try{
 			
-			String selectProductsByShopId = "FROM Product WHERE Shop_ID = :Shop_ID AND Availability = :Availability";
+			String selectProductsByShopId = "FROM Product WHERE Shop_ID = :Shop_ID ";
 			
 			List <Product> list = sessionFactory
 					.getCurrentSession()
 						.createQuery(selectProductsByShopId, Product.class)
 							.setParameter("Shop_ID", Shop_ID)
-							.setParameter("Availability", true)
 								.getResultList();
 			
 			if ((list != null) && (list.size() > 0)) {
@@ -201,13 +204,16 @@ public class ProductDAOImpl implements ProductDAO {
 	        if ((list != null) && (list.size() > 0)) {
 				//userFound= true;
 				log.debug("get successful,User Name and Password found");
+				
 				product = list.get(0);
+				//set the updated product value 
 				product.setProduct_Name(productData.getProduct_Name());
 				product.setProduct_Category(productData.getProduct_Category());
 				product.setProduct_Image(productData.getProduct_Image());
 				product.setProduct_Type(productData.getProduct_Type());
 				product.setProduct_Price(productData.getProduct_Price());
 				//product.setProduct_Category(productData.getProduct_Category());
+				//update product
 				sessionFactory.getCurrentSession().update(product);
 				
 				return product;
@@ -227,6 +233,43 @@ public class ProductDAOImpl implements ProductDAO {
 		
 	    }
 
+	}
+	
+	/**
+	 * Get all unique productList using product name in productDAOImpl class
+	 * **/
+
+	@Override
+	public List<UniqueProductResponse> uniqueProductList() {
+
+		log.debug("Show Unique product list ProductDAOImpl class");
+
+		try {
+
+			List<UniqueProductResponse> listProduct = sessionFactory.getCurrentSession()
+					.createQuery("FROM UniqueProductResponse GROUP BY Product_Name").getResultList();
+
+			System.out.println(listProduct);
+
+			if ((listProduct != null) && (listProduct.size() > 0)) {
+				// userFound= true;
+				log.debug("get successful,User Name and Password found");
+				// Product product = list;
+				return listProduct;
+			} else {
+				log.debug("get successful,No Product List is there ");
+
+			}
+			return null;
+		} catch (RuntimeException re) {
+			log.error("get failed", re);
+			throw re;
+		} finally {
+			/*
+			 * if (sessionFactory != null) { sessionFactory.close(); }
+			 */
+
+		}
 	}
 
 /*	@Override

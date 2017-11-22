@@ -10,6 +10,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -21,7 +22,7 @@ import org.springframework.web.servlet.config.annotation.EnableWebMvc;
 import net.saddam.restaurantsbackend.common.ApiErrors;
 import net.saddam.restaurantsbackend.common.JsonResponse;
 import net.saddam.restaurantsbackend.dao.UserDAO;
-import net.saddam.restaurantsbackend.dto.Child;
+
 import net.saddam.restaurantsbackend.dto.Product;
 import net.saddam.restaurantsbackend.dto.User;
 import net.saddam.restaurantsbackend.dto.UserALL;
@@ -32,6 +33,7 @@ import net.saddam.restaurantsbackend.model.AllProduct;
  * @author saddam
  *
  */
+@CrossOrigin(origins = "http://localhost:4200", maxAge = 3600)
 @Controller
 @EnableWebMvc
 
@@ -154,7 +156,7 @@ public class PageController {
 	  * 
 	  * Tested url for testing 
 	  * *****/
-	 
+/*	 
 	 @RequestMapping("/all/test")
 	  public @ResponseBody Child getTest(HttpServletRequest request) {
 		 
@@ -167,7 +169,7 @@ public class PageController {
 		 return ch;
 		 
 	  }
-	 
+	 */
 	 
 	 
 	 
@@ -227,7 +229,7 @@ public class PageController {
 
 	        return allProduct;
 	    }
-
+ 
 
 
 }

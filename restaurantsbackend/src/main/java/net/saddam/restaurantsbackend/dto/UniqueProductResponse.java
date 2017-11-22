@@ -1,7 +1,5 @@
 package net.saddam.restaurantsbackend.dto;
 
-import java.util.UUID;
-
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -10,55 +8,35 @@ import javax.persistence.Table;
 
 @Entity
 @Table(name = "Productlist")
-public class Product {
+public class UniqueProductResponse {
 	
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
     private int ID;	
 	
-	private String code;
 	private String Product_Name;
-	private String Product_ID;
-	private String Shop_ID;
 	 private int Product_Price;
 	 private String Product_Image;
 	 private String Product_Category;
 	 private String Product_Type;
 	 private boolean Availability ;
 	 
-	 
-	 public Product() {
-		 this.code = UUID.randomUUID().toString().substring(26).toUpperCase();
-	 }
-	  
-	 
 
-
+    
 	
-	
+	 
 	@Override
 	public String toString() {
-		return "Product [ID=" + ID + ", code=" + code + ", Product_Name=" + Product_Name + ", Product_ID=" + Product_ID
-				+ ", Shop_ID=" + Shop_ID + ", Product_Price=" + Product_Price + ", Product_Image=" + Product_Image
-				+ ", Product_Category=" + Product_Category + ", Product_Type=" + Product_Type + ", Availability="
-				+ Availability + "]";
+		return "UniqueProductRessponse [ID=" + ID + ", Product_Name=" + Product_Name + ", Product_Price="
+				+ Product_Price + ", Product_Image=" + Product_Image + ", Product_Category=" + Product_Category
+				+ ", Product_Type=" + Product_Type + ", Availability=" + Availability + "]";
 	}
 
 
 
-
-
-
-	public String getCode() {
-		return code;
-	}
-	public void setCode(String code) {
-		this.code = code;
-	}
 	public int getID() {
 		return ID;
 	}
-	
 	public void setID(int iD) {
 		ID = iD;
 	}
@@ -76,18 +54,6 @@ public class Product {
 	}
 	public String getProduct_Image() {
 		return Product_Image;
-	}
-	public String getProduct_ID() {
-		return Product_ID;
-	}
-	public void setProduct_ID(String product_ID) {
-		Product_ID = product_ID;
-	}
-	public String getShop_ID() {
-		return Shop_ID;
-	}
-	public void setShop_ID(String shop_ID) {
-		Shop_ID = shop_ID;
 	}
 	public void setProduct_Image(String product_Image) {
 		Product_Image = product_Image;
@@ -110,11 +76,8 @@ public class Product {
 	public void setAvailability(boolean availability) {
 		Availability = availability;
 	}
+
 	 
 	 
-	 
-	 
-	
-	
 
 }

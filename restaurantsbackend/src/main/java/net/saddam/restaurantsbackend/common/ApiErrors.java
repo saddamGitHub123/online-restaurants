@@ -52,6 +52,7 @@ public interface ApiErrors {
     
     
     public static final String ERROR__NO_CATEGORIES_EXIST = "No Categories exist";
+    public static final String ERROR__NO_USER_EXIST = "No User exist";
     public static final String ERROR__NO_PRODUCTS_EXIST = "No Products exist";
     public static final String ERROR__NO_USERS_EXIST = "No Users exist";
     

@@ -1,7 +1,6 @@
 package net.saddam.restaurantsbackend.model;
 
 import net.saddam.restaurantsbackend.dto.Product_Data;
-import net.saddam.restaurantsbackend.dto.Response;
 
 public class RequestProduct extends Response{
 

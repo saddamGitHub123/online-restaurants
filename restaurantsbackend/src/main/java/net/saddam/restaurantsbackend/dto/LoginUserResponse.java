@@ -2,6 +2,8 @@ package net.saddam.restaurantsbackend.dto;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 
+import net.saddam.restaurantsbackend.model.Response;
+
 public class LoginUserResponse extends Response{
 
 	   

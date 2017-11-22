@@ -1,4 +1,4 @@
-package net.saddam.restaurantsbackend.dto;
+package net.saddam.restaurantsbackend.model;
 
 
 public class Response 

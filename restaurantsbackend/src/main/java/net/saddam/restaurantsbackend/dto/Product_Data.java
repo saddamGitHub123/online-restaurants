@@ -1,6 +1,7 @@
 	package net.saddam.restaurantsbackend.dto;
 
 	import java.io.Serializable;
+import java.util.UUID;
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -23,6 +24,8 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 		@GeneratedValue(strategy = GenerationType.IDENTITY)
 		@JsonIgnore
 	    private int ID;	
+		
+		private String code;
 		@JsonIgnore
 		private String Product_Name;
 		
@@ -39,26 +42,44 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 		@JsonIgnore
 		 private boolean Availability ;
 		 
+
+
+		 public Product_Data() {
+			 this.code = UUID.randomUUID().toString().substring(26).toUpperCase();
+		 }
 		 
 		  
 		 
 		
-		@Override
-		public String toString() {
-			return "Product [ID=" + ID + ", Product_Name=" + Product_Name + ", Product_ID=" + Product_ID + ", Shop_ID="
-					+ Shop_ID + ", Product_Price=" + Product_Price + ", Product_Image=" + Product_Image
-					+ ", Product_Category=" + Product_Category + ", Product_Type=" + Product_Type + ", Availability="
-					+ Availability + "]";
-		}
+
 		
 			
 		
 		
 		
-		public Product_Data(int iD, String product_Name, String product_ID, String shop_ID, int product_Price,
-				String product_Image, String product_Category, String product_Type, boolean availability) {
+		@Override
+		public String toString() {
+			return "Product_Data [ID=" + ID + ", code=" + code + ", Product_Name=" + Product_Name + ", Product_ID="
+					+ Product_ID + ", Shop_ID=" + Shop_ID + ", Product_Price=" + Product_Price + ", Product_Image="
+					+ Product_Image + ", Product_Category=" + Product_Category + ", Product_Type=" + Product_Type
+					+ ", Availability=" + Availability + "]";
+		}
+
+
+
+
+
+
+
+
+
+
+		public Product_Data(int iD, String code, String product_Name, String product_ID, String shop_ID,
+				int product_Price, String product_Image, String product_Category, String product_Type,
+				boolean availability) {
 			super();
 			ID = iD;
+			this.code = code;
 			Product_Name = product_Name;
 			Product_ID = product_ID;
 			Shop_ID = shop_ID;
@@ -72,11 +93,22 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 
 
 
-
-		public Product_Data() {
-			super();
-			// TODO Auto-generated constructor stub
+		public String getCode() {
+			return code;
 		}
+
+
+
+
+
+		public void setCode(String code) {
+			this.code = code;
+		}
+
+
+
+
+
 
 
 		@JsonIgnore

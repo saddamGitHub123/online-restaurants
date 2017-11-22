@@ -15,7 +15,7 @@ import net.saddam.restaurantsbackend.dto.User;
 public interface LoginDAO {
 	
 	/**
-	 * Serivices login api for USER
+	 * user name and password validation checking method
 	 * **/
 	LoginUser checkLogin(String userName, String userPassword);
     
