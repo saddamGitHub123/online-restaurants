@@ -1,3 +1,8 @@
+How to kill particuler port id
+ => netstat -a -o -n
+ taskkill /F /PID 28344
+
+
 
 Create database groceriesproduct;
 
@@ -103,37 +108,6 @@ INSERT INTO USERJSON  (status_code,status_message) VALUES ('OK ', 'successfull')
 
 
 /**
- * for the orderlist table
- * **/
-
-CREATE TABLE OrderList (
-    ID INT NOT NULL AUTO_INCREMENT,
-    Shop_ID VARCHAR(20)NOT NULL,
-    User_ID VARCHAR (20) NOT NULL,
-    Ordered_List VARCHAR(MAX),
-    Address VARCHAR(200),
-    TimeStamp TIMESTAMP()
-    CONSTRAINT pk_order_id PRIMARY KEY (ID),
-
-);
-
-/**
- * Unique ProductList Table
- * **/
-
-CREATE TABLE Productlist (
-    ID INT NOT NULL AUTO_INCREMENT,
-    Product_Name VARCHAR(20),
-    Product_Price int,
-    Product_Image VARCHAR(20),
-    Product_Category VARCHAR(20),
-    Product_Type VARCHAR(20),
-    Product_Qty VARCHAR(10),
-    CONSTRAINT pk_product_id PRIMARY KEY (ID),
-);
-
-
-/**
  * Address Table for all user 
  * ***/
 
@@ -167,4 +141,21 @@ CREATE TABLE groceriesproduct.Address (
 INSERT INTO `groceriesproduct`.`address` (`ID`, `user_id`, `House_No`, `Locality`, `Landmark`, `PinCode`, `Area`, `City`) 
 VALUES ('1', 'Sadda', 'ee', 'ww', 'tt', '33', 'dd', 'rr');
 
+/**
+ * for the orderlist table
+ * **/
+
+CREATE TABLE orderList (
+    ID INT NOT NULL AUTO_INCREMENT,
+    code varchar(20),
+    Shop_ID VARCHAR(20)NOT NULL,
+    User_ID VARCHAR (20) NOT NULL,
+    Product_ID VARCHAR(20) NOT NULL,
+    Product_Name VARCHAR(20) ,
+    Units VARCHAR(20) ,
+    Qty VARCHAR(10),
+    TimeStamp TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    CONSTRAINT pk_order_id PRIMARY KEY (ID)
+
+);
 

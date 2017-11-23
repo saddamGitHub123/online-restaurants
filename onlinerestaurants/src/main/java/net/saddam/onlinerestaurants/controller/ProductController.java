@@ -308,10 +308,11 @@ public class ProductController {
 		logger.info("Entered updateProductList()  - Update all the product ");
 
 		AllProduct_Data allProduct = new AllProduct_Data();
+		Product_Data checkProduct = allProductData.getProductData();
 
 		try {
 			
-			if(allProductData.getShop_ID() == null) {
+			if(allProductData.getShop_ID() == null || checkProduct.getProduct_ID() == null ) {
 				allProduct.setStatus_code(JsonResponse.CODE__EMPTY);
 				allProduct.setStatus_message("CODE__ERROR");
 				allProduct.setRequest_Type("ShopId Is Not Exist ");
@@ -376,8 +377,7 @@ public class ProductController {
 	}
 
 	/**
-	 * this controller for testing and its also send the data one controller to
-	 * another controller for the used of value
+	 * SMS integration just for testion 
 	 */
 
 	@RequestMapping(value = "/list/byShopId/device", method = RequestMethod.GET)

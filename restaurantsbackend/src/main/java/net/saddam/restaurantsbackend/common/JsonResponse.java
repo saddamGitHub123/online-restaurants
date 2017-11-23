@@ -23,6 +23,10 @@ public class JsonResponse {
     public static final String CODE__REQUEST_DENIED = "REQUEST_DENIED";
     @JsonIgnore
     public static final String CODE__UNKNOWN_ERROR = "UNKNOWN_ERROR";
+    
+    @JsonIgnore
+    public static final String CODE__SUCCESS = "Your Order is Placed Successfully";
+    
 
     
     private String code;
