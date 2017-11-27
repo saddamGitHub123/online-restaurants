@@ -1,9 +1,12 @@
 package net.saddam.onlinerestaurants.controller;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
 
+import org.apache.http.NameValuePair;
+import org.apache.http.message.BasicNameValuePair;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,6 +18,11 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.config.annotation.EnableWebMvc;
+
+import com.twilio.sdk.TwilioRestClient;
+import com.twilio.sdk.TwilioRestException;
+import com.twilio.sdk.resource.factory.MessageFactory;
+import com.twilio.sdk.resource.instance.Message;
 
 import net.saddam.restaurantsbackend.common.ApiErrors;
 import net.saddam.restaurantsbackend.common.JsonResponse;
@@ -116,6 +124,47 @@ public class LoginController {
 			e.printStackTrace();
 			return null;
 		}
+	}
+	
+	
+	
+	/**
+	 * SMS integration with Twilio
+	 */
+
+	@RequestMapping(value = "/forgotten/password", method = RequestMethod.GET)
+	public @ResponseBody void forgottenPassword(HttpServletRequest request) {
+
+		try {
+			logger.info("Entered forgottenPassword()  - Send password in your mobile");
+			
+			// Find your Account Sid and Token at twilio.com/user/account
+		   // public static final String ACCOUNT_SID = "ACb984ebe5fa98b08b29f21139b7edd152";
+		   // public static final String AUTH_TOKEN = "50420a58d72b94576f8a9d854d07ff55";
+		    //public static final String TWILIO_NUMBER = "+19295002280";
+		    
+		    String ACCOUNT_SID = "ACb984ebe5fa98b08b29f21139b7edd152";
+		    String AUTH_TOKEN = "50420a58d72b94576f8a9d854d07ff55";
+		    String TWILIO_NUMBER = "+19295002280";
+			
+		        TwilioRestClient client = new TwilioRestClient(ACCOUNT_SID, AUTH_TOKEN);
+		 
+		        // Build a filter for the MessageList
+		        List<NameValuePair> params = new ArrayList<NameValuePair>();
+		        params.add(new BasicNameValuePair("Body", "Hello, World!"));
+		        params.add(new BasicNameValuePair("To", "+917204414827")); //Add real number here
+		        params.add(new BasicNameValuePair("From", TWILIO_NUMBER));
+
+		        MessageFactory messageFactory = client.getAccount().getMessageFactory();
+		        Message message = messageFactory.create(params);
+		        System.out.println(message.getSid());
+		        
+		       // return 
+		    
+		}   catch (TwilioRestException e) {
+	        System.out.println(e.getErrorMessage());
+	    }
+
 	}
 
 }

@@ -1,6 +1,10 @@
 package net.saddam.restaurantsbackend.common;
 
 public interface ApiErrors {
+	
+	//ORDER TABLE	
+	public static final String ERROR__ORDER_LIST_EMPTY = "Orderlist is empty";
+	
     public static final String ERROR__PHONE_CELL_MISSING = "Phone cell is missing";
     public static final String ERROR__EMAIL_MISSING = "Email Id is missing";
     public static final String ERROR__MISSING_PASSOWRD = "Password is missing";
@@ -73,7 +77,7 @@ public interface ApiErrors {
 
     public static final String SUCCESS__VALID_SUBSCRIBER = "Valid Kiora Subscriber";
     public static final String SUCCESS__LICENSE_GEN = "Successfully generated the license";
-    public static final String SUCCESS__LOGIN_STATUS = "Successfully Login”";
+    public static final String SUCCESS__LOGIN_STATUS = "Successfully Login";
 
     public static final String ERROR__INVALID_OPERATOR = "Not a valid operator";
     public static final String ERROR__INVALID_VIDEOCON_RTN = "Not a valid Videocon RTN";

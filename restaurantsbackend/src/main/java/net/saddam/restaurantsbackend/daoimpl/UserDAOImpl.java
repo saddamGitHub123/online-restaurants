@@ -3,8 +3,6 @@ package net.saddam.restaurantsbackend.daoimpl;
 import java.util.ArrayList;
 import java.util.List;
 
-
-
 import org.hibernate.SessionFactory;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -15,7 +13,6 @@ import org.springframework.transaction.annotation.Transactional;
 import net.saddam.restaurantsbackend.dao.UserDAO;
 import net.saddam.restaurantsbackend.dto.Address;
 import net.saddam.restaurantsbackend.dto.Product;
-import net.saddam.restaurantsbackend.dto.Product_Data;
 import net.saddam.restaurantsbackend.dto.User;
 import net.saddam.restaurantsbackend.dto.UserDetails;
 import net.saddam.restaurantsbackend.dto.User_Data;

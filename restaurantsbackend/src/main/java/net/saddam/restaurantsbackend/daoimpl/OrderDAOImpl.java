@@ -1,5 +1,6 @@
 package net.saddam.restaurantsbackend.daoimpl;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.hibernate.SessionFactory;
@@ -10,8 +11,11 @@ import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
 import net.saddam.restaurantsbackend.dao.OrderDAO;
+import net.saddam.restaurantsbackend.dto.Address;
 import net.saddam.restaurantsbackend.dto.Order;
+import net.saddam.restaurantsbackend.dto.User;
 import net.saddam.restaurantsbackend.model.OrderRequest;
+import net.saddam.restaurantsbackend.model.Ordered_List;
 
 /**
  * 
@@ -66,6 +70,86 @@ public class OrderDAOImpl implements OrderDAO {
 			throw re;
 		}
 		//return false;
+	}
+
+
+	/**
+	 * Returning all user details and order details using by shopID 
+	 * ***/
+	
+	@Override
+	public List<Ordered_List> userOrderListByShopId(String Shop_ID) {
+		
+		
+		try{
+		    log.debug("Entering userOrderListByShopId() - at OrderDAOImpl class ");	
+		    
+		    Ordered_List orderedList;
+		    
+		    int count = 0;
+		    List<Ordered_List> orderAddList = new ArrayList();
+		    Address address =new Address();
+		    
+		    //getting userID List from user Table
+		    String selectUserByShopId = "from User where Shop_ID = :Shop_ID ";
+			
+		     List<User> userList = sessionFactory
+					.getCurrentSession()
+						.createQuery(selectUserByShopId, User.class)
+							.setParameter("Shop_ID", Shop_ID)
+								.getResultList();
+		     
+		     for (User entity : userList) {
+		    	 
+		    	 //getting userID from user table using shopID
+		    	 String User_ID = userList.get(count).getUser_Id();
+		    	 
+		    	 //getting list of order using userID
+		    	  String selectOrderByUserID = "from Order where User_ID = :User_ID ";
+					
+				     List<Order> orderList = sessionFactory
+							.getCurrentSession()
+								.createQuery(selectOrderByUserID, Order.class)
+									.setParameter("User_ID", User_ID)
+										.getResultList();
+				     
+				   //getting Address using userID
+			    	  String selectAddressByUserID = "from Address where User_ID = :User_ID ";
+						
+					     List<Address> addressList = sessionFactory
+								.getCurrentSession()
+									.createQuery(selectAddressByUserID, Address.class)
+										.setParameter("User_ID", User_ID)
+											.getResultList();
+					     
+					     //convert address list to object
+					     if ((addressList != null) && (addressList.size() > 0)) {
+					    	 address = addressList.get(0);
+
+							}
+					     else {
+					    	 address = null;
+					     }
+
+					     
+					     orderedList = new Ordered_List(User_ID,address,orderList);
+					     orderAddList.add(orderedList);
+					     count++;
+		     }
+		     
+		     
+    
+		   // System.out.println(orderedList);
+ 
+		    return orderAddList;
+		}catch (RuntimeException re)
+		{
+			log.error("Returrning order list failed", re);
+			throw re;
+		}
+		
+		
+		
 	}
 
 	

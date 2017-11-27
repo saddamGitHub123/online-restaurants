@@ -62,7 +62,7 @@ private static final Logger logger = LoggerFactory.getLogger(UserController.clas
 		int count = -1;
 		
 		try {
-			if (userRequest.getShop_ID() == null) {
+			if (userRequest.getShop_ID() == null || userDetails.getName()== null || userDetails.getPassword() == null) {
 				// ** no users exist, error message *//
 				userResponse.setStatus_code(JsonResponse.CODE__EMPTY);
 				userResponse.setStatus_message(JsonResponse.CODE__ERROR);
