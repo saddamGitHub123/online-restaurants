@@ -151,7 +151,7 @@ public class LoginController {
 		 
 		        // Build a filter for the MessageList
 		        List<NameValuePair> params = new ArrayList<NameValuePair>();
-		        params.add(new BasicNameValuePair("Body", "Hello, World!"));
+		        params.add(new BasicNameValuePair("Body", "sms integration by saddam"));
 		        params.add(new BasicNameValuePair("To", "+917204414827")); //Add real number here
 		        params.add(new BasicNameValuePair("From", TWILIO_NUMBER));
 

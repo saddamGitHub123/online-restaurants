@@ -73,6 +73,8 @@ private static final Logger logger = LoggerFactory.getLogger(UserController.clas
 
 			List<UserDetails> listOfUser = userDAO.listUserByShopId(userRequest.getShop_ID());
 			
+			
+			
 			// If list will be null then it will be execute 
 			if (listOfUser == null || listOfUser.size() == 0) {
 				
@@ -84,14 +86,19 @@ private static final Logger logger = LoggerFactory.getLogger(UserController.clas
 				return userResponse;
 			}
 			
-
+			//UserDetails userDetails1 =new UserDetails();
 			for (UserDetails entity : listOfUser) {
-				// do something useful with entity;
-
 				System.out.println("The value of database: "+ entity);
 				count++;
-
-			}
+				
+				//If user name is exist 
+				if(  (listOfUser.get(count).getUsername()).equals(userDetails.getUsername())  ) {
+					userResponse.setStatus_code("400");
+					userResponse.setStatus_message("User Name Already Exist!!!");				
+					return userResponse;	
+				  }				   
+					
+			  }
 			
 			
 			if (listOfUser.get(count).getUser_Id() == null || listOfUser.size() == 0) {
@@ -154,7 +161,7 @@ private static final Logger logger = LoggerFactory.getLogger(UserController.clas
         //call the update method
 		User_Data user = userDAO.updateUser(updateRequest);
 
-		if (user.getUsername() == null) {
+		if (user.getUser_ID() == null) {
 
 			updateResponse.setStatus_code(JsonResponse.CODE__EMPTY);
 			updateResponse.setStatus_message("CODE__ERROR");
@@ -222,7 +229,7 @@ private static final Logger logger = LoggerFactory.getLogger(UserController.clas
 		
 		logger.info("Entered getUserDetails()  - one user details ");
 		
-		String shopid = updateRequest.getShop_ID();
+		//String shopid = updateRequest.getShop_ID();
 		UserDetailsResponse updateResponse = new UserDetailsResponse();
 		
 		try {

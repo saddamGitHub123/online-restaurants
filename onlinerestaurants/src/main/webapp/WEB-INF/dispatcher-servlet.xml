@@ -14,6 +14,25 @@
    
     <context:component-scan base-package="net.saddam.onlinerestaurants" />
     <context:component-scan base-package="net.saddam.restaurantsbackend" />
+    
+    <!-- email configuration  -->
+    
+    <bean id="mailSender" class="org.springframework.mail.javamail.JavaMailSenderImpl">
+        <property name="host" value="smtp.gmail.com" />
+        <property name="port" value="587" />
+        <property name="username" value="sksddmhosan@gmail.com" />
+        <property name="password" value="9800536118Sa" />
+        <property name="javaMailProperties">
+            <props>
+                <prop key="mail.transport.protocol">smtp</prop>
+                <prop key="mail.smtp.auth">true</prop>
+                <prop key="mail.smtp.starttls.enable">true</prop>
+            </props>
+        </property>
+    </bean>
+    
+    
+    
      
     <bean id="viewResolver"
         class="org.springframework.web.servlet.view.InternalResourceViewResolver">

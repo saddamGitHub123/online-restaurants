@@ -2,6 +2,10 @@ How to kill particuler port id
  => netstat -a -o -n
  taskkill /F /PID 28344
 
+ 
+ Modify column and size :
+ 
+ ALTER TABLE groceriesproduct.usershopkeeper MODIFY COLUMN email VARCHAR(100);
 
 
 Create database groceriesproduct;
@@ -32,7 +36,7 @@ CREATE TABLE usershopkeeper (
 	name VARCHAR(50),
 	username VARCHAR(20),
 	password VARCHAR(20),
-	contact VARCHAR(20),
+	contact VARCHAR(1010),
 	email VARCHAR(20),
 	is_active BOOLEAN,
 	

@@ -349,6 +349,14 @@ public User_Data userDetailByShopIdAndUserId(UpdateRequest updateRequest) {
 						//Add the all object to array list
 						userList.add(userData);
 					}
+					else {
+						address = null;
+						//Set the particular address in ther user
+						userData.setUserAddress(address);
+						
+						//Add the all object to array list
+						userList.add(userData);
+					}
 					count++;
 				}
 				

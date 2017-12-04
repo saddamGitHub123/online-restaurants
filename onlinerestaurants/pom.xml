@@ -13,7 +13,9 @@
 		<spring.version>4.3.6.RELEASE</spring.version>
 	</properties>
 
-
+	<!-- <dependencyManagement> <dependencies> <dependency> <groupId>org.springframework</groupId> 
+		<artifactId>spring-framework-bom</artifactId> <version>${spring.version}</version> 
+		<type>pom</type> <scope>import</scope> </dependency> </dependencies> </dependencyManagement> -->
 
 	<dependencies>
 
@@ -55,15 +57,38 @@
 		</dependency>
 
 
+
+
 		<!-- SPRING -->
+
+		<!-- https://mvnrepository.com/artifact/org.springframework/spring-context-support -->
+		<dependency>
+			<groupId>org.springframework</groupId>
+			<artifactId>spring-context-support</artifactId>
+			<version>4.3.12.RELEASE</version>
+		</dependency>
 
 		<dependency>
 			<groupId>org.springframework</groupId>
 			<artifactId>spring-webmvc</artifactId>
 			<version>${spring.version}</version>
 		</dependency>
-		
-		
+
+		<!-- used for mail api -->
+		<dependency>
+			<groupId>org.springframework</groupId>
+			<artifactId>spring-context</artifactId>
+			<version>${spring.version}</version>
+		</dependency>
+
+
+		<!-- https://mvnrepository.com/artifact/org.springframework/spring-expression -->
+		<dependency>
+			<groupId>org.springframework</groupId>
+			<artifactId>spring-expression</artifactId>
+			<version>${spring.version}</version>
+		</dependency>
+
 
 		<dependency>
 			<groupId>org.springframework</groupId>
@@ -78,14 +103,40 @@
 			</exclusions>
 
 		</dependency>
-		
-     <!-- Twilio api integration file -->
 
-	<dependency>
-		<groupId>com.twilio.sdk</groupId>
-		<artifactId>twilio-java-sdk</artifactId>
-		<version>3.4.5</version>
-	</dependency>
+		<!-- Twilio api for sms integration file -->
+
+		<dependency>
+			<groupId>com.twilio.sdk</groupId>
+			<artifactId>twilio-java-sdk</artifactId>
+			<version>3.4.5</version>
+		</dependency>
+
+		<!-- gmail api intragation -->
+
+		<dependency>
+			<groupId>javax.mail</groupId>
+			<artifactId>mail</artifactId>
+			<version>1.4.7</version>
+		</dependency>
+
+
+
+
+		<!-- push notification to firebase -->
+		<dependency>
+			<groupId>com.ganyo</groupId>
+			<artifactId>gcm-server</artifactId>
+			<version>1.0.2</version>
+		</dependency>
+
+
+
+
+
+
+
+
 
 	</dependencies>
 	<build>
