@@ -1,30 +1,35 @@
 package net.saddam.onlinerestaurants.controller;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.io.UnsupportedEncodingException;
+import java.util.Properties;
 import java.util.Random;
 
+import javax.mail.Message;
+import javax.mail.MessagingException;
+import javax.mail.PasswordAuthentication;
+import javax.mail.Session;
+import javax.mail.Transport;
+import javax.mail.internet.InternetAddress;
+import javax.mail.internet.MimeMessage;
 import javax.servlet.http.HttpServletRequest;
 
-import org.apache.http.NameValuePair;
-import org.apache.http.message.BasicNameValuePair;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpEntity;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.HttpMethod;
+import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
 import org.springframework.mail.SimpleMailMessage;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.client.RestTemplate;
 import org.springframework.web.servlet.config.annotation.EnableWebMvc;
-
-import com.twilio.sdk.TwilioRestClient;
-import com.twilio.sdk.TwilioRestException;
-import com.twilio.sdk.resource.factory.MessageFactory;
-import com.twilio.sdk.resource.instance.Message;
 
 import net.saddam.restaurantsbackend.dao.TestDAO;
 import net.saddam.restaurantsbackend.dto.User;
@@ -50,10 +55,100 @@ public class TestController {
 	    private JavaMailSender mailSender;
 	 
 	 
-	 //Sending OTP using email vadi
+	 
+	 
+ //Sending OTP using email validation
+	 
+	 @RequestMapping(value = "/send/email/otp", method = RequestMethod.POST)
+		public @ResponseBody User mailSenderUsedSMTP(HttpServletRequest request,@RequestBody User user) throws UnsupportedEncodingException {
+		 
+		 logger.info("email verification Entered mailSenderUsedSMTP() in TestController  - Post email,userid and shopid");
+		
+		 //Set your account user name and password
+		 final String username = "sksaddamhosan2015@gmail.com";
+		 final String password = "9800536118";
+         
+		 
+		 //set 
+		    Properties props = new Properties();
+			props.put("mail.smtp.host", "smtp.gmail.com");
+			props.put("mail.smtp.socketFactory.port", "465");
+			props.put("mail.smtp.socketFactory.class",
+					"javax.net.ssl.SSLSocketFactory");
+			props.put("mail.smtp.auth", "true");
+			props.put("mail.smtp.port", "465");
+
+			Session session = Session.getDefaultInstance(props,
+				new javax.mail.Authenticator() {
+					protected PasswordAuthentication getPasswordAuthentication() {
+						return new PasswordAuthentication(username,password);
+					}
+				});
+			try {
+				
+				//create OTP for texting mesg
+				 String sendingOTP = String.valueOf(sendOTP(6));
+			        System.out.println(sendingOTP);
+			        
+			        //automatic genarate OTP set as password
+			        user.setPassword(sendingOTP);
+			        
+			        //save otp as a password into database method
+			        testDAO.saveOTPasPaswd(user);
+			        
+			        
+			      //Set all input 
+			    	String  recipientAddress = user.getEmail();
+					// String subject = "One Time Password";
+					 String otp = sendingOTP;
+
+				Message message = new MimeMessage(session);
+				///message.setFrom(new InternetAddress("no-reply@touchcor.com"));
+				InternetAddress me = new InternetAddress("from-email@gmail.com");
+		        me.setPersonal("no-reply");
+		        message.setFrom(me);
+				message.setRecipients(Message.RecipientType.TO,
+						InternetAddress.parse(recipientAddress));
+				message.setSubject("One Time Password");
+				message.setText("Your OTP is :" + otp +
+						"\n\n\n\n Disclaimer:- This is a system generated email. Please do not reply to this email." +
+						"\n\n\n\r\n" + 
+						"*** This message is intended only for the person or entity, addressed for security purpose."
+						+ "\nIf you have received this message in error, delete this message from your system *** ");
+
+				Transport.send(message);
+
+				System.out.println("Done");
+
+			} catch (MessagingException e) {
+				throw new RuntimeException(e);
+			}
+
+		   return user;
+		 
+	 }
+	 
+	 
+	 
+	 
+	 
+	 
+	 
+	 
+	 
+	 
+	 
+	 
+	 
+	 
+	 
+	 
+	 
+	 
+	 //Sending OTP using email validation
 	 
 	 @RequestMapping(value = "/send/email", method = RequestMethod.POST)
-		public String mailSender(HttpServletRequest request, @RequestBody User user) {
+		public @ResponseBody User mailSender(HttpServletRequest request, @RequestBody User user) {
 
 		    /*Properties props = new Properties();
 		   
@@ -62,15 +157,15 @@ public class TestController {
 		 //create OTP for texting mesg
 		 String sendingOTP =String.valueOf(sendOTP(4));
 	        System.out.println(sendingOTP);
-		    
+	        
+	        //automatic genarate OTP set as password
+	        user.setPassword(sendingOTP);
+	        
+	        //save otp as a password into database method
+	        testDAO.saveOTPasPaswd(user);
+	        
 	        
 		    //Set all input 
-	        
-	        /*if(recipientAddress.equals("sksaddamhosan2015@gmail.com")) {
-	        	System.out.println("both are equal");
-	        }*/
-	        	
-		    	//String  recipientAddress = "sksaddamhosan2015@gmail.com";
 		    	String  recipientAddress = user.getEmail();
 				 String subject = "One Time Password";
 				 String message = sendingOTP;
@@ -89,87 +184,68 @@ public class TestController {
                    
                 // sends the e-mail
                    mailSender.send(email);
-                   
-                   String result = "OTP Send";
-                   
-             return result;
 
-		     
-		 
-		 
-		 
-		 
-		 
-		 
-		 
-		 
-		 
-		 
-		 
-		// String recipient1 ="sksaddamhosan2015@gmail.com";
-		// String  subjectOTP = "OTP";
-		// String messageValue = "3425";
-		 
-		// takes input from e-mail form
-		 /*String  recipientAddress = request.getParameter("sksaddamhosan2015@gmail.com");
-		 String subject = request.getParameter("OTP");
-		 String message = request.getParameter("3456");*/
-		/* Properties props = new Properties();
-		 props.put("mail.smtp.ssl.trust", "smtp.gmail.com");
-		 
-		 String  recipientAddress = "sksaddamhosan2015@gmail.com";
-		 String subject = "OTP";
-		 String message = "3456";
-		 
-		// prints debug info
-           System.out.println("To: " + recipientAddress);
-           System.out.println("Subject: " + subject);
-           System.out.println("Message: " + message);
-           
-           
-        // creates a simple e-mail object
-               SimpleMailMessage email = new SimpleMailMessage();
-                email.setTo(recipientAddress);
-                email.setSubject(subject);
-                email.setText(message);
-                
-                
-             // sends the e-mail
-             mailSender.send(email);
-             
-             // forwards to the view named "Result"
-              return "Result";*/
-		 
-		/*// takes input from e-mail form
-		 
-          String recipientAddress = request.getParameter(recipient);
-	         String subject = request.getParameter("subject");
-	         String message = request.getParameter("message");
-	          
-	         // prints debug info
-	         System.out.println("To: " + recipientAddress);
-	         System.out.println("Subject: " + subject);
-	         System.out.println("Message: " + message);
-	          
-	         // creates a simple e-mail object
-	         SimpleMailMessage email = new SimpleMailMessage();
-	         email.setTo(recipientAddress);
-	         email.setSubject(subject);
-	         email.setText(message);
-	          
-	         // sends the e-mail
-	         mailSender.send(email);
-	          
-	         // forwards to the view named "Result"
-	         return "Result";*/
-		 
+                   
+             return user;
 		 
 	 }
 
+
 	 
+	 
+	 
+	 
+	 
+	 
+	//Sending email using smtp
+	 
+ //Sending OTP using email validation
+	 
+	 @RequestMapping(value = "/send/email/smtp", method = RequestMethod.GET)
+		public String  mailSenderSMTP(HttpServletRequest request) {
+		 
+		 final String username = "sksddmhosan@gmail.com";
+			final String password = "9800536118Sa";
+
+			Properties props = new Properties();
+			props.put("mail.smtp.auth", "true");
+			props.put("mail.smtp.starttls.enable", "true");
+			props.put("mail.smtp.host", "smtp.gmail.com");
+			props.put("mail.smtp.port", "587");
+
+			Session session = Session.getInstance(props,
+			  new javax.mail.Authenticator() {
+				protected PasswordAuthentication getPasswordAuthentication() {
+					return new PasswordAuthentication(username, password);
+				}
+			  });
+			
+			try {
+
+				Message message = new MimeMessage(session);
+				message.setFrom(new InternetAddress("no-replay@gmail.com"));
+				message.setRecipients(Message.RecipientType.TO,
+					InternetAddress.parse("sksaddamhosan2015@gmail.com"));
+				message.setSubject("Testing Subject");
+				message.setText("Dear Mail Crawler,"
+					+ "\n\n No spam to my email, please!");
+
+				Transport.send(message);
+
+				System.out.println("Done");
+
+			} catch (MessagingException e) {
+				throw new RuntimeException(e);
+			}
+
+		   return "result";
+		 
+	 }
+	 
+	 
+
 	
-	
-	@RequestMapping(value = "/forgotten/password/phoneNumber/{phnNumber}", method = RequestMethod.GET)
+	/*@RequestMapping(value = "/forgotten/password/phoneNumber/{phnNumber}", method = RequestMethod.GET)
 	public @ResponseBody void forgottenPassword(HttpServletRequest request,@PathVariable("phnNumber")String phnNumber) {
 		
 		
@@ -198,8 +274,8 @@ public class TestController {
 		        params.add(new BasicNameValuePair("From", TWILIO_NUMBER));
 
 		        MessageFactory messageFactory = client.getAccount().getMessageFactory();
-		        Message message = messageFactory.create(params);
-		        System.out.println(message.getSid());
+		       // Message message = messageFactory.create(params);
+		       // System.out.println(message.getSid());
 		        
 		       // return 
 		    
@@ -207,7 +283,7 @@ public class TestController {
 	        System.out.println(e.getErrorMessage());
 	    }
 
-	}
+	}*/
 	
 	//Generate automatic  OTP
 	static char[] sendOTP(int length){
@@ -222,6 +298,61 @@ public class TestController {
 		 } 
 		 return otp;
 		 }
+	
+	
+	
+	
+	 // post data from one controller to another controller
+	 
+	 @RequestMapping(value = "/send/datato/ctrl", method = RequestMethod.POST)
+		public @ResponseBody User dataToAnotherCtrl(HttpServletRequest request,@RequestBody User user){
+		 
+		 logger.info("send data to one controller to another dataToAnotherCtrl() in TestController");
+		 
+		 
+		 //Setting another controller url
+		 String url = "http://192.168.2.94:8080/onlinerestaurants/test/send/email/otp";
+		 
+		//set your headers
+	        HttpHeaders headers = new HttpHeaders();
+	        headers.setContentType(MediaType.APPLICATION_JSON);
+	        
+	      //set your entity to send
+	        HttpEntity entity = new HttpEntity(user, headers);
+
+	        RestTemplate restTemplate = new RestTemplate();
+	        
+	     // send it!
+	        ResponseEntity<User> response = restTemplate.exchange(url, HttpMethod.POST, entity,User.class);
+	        
+	        System.out.println(response);
+	         
+	         
+
+		 
+		   return user;
+		 
+	 }
+	 
+	
+	
+	
+	
+	
+	
+	// Fetching data from multiple table using hibernate
+	@RequestMapping(value = "/fetching/data/multiple/table", method = RequestMethod.GET)
+	public String  fetchingData(HttpServletRequest request) {
+		
+		  //String shopid = "";
+		 // String userid = "";
+		  
+		  
+		
+		
+		return "result";
+	}
+	
 	
 }	
 	

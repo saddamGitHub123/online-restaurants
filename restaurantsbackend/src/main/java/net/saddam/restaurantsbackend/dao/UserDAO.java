@@ -2,6 +2,7 @@ package net.saddam.restaurantsbackend.dao;
 
 import java.util.List;
 
+import net.saddam.restaurantsbackend.dto.Address;
 import net.saddam.restaurantsbackend.dto.Product;
 import net.saddam.restaurantsbackend.dto.User;
 import net.saddam.restaurantsbackend.dto.UserDetails;
@@ -31,7 +32,7 @@ public interface UserDAO {
 
 	List<UserDetails> listUserByShopId(String Shop_ID);
 
-	boolean addUser(UserDetails userDetails);
+	boolean addUser(UserDetails userDetails,Address address);
 	
 	
 	/**

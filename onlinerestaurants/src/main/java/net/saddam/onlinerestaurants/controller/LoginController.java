@@ -101,6 +101,9 @@ public class LoginController {
 		try {
 			// Create main class Object
 			LoginUserResponse loginUseRes = new LoginUserResponse();
+			
+			System.out.println(loginuser.getUsername()+" "+loginuser.getUser_password());
+			
 			LoginUser listOfUser = loginDAO.checkLogin(loginuser.getUsername(), loginuser.getUser_password());
 			// String userName = loginuser.getUsername();
 			// String userPassword = loginuser.getUser_password();

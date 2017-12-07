@@ -138,11 +138,13 @@ public class UserDAOImpl implements UserDAO {
 	 * ***/
 
 	@Override
-	public boolean addUser(UserDetails userDetails) {
+	public boolean addUser(UserDetails userDetails,Address address) {
 		
 	try{
-		    log.debug("Add all the product");	
+		    log.debug("Add all the product");
+		    address.setUser_ID(userDetails.getUser_Id());
 			sessionFactory.getCurrentSession().persist(userDetails);
+			sessionFactory.getCurrentSession().persist(address);
 			
 			return true;
 			

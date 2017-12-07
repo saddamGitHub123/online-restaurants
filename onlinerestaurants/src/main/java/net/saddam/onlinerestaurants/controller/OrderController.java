@@ -19,7 +19,6 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.config.annotation.EnableWebMvc;
 
-
 import net.saddam.restaurantsbackend.common.ApiErrors;
 import net.saddam.restaurantsbackend.common.JsonResponse;
 import net.saddam.restaurantsbackend.dao.OrderDAO;
@@ -103,7 +102,11 @@ public class OrderController {
 		    	
 		    	 response.setStatus_code(JsonResponse.CODE__EMPTY);
 					response.setStatus_message(ApiErrors.ERROR__ORDER_LIST_EMPTY);
+					return response;
 		     }
+		     
+		     response.setStatus_code(JsonResponse.CODE__OK);
+		     response.setStatus_message("Successfully Authenticated");
 		     return response;
 
 		} catch (Exception e) {
@@ -117,6 +120,7 @@ public class OrderController {
 	}
 
 
+	 //push notification for the web page 
 	@RequestMapping(value = "/addNotificationtype", method = RequestMethod.GET)
 	public String addNotification() {
 
@@ -145,12 +149,12 @@ public class OrderController {
 
 			    JSONObject json = new JSONObject();
 
-			    json.put("to", deviceToken.trim());
+			    /*json.put("to", deviceToken.trim());
 			    JSONObject info = new JSONObject();
 			    info.put("title", "notification title"); // Notification title
 			    info.put("body", "message body"); // Notification
 			                                                            // body
-			    json.put("notification", info);
+			    json.put("notification", info);*/
 			    
 			    
 			    OutputStreamWriter wr = new OutputStreamWriter(

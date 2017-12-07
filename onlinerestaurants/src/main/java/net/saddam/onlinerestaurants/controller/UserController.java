@@ -18,6 +18,7 @@ import org.springframework.web.servlet.config.annotation.EnableWebMvc;
 import net.saddam.restaurantsbackend.common.ApiErrors;
 import net.saddam.restaurantsbackend.common.JsonResponse;
 import net.saddam.restaurantsbackend.dao.UserDAO;
+import net.saddam.restaurantsbackend.dto.Address;
 import net.saddam.restaurantsbackend.dto.UserDetails;
 import net.saddam.restaurantsbackend.dto.User_Data;
 import net.saddam.restaurantsbackend.model.UpdateRequest;
@@ -52,6 +53,8 @@ private static final Logger logger = LoggerFactory.getLogger(UserController.clas
 	@RequestMapping(value = "/add/userList", method = RequestMethod.POST)
 	public @ResponseBody UserResponse addUserList(@RequestBody UserRequest userRequest) {
 		logger.info("Entered addUserList()  - Add all user ");
+		
+		Address address = new Address();
 		
 		//parent model for user
 		UserDetails userDetails = userRequest.getUserDetails();
@@ -91,10 +94,10 @@ private static final Logger logger = LoggerFactory.getLogger(UserController.clas
 				System.out.println("The value of database: "+ entity);
 				count++;
 				
-				//If user name is exist 
-				if(  (listOfUser.get(count).getUsername()).equals(userDetails.getUsername())  ) {
+				//If user name is exist or user name is empty
+				if(  (listOfUser.get(count).getUsername()).equals(userDetails.getUsername()) || (listOfUser.get(count).getUsername()).isEmpty()) {
 					userResponse.setStatus_code("400");
-					userResponse.setStatus_message("User Name Already Exist!!!");				
+					userResponse.setStatus_message("User Name Already Exist or Empty!!!");				
 					return userResponse;	
 				  }				   
 					
@@ -111,7 +114,9 @@ private static final Logger logger = LoggerFactory.getLogger(UserController.clas
 				userResponse.setStatus_message("Successfully Authenticated");
 				//userResponse.setRequest_Type("Add-New_Product");
 				userResponse.setUserDetails(userDetails);
-				userDAO.addUser(userDetails);
+				
+				//Save all detail to user data base and userID save into address database
+				userDAO.addUser(userDetails,address);
 				return userResponse;
 			}
 
@@ -127,8 +132,8 @@ private static final Logger logger = LoggerFactory.getLogger(UserController.clas
 			//userResponse.setRequest_Type("Update_Product_Id");
 			userResponse.setUserDetails(userDetails);
 			
-			//save user details to user table
-			userDAO.addUser(userDetails);
+			//Save all detail to user data base and userID save into address database
+			userDAO.addUser(userDetails,address);
 			return userResponse;
 		} catch (Exception e) {
 			logger.error("listOfProductByShopId(): Error - " + e);

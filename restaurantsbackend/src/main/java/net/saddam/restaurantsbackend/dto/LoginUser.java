@@ -8,7 +8,6 @@ import javax.persistence.Id;
 import javax.persistence.Table;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.fasterxml.jackson.annotation.JsonProperty;
 
 @Entity
 @Table(name = "usershopkeeper")
@@ -38,7 +37,7 @@ public class LoginUser {
 	 @Column(name="name")
 	   private String Name;
 	 @Column(name="contact")
-	   private int Contact;
+	   private String Contact;
 
 
 	public String getName() {
@@ -49,11 +48,11 @@ public class LoginUser {
 		Name = name;
 	}
 
-	public int getContact() {
+	public String getContact() {
 		return Contact;
 	}
 
-	public void setContact(int contact) {
+	public void setContact(String contact) {
 		Contact = contact;
 	}
 
