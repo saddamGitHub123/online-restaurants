@@ -1,8 +1,11 @@
 	package net.saddam.restaurantsbackend.dto;
 
 	import java.io.Serializable;
+import java.util.List;
 import java.util.UUID;
 
+import javax.persistence.Column;
+import javax.persistence.ElementCollection;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -32,7 +35,14 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 		private String Product_ID;
 		private String Shop_ID;
 		@JsonIgnore
-		 private int Product_Price;
+		// private String Product_Price;
+		
+		@ElementCollection
+		private List<String> Product_Price;
+		
+		@ElementCollection
+		@Column(name="Qty_Price")
+		private List<String> Unit;
 		@JsonIgnore
 		 private String Product_Image;
 		@JsonIgnore
@@ -57,12 +67,23 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 		
 		
 		
+		
+
+
+
+
+
+
+
+
+
+
 		@Override
 		public String toString() {
 			return "Product_Data [ID=" + ID + ", code=" + code + ", Product_Name=" + Product_Name + ", Product_ID="
-					+ Product_ID + ", Shop_ID=" + Shop_ID + ", Product_Price=" + Product_Price + ", Product_Image="
-					+ Product_Image + ", Product_Category=" + Product_Category + ", Product_Type=" + Product_Type
-					+ ", Availability=" + Availability + "]";
+					+ Product_ID + ", Shop_ID=" + Shop_ID + ", Product_Price=" + Product_Price + ", Unit=" + Unit
+					+ ", Product_Image=" + Product_Image + ", Product_Category=" + Product_Category + ", Product_Type="
+					+ Product_Type + ", Availability=" + Availability + "]";
 		}
 
 
@@ -74,9 +95,25 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 
 
 
+
+
+
+
+
+
+
+
+
+
+
+		
+
+
+
+
 		public Product_Data(int iD, String code, String product_Name, String product_ID, String shop_ID,
-				int product_Price, String product_Image, String product_Category, String product_Type,
-				boolean availability) {
+				List<String> product_Price, List<String> unit, String product_Image, String product_Category,
+				String product_Type, boolean availability) {
 			super();
 			ID = iD;
 			this.code = code;
@@ -84,6 +121,7 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 			Product_ID = product_ID;
 			Shop_ID = shop_ID;
 			Product_Price = product_Price;
+			Unit = unit;
 			Product_Image = product_Image;
 			Product_Category = product_Category;
 			Product_Type = product_Type;
@@ -107,6 +145,50 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 
 
 
+		public List<String> getUnit() {
+			return Unit;
+		}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+		public void setUnit(List<String> unit) {
+			Unit = unit;
+		}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
@@ -126,10 +208,10 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 			Product_Name = product_Name;
 		}
 		
-		public int getProduct_Price() {
+		public List<String> getProduct_Price() {
 			return Product_Price;
 		}
-		public void setProduct_Price(int product_Price) {
+		public void setProduct_Price(List<String> product_Price) {
 			Product_Price = product_Price;
 		}
 		

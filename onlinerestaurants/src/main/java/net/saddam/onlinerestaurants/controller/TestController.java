@@ -326,7 +326,8 @@ public class TestController {
 	        ResponseEntity<User> response = restTemplate.exchange(url, HttpMethod.POST, entity,User.class);
 	        
 	        System.out.println(response);
-	         
+	        
+	        logger.info("Returning from dataToAnotherCtrl()");
 	         
 
 		 

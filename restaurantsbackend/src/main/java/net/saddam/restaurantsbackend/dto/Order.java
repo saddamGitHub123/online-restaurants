@@ -31,15 +31,6 @@ public class Order {
     public Order() {
 		 this.code = UUID.randomUUID().toString().substring(26).toUpperCase();
 	 }
-    
-    
-    
-    
-    
-
-
-
-
 
 
 	@Override
@@ -48,16 +39,6 @@ public class Order {
 				+ Product_ID + ", Product_Name=" + Product_Name + ", Units=" + Units + ", Qty=" + Qty
 				+ ", currentTimestamp=" + currentTimestamp + "]";
 	}
-
-
-
-
-
-
-
-
-
-
 
 	public int getID() {
 		return ID;

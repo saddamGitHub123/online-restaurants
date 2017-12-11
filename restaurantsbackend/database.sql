@@ -163,3 +163,17 @@ CREATE TABLE orderList (
 
 );
 
+
+CREATE TABLE prices (
+	
+	ID INT NOT NULL AUTO_INCREMENT,
+	Shop_ID VARCHAR(20)NOT NULL,
+    Product_ID VARCHAR(20)NOT NULL,
+	Price VARCHAR(400) NOT NULL,
+    Qty_Price VARCHAR(400),
+	
+	CONSTRAINT pk_prices_id PRIMARY KEY (ID) 
+
+);
+
+Drop Table prices

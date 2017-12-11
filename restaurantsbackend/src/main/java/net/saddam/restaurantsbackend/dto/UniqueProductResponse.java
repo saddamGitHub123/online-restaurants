@@ -14,24 +14,63 @@ public class UniqueProductResponse {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
     private int ID;	
 	
+	private String Product_ID;
+	private String Shop_ID;
 	private String Product_Name;
-	 private int Product_Price;
+	 //private int Product_Price;
 	 private String Product_Image;
 	 private String Product_Category;
 	 private String Product_Type;
 	 private boolean Availability ;
-	 
+     
 
-    
-	
 	 
-	@Override
-	public String toString() {
-		return "UniqueProductRessponse [ID=" + ID + ", Product_Name=" + Product_Name + ", Product_Price="
-				+ Product_Price + ", Product_Image=" + Product_Image + ", Product_Category=" + Product_Category
-				+ ", Product_Type=" + Product_Type + ", Availability=" + Availability + "]";
+	 public UniqueProductResponse() {}
+	 
+	 
+	 
+	 
+	 
+	public UniqueProductResponse(int iD, String product_ID, String shop_ID, String product_Name, String product_Image,
+			String product_Category, String product_Type, boolean availability) {
+		super();
+		ID = iD;
+		Product_ID = product_ID;
+		Shop_ID = shop_ID;
+		Product_Name = product_Name;
+		Product_Image = product_Image;
+		Product_Category = product_Category;
+		Product_Type = product_Type;
+		Availability = availability;
 	}
 
+
+	@Override
+	public String toString() {
+		return "UniqueProductResponse [ID=" + ID + ", Product_ID=" + Product_ID + ", Shop_ID=" + Shop_ID
+				+ ", Product_Name=" + Product_Name + ", Product_Image=" + Product_Image + ", Product_Category="
+				+ Product_Category + ", Product_Type=" + Product_Type + ", Availability=" + Availability + "]";
+	}
+	
+	
+	public String getProduct_ID() {
+		return Product_ID;
+	}
+
+
+	public void setProduct_ID(String product_ID) {
+		Product_ID = product_ID;
+	}
+
+
+	public String getShop_ID() {
+		return Shop_ID;
+	}
+
+
+	public void setShop_ID(String shop_ID) {
+		Shop_ID = shop_ID;
+	}
 
 
 	public int getID() {
@@ -46,12 +85,12 @@ public class UniqueProductResponse {
 	public void setProduct_Name(String product_Name) {
 		Product_Name = product_Name;
 	}
-	public int getProduct_Price() {
+	/*public int getProduct_Price() {
 		return Product_Price;
 	}
 	public void setProduct_Price(int product_Price) {
 		Product_Price = product_Price;
-	}
+	}*/
 	public String getProduct_Image() {
 		return Product_Image;
 	}

@@ -20,7 +20,7 @@ public class Product {
 	private String Product_Name;
 	private String Product_ID;
 	private String Shop_ID;
-	 private int Product_Price;
+	// private int Product_Price;
 	 private String Product_Image;
 	 private String Product_Category;
 	 private String Product_Type;
@@ -36,12 +36,38 @@ public class Product {
 
 	
 	
+	public Product(int iD, String code, String product_Name, String product_ID, String shop_ID, 
+			String product_Image, String product_Category, String product_Type, boolean availability) {
+		super();
+		ID = iD;
+		this.code = code;
+		Product_Name = product_Name;
+		Product_ID = product_ID;
+		Shop_ID = shop_ID;
+		//Product_Price = product_Price;
+		Product_Image = product_Image;
+		Product_Category = product_Category;
+		Product_Type = product_Type;
+		Availability = availability;
+	}
+
+
+
+
+
+
+	
+
+
+
+
+
+
 	@Override
 	public String toString() {
 		return "Product [ID=" + ID + ", code=" + code + ", Product_Name=" + Product_Name + ", Product_ID=" + Product_ID
-				+ ", Shop_ID=" + Shop_ID + ", Product_Price=" + Product_Price + ", Product_Image=" + Product_Image
-				+ ", Product_Category=" + Product_Category + ", Product_Type=" + Product_Type + ", Availability="
-				+ Availability + "]";
+				+ ", Shop_ID=" + Shop_ID + ", Product_Image=" + Product_Image + ", Product_Category=" + Product_Category
+				+ ", Product_Type=" + Product_Type + ", Availability=" + Availability + "]";
 	}
 
 
@@ -68,12 +94,12 @@ public class Product {
 	public void setProduct_Name(String product_Name) {
 		Product_Name = product_Name;
 	}
-	public int getProduct_Price() {
+	/*public int getProduct_Price() {
 		return Product_Price;
-	}
-	public void setProduct_Price(int product_Price) {
+	}*/
+	/*public void setProduct_Price(int product_Price) {
 		Product_Price = product_Price;
-	}
+	}*/
 	public String getProduct_Image() {
 		return Product_Image;
 	}

@@ -2,9 +2,8 @@ package net.saddam.restaurantsbackend.dao;
 
 import java.util.List;
 
-import net.saddam.restaurantsbackend.dto.Product;
 import net.saddam.restaurantsbackend.dto.Product_Data;
-import net.saddam.restaurantsbackend.dto.UniqueProductResponse;
+import net.saddam.restaurantsbackend.dto.UniqueProduct;
 
 /**
  * 
@@ -30,7 +29,7 @@ public interface ProductDAO {
  *  Get all product list using shopId
  * **/
 	
-	List<Product> productsByShopId(String Shop_ID);
+	List<UniqueProduct> productsByShopId(String Shop_ID);
 	
 	
 
@@ -49,7 +48,7 @@ public interface ProductDAO {
      * Get all unique productList
      * ****/
     
-   List< UniqueProductResponse> uniqueProductList();
+   List< UniqueProduct> uniqueProductList();
     
     
     

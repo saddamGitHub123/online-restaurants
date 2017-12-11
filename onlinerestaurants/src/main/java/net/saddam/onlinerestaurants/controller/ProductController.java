@@ -28,10 +28,9 @@ import net.saddam.restaurantsbackend.common.ApiErrors;
 import net.saddam.restaurantsbackend.common.JsonResponse;
 import net.saddam.restaurantsbackend.dao.ProductDAO;
 import net.saddam.restaurantsbackend.dao.UserDAO;
-import net.saddam.restaurantsbackend.dto.Product;
 import net.saddam.restaurantsbackend.dto.ProductResponse;
 import net.saddam.restaurantsbackend.dto.Product_Data;
-import net.saddam.restaurantsbackend.dto.UniqueProductResponse;
+import net.saddam.restaurantsbackend.dto.UniqueProduct;
 import net.saddam.restaurantsbackend.model.AllProduct;
 import net.saddam.restaurantsbackend.model.AllProduct_Data;
 import net.saddam.restaurantsbackend.model.RequestProduct;
@@ -74,7 +73,7 @@ public class ProductController {
 
 		{
 			logger.info("Entered listOfProductByShopId()  - Get a Product list from shopId");
-			AllProduct allProduct = new AllProduct();
+			AllProduct allProduct = null;
 
 			try {
 
@@ -85,10 +84,16 @@ public class ProductController {
 					logger.error(ApiErrors.ERROR__NO_USER_ID_EXIST);
 					return allProduct;
 				}
-
-				List<Product> listOfSimpleEntities = productDAO.productsByShopId(productResponse.getShop_ID());
-				allProduct.setProduct(listOfSimpleEntities);
-
+                
+				//not used price and qty_Price
+				//List<Product> listOfSimpleEntities = productDAO.productsByShopId(productResponse.getShop_ID());
+				
+				//for price and qty_price used 
+				
+				List<UniqueProduct> listOfSimpleEntities = productDAO.productsByShopId(productResponse.getShop_ID());
+				//allProduct.setProduct(listOfSimpleEntities);
+				allProduct = new AllProduct(listOfSimpleEntities);
+           
 				if (listOfSimpleEntities == null || listOfSimpleEntities.size() == 0) {
 					// ** no products exist, error message *//
 					allProduct.setStatus_code(JsonResponse.CODE__EMPTY);
@@ -146,7 +151,7 @@ public class ProductController {
 				int i = 0;
 				product.setProduct_Name("Apple");
 				product.setShop_ID(shopId);
-				product.setProduct_Price(200);
+				//product.setProduct_Price("200,23");
 				product.setProduct_Image("image_1");
 				product.setProduct_Category("Grocery");
 				product.setProduct_Type("L_01");
@@ -167,7 +172,7 @@ public class ProductController {
 
 			product.setProduct_Name("Apple");
 			product.setShop_ID(shopId);
-			product.setProduct_Price(200);
+		//	product.setProduct_Price("200");
 			product.setProduct_Image("image_1");
 			product.setProduct_Category("Grocery");
 			product.setProduct_Type("L_01");
@@ -279,12 +284,13 @@ public class ProductController {
 			productData.setProduct_ID(productName + count);
 
 			// productList.add(productD);
-			allProduct.setStatus_code(JsonResponse.CODE__OK);
-			allProduct.setStatus_message("Successfully Authenticated");
-			allProduct.setRequest_Type("Add_New_Product");
 			allProduct.setProductData(productData);
 
 			productDAO.addProduct(productData);
+			allProduct.setStatus_code(JsonResponse.CODE__OK);
+			allProduct.setStatus_message("Successfully Authenticated");
+			allProduct.setRequest_Type("Add_New_Product");
+			
 
 			// ** set status OK *//*
 			// allProduct.setStatus_Code(JsonResponse.CODE__OK);
@@ -359,7 +365,7 @@ public class ProductController {
 	 **/
 
 	@RequestMapping(value = "/unique/product/list", method = RequestMethod.GET)
-	public @ResponseBody List<UniqueProductResponse> uniqueProductListByName(HttpServletRequest request)
+	public @ResponseBody List<UniqueProduct> uniqueProductListByName(HttpServletRequest request)
 
 	{
 		logger.info("Entered uniqueProductListByName()  - Get all Unique Product list");
@@ -367,7 +373,7 @@ public class ProductController {
 
 		try {
 
-			List<UniqueProductResponse> productList = productDAO.uniqueProductList();
+			List<UniqueProduct> productList = productDAO.uniqueProductList();
 
 			// System.out.println(productList);
 			return productList;
