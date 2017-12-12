@@ -42,7 +42,7 @@ public class OrderDAOImpl implements OrderDAO {
 		try{
 		    log.debug("Add all the order list ");	
 		    
-		    int count = 0;
+		    // int count = 0;
 
 		    Order  order = new Order();
 		    
@@ -50,15 +50,16 @@ public class OrderDAOImpl implements OrderDAO {
 		    List<Order> orderList = orderRequest.getOrderList();
 		      
 		    //Add one by one order list using loop
-		    for (Order entity : orderList) {
+		    for (int count = 0 ; count < orderList.size(); count++ ) {
 		    	
 		    	order = orderList.get(count);
 		    	//Set shopID and UserID in the order list class
 		    	order.setShop_ID(orderRequest.getShop_ID());
-		    	order.setUser_ID(orderRequest.getUser_ID());		    	
+		    	order.setUser_ID(orderRequest.getUser_ID());
+		    	order.setCurrentTimestamp(orderRequest.getTimeStamp());
 		    	//Save the order list
 		    	sessionFactory.getCurrentSession().persist(order);
-		    	count++;
+		    	//count++;
 		    	//System.out.println(order);
 		    }
 			
@@ -85,6 +86,7 @@ public class OrderDAOImpl implements OrderDAO {
 		    log.debug("Entering userOrderListByShopId() - at OrderDAOImpl class ");	
 		    
 		    Ordered_List orderedList;
+		    java.sql.Timestamp timeStamp ;
 		    
 		    int count = 0;
 		    List<Ordered_List> orderAddList = new ArrayList();
@@ -113,6 +115,13 @@ public class OrderDAOImpl implements OrderDAO {
 									.setParameter("User_ID", User_ID)
 										.getResultList();
 				     
+				     //set timeStamp
+				     if((orderList != null) && (orderList.size() > 0)) {
+				      timeStamp = orderList.get(0).getCurrentTimestamp();
+				     }
+				     else
+				    	 timeStamp = null;
+				     
 				   //getting Address using userID
 			    	  String selectAddressByUserID = "from Address where User_ID = :User_ID ";
 						
@@ -132,7 +141,7 @@ public class OrderDAOImpl implements OrderDAO {
 					     }
 
 					     
-					     orderedList = new Ordered_List(User_ID,address,orderList);
+					     orderedList = new Ordered_List(User_ID,address,orderList,timeStamp);
 					     orderAddList.add(orderedList);
 					     count++;
 		     }

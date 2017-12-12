@@ -10,6 +10,8 @@ public class OrderRequest {
 	private String Shop_ID;
     private String User_ID;
     
+    java.sql.Timestamp TimeStamp;
+    
     List<Order> orderList;
 
 	public String getShop_ID() {
@@ -34,6 +36,14 @@ public class OrderRequest {
 
 	public void setOrderList(List<Order> orderList) {
 		this.orderList = orderList;
+	}
+
+	public java.sql.Timestamp getTimeStamp() {
+		return TimeStamp;
+	}
+
+	public void setTimeStamp(java.sql.Timestamp timeStamp) {
+		TimeStamp = timeStamp;
 	}
     
     

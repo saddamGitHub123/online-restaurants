@@ -201,7 +201,8 @@ public class PageController {
 				}
 				
 				List<Product> listOfSimpleEntities = userDAO.productsByShopId(shopId);
-				allProduct.setProduct(listOfSimpleEntities);
+				//allProduct.setProduct(listOfSimpleEntities);
+				//allProduct.setUniqueProduct(listOfSimpleEntities);
 				 
 				if (listOfSimpleEntities == null || listOfSimpleEntities.size()== 0 ) {
 				    //** no products exist, error message *//

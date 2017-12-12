@@ -10,6 +10,8 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 @Entity
 @Table(name = "orderlist")
 public class Order {
@@ -25,8 +27,11 @@ public class Order {
     private String Units;
     private String Qty; 
     
+   /* @Column(name="TimeStamp")
+    java.sql.Timestamp currentTimestamp = new java.sql.Timestamp(Calendar.getInstance().getTime().getTime());*/
+    
     @Column(name="TimeStamp")
-    java.sql.Timestamp currentTimestamp = new java.sql.Timestamp(Calendar.getInstance().getTime().getTime());
+    java.sql.Timestamp currentTimestamp;
     
     public Order() {
 		 this.code = UUID.randomUUID().toString().substring(26).toUpperCase();
@@ -104,6 +109,7 @@ public class Order {
 		Qty = qty;
 	}
 
+	@JsonIgnore
 	public java.sql.Timestamp getCurrentTimestamp() {
 		return currentTimestamp;
 	}
