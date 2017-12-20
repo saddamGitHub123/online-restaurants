@@ -1,0 +1,18 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+
+<hibernate-mapping>
+    <class name="net.saddam.restaurantsbackend.dto.Test" table="testing" catalog="groceriesproduct">
+        <id name="test_ID" type="java.lang.Integer">
+            <column name="test_ID" />
+            <generator class="identity" />
+        </id>
+        <property name="image" type="binary">
+            <column name="image" not-null="true" />
+        </property>
+        <property name="url" type="string">
+            <column name="url" length="2000" />
+        </property>
+    </class>
+</hibernate-mapping>

@@ -101,10 +101,10 @@ public class ProductDAOImpl implements ProductDAO {
 			  for (int i = 0 ;i<items.size();i++) {
 				  Price pri = null;
 				  pri = new Price(Product_ID,Shop_ID,items.get(i),unit.get(i));
-				 // pri.setShop_ID(Shop_ID);
+				  //pri.setShop_ID(Shop_ID);
 				  //pri.setProduct_ID(Product_ID);
-				 // pri.setPrice(items.get(i));
-				 // pri.setQty_Price(unit.get(i));
+				  //pri.setPrice(items.get(i));
+				  //pri.setQty_Price(unit.get(i));
 				  sessionFactory.getCurrentSession().persist(pri);
 			  }
 			  
@@ -139,8 +139,8 @@ public class ProductDAOImpl implements ProductDAO {
 		try{
 					
 		    log.debug("Add all the product ProductDAOImpl class");	
-            String selectProductsByShopId = "FROM Product_Data WHERE Shop_ID = :Shop_ID AND Availability = :Availability";
-			
+           // String selectProductsByShopId = "FROM Product_Data WHERE Shop_ID = :Shop_ID AND Availability = :Availability";
+		    String selectProductsByShopId = "FROM Product_Data WHERE Shop_ID = :Shop_ID";
            /* return sessionFactory
 					.getCurrentSession()
 						.createQuery(selectProductsByShopId, Product_Data.class)
@@ -151,7 +151,7 @@ public class ProductDAOImpl implements ProductDAO {
 					.getCurrentSession()
 					.createQuery(selectProductsByShopId, Product_Data.class)
 						.setParameter("Shop_ID", Shop_ID)
-						.setParameter("Availability", true)
+					//	.setParameter("Availability", true)
 							.getResultList();
 
 		if ((list != null) && (list.size() > 0)) {
@@ -241,7 +241,7 @@ public class ProductDAOImpl implements ProductDAO {
 				           String priValue =  pri.getPrice();
 				           Product_Price.add(priValue);				           
 				           String qtyPri = pri.getQty_Price();
-				           Unit.add(priValue);
+				           Unit.add(qtyPri);
 				           System.out.println(priValue+" "+qtyPri);
 	
 				}
@@ -322,41 +322,7 @@ public class ProductDAOImpl implements ProductDAO {
 		String Product_ID  = productData.getProduct_ID();
 		//String product_Name = productData.getProduct_Name();
 		
-		try{
-			
-            /* Product pro = new Product();
-		    
-		    //get all data from Product_Data class
-		     int ID = productData.getID();	
-			 String code = productData.getCode();
-			 String Product_Name = productData.getProduct_Name();
-			 String Product_ID = productData.getProduct_ID();
-			// String Shop_ID = productData.getShop_ID();
-			// private int Product_Price;
-			 String Product_Image = productData.getProduct_Image();
-			 String Product_Category = productData.getProduct_Category();
-			  String Product_Type = productData.getProduct_Type();
-			  boolean Availability =productData.isAvailability();
-		   
-			  //set all the data from Product_Data.java to Product.java class
-			  pro.setID(ID);
-			  pro.setProduct_Category(Product_Category);
-			  pro.setCode(code);
-			  pro.setProduct_ID(Product_ID);
-			  pro.setProduct_Name(Product_Name);
-			  pro.setShop_ID(Shop_ID);
-			  pro.setProduct_Image(Product_Image);
-			  pro.setProduct_Type(Product_Type);
-			  pro.setAvailability(Availability);
-			
-			  sessionFactory.getCurrentSession().update(pro);*/
-			
-			
-			
-			
-			
-			
-			
+		try{				
 		
 		String selectProductsByShopId = "FROM Product WHERE Shop_ID = :Shop_ID AND Product_ID = :Product_ID";
 		List <Product> list = sessionFactory
@@ -380,7 +346,8 @@ public class ProductDAOImpl implements ProductDAO {
 				product.setAvailability(true);
 				//update product
 				sessionFactory.getCurrentSession().update(product);
-				/*
+				
+				//update price and qty price
 				String selectProductsByShopId1 = "FROM Price WHERE Shop_ID = :Shop_ID AND Product_ID = :Product_ID";
 				List <Price> priceList = sessionFactory
 						.getCurrentSession()
@@ -397,7 +364,28 @@ public class ProductDAOImpl implements ProductDAO {
 				  Price pri;
 				for(int i = 0 ;i< items.size();i++) {
 					pri = priceList.get(i);
-					 pri = new Price( Product_ID, Shop_ID,items.get(i), unit.get(i));
+					
+					int ID = priceList.get(i).getID();
+					String Price = items.get(i);
+					String Qty_Price = unit.get(i);
+					
+					
+					// update particular column using ID and productID and shopID
+					String updateSingleValu = "UPDATE Price SET Price = :Price , Qty_Price =:Qty_Price WHERE ID = :ID AND Product_ID = :Product_ID";
+					
+					//set the data base value usign hibernat query
+					int updatedEntities = sessionFactory.getCurrentSession()
+							 .createQuery( updateSingleValu )
+							 .setParameter( "ID", ID )
+					        .setParameter( "Price", Price )
+					        .setParameter( "Qty_Price", Qty_Price )
+					        .setParameter( "Product_ID", Product_ID )
+					        .executeUpdate();
+					
+					
+					
+					//int id = priceList.get(i).getID();
+					// pri = new Price(Product_ID, Shop_ID,items.get(i), unit.get(i));
 					//pri.setShop_ID(Shop_ID);
 					//pri.setProduct_ID(Product_ID);
 					//pri.setPrice(items.get(i));
@@ -405,8 +393,8 @@ public class ProductDAOImpl implements ProductDAO {
 					 
 					 // sessionFactory.getCurrentSession().saveOrUpdate(pri);
 					// sessionFactory.getCurrentSession().clear();
-					 sessionFactory.getCurrentSession().update(pri);
-				}*/
+					// sessionFactory.getCurrentSession().update(pri);
+				}
 				
 				productData.setShop_ID(Shop_ID);
 				

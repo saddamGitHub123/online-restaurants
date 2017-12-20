@@ -34,10 +34,18 @@ public class Price implements Serializable {
 				+ ", Qty_Price=" + Qty_Price + "]";
 	}
 	public Price() {}
+
+	/*public Price(int iD, String product_ID, String shop_ID, String price, String qty_Price) {
+		super();
+		ID = iD;
+		Product_ID = product_ID;
+		Shop_ID = shop_ID;
+		Price = price;
+		Qty_Price = qty_Price;
+	}*/
 	
 	public Price( String product_ID, String shop_ID, String price, String qty_Price) {
 		super();
-		//ID = iD;
 		Product_ID = product_ID;
 		Shop_ID = shop_ID;
 		Price = price;

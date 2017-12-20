@@ -32,6 +32,7 @@ import org.springframework.web.client.RestTemplate;
 import org.springframework.web.servlet.config.annotation.EnableWebMvc;
 
 import net.saddam.restaurantsbackend.dao.TestDAO;
+import net.saddam.restaurantsbackend.dto.Test;
 import net.saddam.restaurantsbackend.dto.User;
 
 /**
@@ -353,6 +354,33 @@ public class TestController {
 		
 		return "result";
 	}
+	
+	
+	//for save image to database using blob and converting into java post and get
+	
+	
+	@RequestMapping(value = "/image/save/blob", method = RequestMethod.POST)
+	public Test  imageSave(HttpServletRequest request, @RequestBody Test test ) {
+		
+		  //String shopid = "";
+		 // String userid = "";
+		System.out.println("Entering imageSave method");
+		  
+		  Test testValue = testDAO.saveImage(test);
+		  
+		  System.out.println("image to blob file is done");
+		  
+		  
+         
+		
+		  System.out.println(testValue);
+		
+		return testValue;
+	}
+	
+	
+	
+	
 	
 	
 }	

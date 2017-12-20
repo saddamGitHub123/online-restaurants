@@ -26,6 +26,7 @@ public class Order {
     private String Product_Name;
     private String Units;
     private String Qty; 
+    private String Order_ID;
     
    /* @Column(name="TimeStamp")
     java.sql.Timestamp currentTimestamp = new java.sql.Timestamp(Calendar.getInstance().getTime().getTime());*/
@@ -41,9 +42,11 @@ public class Order {
 	@Override
 	public String toString() {
 		return "Order [ID=" + ID + ", code=" + code + ", Shop_ID=" + Shop_ID + ", User_ID=" + User_ID + ", Product_ID="
-				+ Product_ID + ", Product_Name=" + Product_Name + ", Units=" + Units + ", Qty=" + Qty
-				+ ", currentTimestamp=" + currentTimestamp + "]";
+				+ Product_ID + ", Product_Name=" + Product_Name + ", Units=" + Units + ", Qty=" + Qty + ", Order_ID="
+				+ Order_ID + ", currentTimestamp=" + currentTimestamp + "]";
 	}
+	
+	
 
 	public int getID() {
 		return ID;
@@ -53,6 +56,7 @@ public class Order {
 		ID = iD;
 	}
 
+	@JsonIgnore
 	public String getCode() {
 		return code;
 	}
@@ -116,6 +120,16 @@ public class Order {
 
 	public void setCurrentTimestamp(java.sql.Timestamp currentTimestamp) {
 		this.currentTimestamp = currentTimestamp;
+	}
+
+	@JsonIgnore
+	public String getOrder_ID() {
+		return Order_ID;
+	}
+
+
+	public void setOrder_ID(String order_ID) {
+		Order_ID = order_ID;
 	}
 
     

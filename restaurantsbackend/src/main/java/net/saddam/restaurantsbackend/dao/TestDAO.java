@@ -1,5 +1,6 @@
 package net.saddam.restaurantsbackend.dao;
 
+import net.saddam.restaurantsbackend.dto.Test;
 import net.saddam.restaurantsbackend.dto.User;
 
 /**
@@ -17,5 +18,8 @@ public interface TestDAO {
 	
 	//Fetching data from multiple table
 	
+	
+	// save image to database usign blob file
+	Test saveImage(Test test);
 
 }

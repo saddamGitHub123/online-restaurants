@@ -7,7 +7,11 @@ How to kill particuler port id
  
  ALTER TABLE groceriesproduct.usershopkeeper MODIFY COLUMN email VARCHAR(100);
 
-
+=> Add new column to existing Table :
+      ALTER TABLE groceriesproduct.orderlist ADD Order_ID varchar(200) NULL AFTER Product_ID;
+      
+      
+ 
 Create database groceriesproduct;
 
 //For H2 DATABASE

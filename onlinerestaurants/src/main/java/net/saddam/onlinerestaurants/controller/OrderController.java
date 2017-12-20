@@ -23,6 +23,7 @@ import net.saddam.restaurantsbackend.common.ApiErrors;
 import net.saddam.restaurantsbackend.common.JsonResponse;
 import net.saddam.restaurantsbackend.dao.OrderDAO;
 import net.saddam.restaurantsbackend.model.OrderRequest;
+import net.saddam.restaurantsbackend.model.OrderRequestAdd;
 import net.saddam.restaurantsbackend.model.Ordered_List;
 import net.saddam.restaurantsbackend.model.Response;
 import net.saddam.restaurantsbackend.model.ShopkeeperOrderResponse;
@@ -49,7 +50,7 @@ public class OrderController {
 	 * **/
 	
 	@RequestMapping(value = "/addOrderList", method = RequestMethod.POST)
-	public @ResponseBody Response addOrderListByShopID(@RequestBody OrderRequest orderRequest) {
+	public @ResponseBody Response addOrderListByShopID(@RequestBody OrderRequestAdd orderRequest) {
 
 		logger.info("User & Shopkeeper Entered addOrderListByShopID() in OrderController  - Post all order list");
 		Response response = new Response();
@@ -58,7 +59,9 @@ public class OrderController {
 
 			
 			//call the add order method
-			if(orderDAO.addOrder(orderRequest)) {
+			//if(orderDAO.addOrder(orderRequest)) {
+			if(orderDAO.addOrderAndOrderID(orderRequest)) {
+			
 			
 			
 			response.setStatus_code(JsonResponse.CODE__OK);

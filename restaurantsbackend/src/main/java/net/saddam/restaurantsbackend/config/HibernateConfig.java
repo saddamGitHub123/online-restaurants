@@ -56,6 +56,8 @@ public class HibernateConfig {
 		  	LocalSessionFactoryBuilder builder = new LocalSessionFactoryBuilder(dataSource);
 			builder.addProperties(getHibernateProperties());
 			builder.scanPackages("net.saddam.restaurantsbackend.dto");
+			//builder.scanPackages("net.saddam.restaurantsbackend.config");
+			
 			
 			return builder.buildSessionFactory();
 			
