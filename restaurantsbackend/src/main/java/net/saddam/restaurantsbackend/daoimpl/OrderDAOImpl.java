@@ -13,7 +13,6 @@ import org.springframework.transaction.annotation.Transactional;
 import net.saddam.restaurantsbackend.dao.OrderDAO;
 import net.saddam.restaurantsbackend.dto.Address;
 import net.saddam.restaurantsbackend.dto.Order;
-import net.saddam.restaurantsbackend.dto.User;
 import net.saddam.restaurantsbackend.model.OrderRequest;
 import net.saddam.restaurantsbackend.model.OrderRequestAdd;
 import net.saddam.restaurantsbackend.model.Ordered_List;
@@ -110,6 +109,8 @@ public class OrderDAOImpl implements OrderDAO {
 		    	order.setCurrentTimestamp(orderRequest.getTimeStamp());
 		    	//Save the order list
 		    	sessionFactory.getCurrentSession().persist(order);
+		    	
+		    	log.debug("Returing from the addOrderAndOrderID  method");
 		    }
 
 			return true;
@@ -147,7 +148,7 @@ public class OrderDAOImpl implements OrderDAO {
 		    java.sql.Timestamp timeStamp ;
 		    String orderID;
 		    
-		    int count = 0;
+		   // int count = 0;
 		    List<Ordered_List> orderAddList = new ArrayList();
 		    Address address =new Address();
 		    
@@ -162,7 +163,7 @@ public class OrderDAOImpl implements OrderDAO {
 		    
 		   // String selectUserByShopId = "from Order where Shop_ID = :Shop_ID "; 
 		    
-		    //getting unique order_id from order tanle
+		    //getting unique order_id from order table
 			
 		    String selectUserByShopId = "from Order where Shop_ID = :Shop_ID GROUP BY Order_ID ";
 		     List<Order> userList = sessionFactory
@@ -172,8 +173,10 @@ public class OrderDAOImpl implements OrderDAO {
 								.getResultList();
 		    
 		     
-		     for (Order entity : userList) {
-		    	 
+		    // for (Order entity : userList) {
+		    
+
+			     for (int count = 0 ; count<userList.size();count++) {
 		    	 //getting userID from user table using shopID
 		    	 String User_ID = userList.get(count).getUser_ID();
 		    	 String Order_ID = userList.get(count).getOrder_ID();
@@ -188,7 +191,7 @@ public class OrderDAOImpl implements OrderDAO {
 									.setParameter("Order_ID", Order_ID)
 										.getResultList();
 				     
-				     //set timeStamp
+				     //set timeStamp and OrderID 
 				     if((orderList != null) && (orderList.size() > 0)) {
 				      timeStamp = orderList.get(0).getCurrentTimestamp();
 				      orderID = orderList.get(0).getOrder_ID();
@@ -220,10 +223,10 @@ public class OrderDAOImpl implements OrderDAO {
 					     
 					     orderedList = new Ordered_List(User_ID,address,orderList,timeStamp,orderID);
 					     orderAddList.add(orderedList);
-					     count++;
+					    // count++;
 		     }
 		     
-		     
+		     log.error("Returrning order list");  
     
 		   // System.out.println(orderedList);
  

@@ -8,12 +8,64 @@ public class RequestProduct extends Response{
 	private String Request_Type;
 	private String Shop_ID;
 	
-	Product_Data productData;
+	
+	
+	Product_Model productDataValue;
 
-    
+	Product_Data productData;
+	
+
+	/*public Product_Model getProductData() {
+		return productData;
+	}
+
+
+	public void setProductData(Product_Model productData) {
+		this.productData = productData;
+	}*/
+
+
+	
+	
+	
 	public String getShop_ID() {
 		return Shop_ID;
 	}
+
+
+
+
+
+	public Product_Model getProductDataValue() {
+		return productDataValue;
+	}
+
+
+
+
+
+	public void setProductDataValue(Product_Model productDataValue) {
+		this.productDataValue = productDataValue;
+	}
+
+
+
+
+
+	public Product_Data getProductData() {
+		return productData;
+	}
+
+
+
+
+
+	public void setProductData(Product_Data productData) {
+		this.productData = productData;
+	}
+
+
+
 
 
 	public void setShop_ID(String shop_ID) {
@@ -21,13 +73,13 @@ public class RequestProduct extends Response{
 	}
 
 
-	public Product_Data getProductData() {
+	/*public Product_Data getProductData() {
 		return productData;
 	}
 
 	public void setProductData(Product_Data productData) {
 		this.productData = productData;
-	}
+	}*/
 
 	public String getRequest_Type() {
 		return Request_Type;

@@ -28,29 +28,75 @@ public class Price implements Serializable {
 	
 	private String Price;
 	private String Qty_Price;
+    
+	private String Stock;
+
+	
+	public Price() {}
+
+	
+
+	
+	
+	
+	
+	
+
+	public Price(String product_ID, String shop_ID, String price, String stock) {
+		super();
+		Product_ID = product_ID;
+		Shop_ID = shop_ID;
+		Price = price;
+		Stock = stock;
+	}
+
+
+
+
+
+
+
+
+
+	public Price(String product_ID, String shop_ID, String price, String qty_Price, String stock) {
+		super();
+		Product_ID = product_ID;
+		Shop_ID = shop_ID;
+		Price = price;
+		Qty_Price = qty_Price;
+		Stock = stock;
+	}
+
+
+
+
+
+
+
+
+
 	@Override
 	public String toString() {
 		return "Price [ID=" + ID + ", Product_ID=" + Product_ID + ", Shop_ID=" + Shop_ID + ", Price=" + Price
-				+ ", Qty_Price=" + Qty_Price + "]";
+				+ ", Qty_Price=" + Qty_Price + ", Stock=" + Stock + "]";
 	}
-	public Price() {}
 
-	/*public Price(int iD, String product_ID, String shop_ID, String price, String qty_Price) {
-		super();
-		ID = iD;
-		Product_ID = product_ID;
-		Shop_ID = shop_ID;
-		Price = price;
-		Qty_Price = qty_Price;
-	}*/
-	
-	public Price( String product_ID, String shop_ID, String price, String qty_Price) {
-		super();
-		Product_ID = product_ID;
-		Shop_ID = shop_ID;
-		Price = price;
-		Qty_Price = qty_Price;
+
+
+
+
+
+
+
+
+	public String getStock() {
+		return Stock;
 	}
+
+	public void setStock(String stock) {
+		Stock = stock;
+	}
+
 	public int getID() {
 		return ID;
 	}
@@ -84,7 +130,7 @@ public class Price implements Serializable {
 	public static long getSerialversionuid() {
 		return serialVersionUID;
 	}
-	
+
 	
 	
 }

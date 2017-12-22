@@ -16,6 +16,7 @@ import net.saddam.restaurantsbackend.dto.Product;
 import net.saddam.restaurantsbackend.dto.Product_Data;
 import net.saddam.restaurantsbackend.dto.UniqueProduct;
 import net.saddam.restaurantsbackend.dto.UniqueProductResponse;
+import net.saddam.restaurantsbackend.model.Product_Model;
 
 /**
  * 
@@ -60,7 +61,7 @@ public class ProductDAOImpl implements ProductDAO {
 	 * Add the all product using hibernate updated of price and avalibel 
 	 * **/
 	@Override
-	public boolean addProduct(Product_Data product) {
+	public boolean addProduct(Product_Model product) {
 		
 	try{
 		    log.debug("Add all the product");
@@ -97,30 +98,38 @@ public class ProductDAOImpl implements ProductDAO {
 			  List<String> items = product.getProduct_Price();
 			  
 			  List<String> unit = product.getUnit();
+			  
+			  List<String> stock = product.getStock_Value();
+			  
 			   System.out.println(items.size());
 			  for (int i = 0 ;i<items.size();i++) {
 				  Price pri = null;
-				  pri = new Price(Product_ID,Shop_ID,items.get(i),unit.get(i));
-				  //pri.setShop_ID(Shop_ID);
-				  //pri.setProduct_ID(Product_ID);
-				  //pri.setPrice(items.get(i));
-				  //pri.setQty_Price(unit.get(i));
+				  //Price pri1 = null;
+				 
+				  //If quantity is empty then its save null value to database 
+				  if(unit == null || unit.isEmpty()) {
+					  
+					  /*for(int j= 0 ;j< items.size() ;j++) {
+					  unit.add(null);
+					 
+					  System.out.println(unit.get(i));
+					  }*/
+					  
+					  // Set only three value when quantity is not available
+					  pri = new Price(Product_ID,Shop_ID,items.get(i),stock.get(i));
+					  //pri = new Price(Product_ID,Shop_ID,items.get(i));
+					  sessionFactory.getCurrentSession().persist(pri);
+					  
+				  }   
+				  else {
+					  
+			     //Set all value		  
+				  pri = new Price(Product_ID,Shop_ID,items.get(i),unit.get(i),stock.get(i));
+					 // pri = new Price(Product_ID,Shop_ID,items.get(i),unit.get(i));
 				  sessionFactory.getCurrentSession().persist(pri);
-			  }
-			  
-			 /* 
-			  for (String item : items)
-			  {
-				  Price pri = new Price();
-				  pri.setShop_ID(Shop_ID);
-				  pri.setProduct_ID(Product_ID);
-				  pri.setQty_Price(item);
-				  pri.setPrice(item);
-				  sessionFactory.getCurrentSession().persist(pri);
-			  }*/
-			  
-			  
-			  
+				  }
+				  
+			  }		  
 			  
 			return true;
 			
@@ -153,6 +162,7 @@ public class ProductDAOImpl implements ProductDAO {
 						.setParameter("Shop_ID", Shop_ID)
 					//	.setParameter("Availability", true)
 							.getResultList();
+            System.out.println("list size is"+list.size());
 
 		if ((list != null) && (list.size() > 0)) {
 			//userFound= true;

@@ -43,6 +43,10 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 		@ElementCollection
 		@Column(name="Qty_Price")
 		private List<String> Unit;
+		
+		/*@Column(name="Stock")
+		private List<String> Stock_Value;*/
+		
 		@JsonIgnore
 		 private String Product_Image;
 		@JsonIgnore
@@ -58,62 +62,21 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 			 this.code = UUID.randomUUID().toString().substring(26).toUpperCase();
 		 }
 		 
-		  
-		 
-		
-
-		
-			
-		
-		
-		
-		
 
 
-
-
-
-
-
-
-
-
-		@Override
+	/*	@Override
 		public String toString() {
 			return "Product_Data [ID=" + ID + ", code=" + code + ", Product_Name=" + Product_Name + ", Product_ID="
 					+ Product_ID + ", Shop_ID=" + Shop_ID + ", Product_Price=" + Product_Price + ", Unit=" + Unit
-					+ ", Product_Image=" + Product_Image + ", Product_Category=" + Product_Category + ", Product_Type="
-					+ Product_Type + ", Availability=" + Availability + "]";
-		}
+					+ ", Stock=" + Stock + ", Product_Image=" + Product_Image + ", Product_Category=" + Product_Category
+					+ ", Product_Type=" + Product_Type + ", Availability=" + Availability + "]";
+		}*/
 
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-		
-
-
-
-
-		public Product_Data(int iD, String code, String product_Name, String product_ID, String shop_ID,
-				List<String> product_Price, List<String> unit, String product_Image, String product_Category,
-				String product_Type, boolean availability) {
+		/*public Product_Data(int iD, String code, String product_Name, String product_ID, String shop_ID,
+				List<String> product_Price, List<String> unit, List<String> stock, String product_Image,
+				String product_Category, String product_Type, boolean availability) {
 			super();
 			ID = iD;
 			this.code = code;
@@ -122,20 +85,54 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 			Shop_ID = shop_ID;
 			Product_Price = product_Price;
 			Unit = unit;
+			Stock = stock;
 			Product_Image = product_Image;
 			Product_Category = product_Category;
 			Product_Type = product_Type;
 			Availability = availability;
-		}
+		}*/
 
 
-
+		 
+		 
+		 
+		 
 
 		public String getCode() {
 			return code;
 		}
 
 
+
+		public Product_Data(int iD, String code, String product_Name, String product_ID, String shop_ID,
+			List<String> product_Price, List<String> unit, List<String> stock_Value, String product_Image,
+			String product_Category, String product_Type, boolean availability) {
+		super();
+		ID = iD;
+		this.code = code;
+		Product_Name = product_Name;
+		Product_ID = product_ID;
+		Shop_ID = shop_ID;
+		Product_Price = product_Price;
+		Unit = unit;
+		//Stock_Value = stock_Value;
+		Product_Image = product_Image;
+		Product_Category = product_Category;
+		Product_Type = product_Type;
+		Availability = availability;
+	}
+
+		
+		
+
+
+		@Override
+		public String toString() {
+			return "Product_Data [ID=" + ID + ", code=" + code + ", Product_Name=" + Product_Name + ", Product_ID="
+					+ Product_ID + ", Shop_ID=" + Shop_ID + ", Product_Price=" + Product_Price + ", Unit=" + Unit
+					+  ", Product_Image=" + Product_Image + ", Product_Category="
+					+ Product_Category + ", Product_Type=" + Product_Type + ", Availability=" + Availability + "]";
+		}
 
 
 
@@ -151,45 +148,21 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 
 
 
+		/*public List<String> getStock() {
+			return Stock;
+		}*/
 
 
 
-
-
-
-
-
-
-
-
-
-
-
-
+		/*public void setStock(List<String> stock) {
+			Stock = stock;
+		}*/
 
 
 
 		public void setUnit(List<String> unit) {
 			Unit = unit;
 		}
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 
@@ -254,6 +227,18 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 		public void setAvailability(boolean availability) {
 			Availability = availability;
 		}
+
+
+
+		/*public List<String> getStock_Value() {
+			return Stock_Value;
+		}
+
+
+
+		public void setStock_Value(List<String> stock_Value) {
+			Stock_Value = stock_Value;
+		}*/
 		 
 		 
 		 

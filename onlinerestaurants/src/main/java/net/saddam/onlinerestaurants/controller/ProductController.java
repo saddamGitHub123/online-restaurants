@@ -33,7 +33,9 @@ import net.saddam.restaurantsbackend.dto.Product_Data;
 import net.saddam.restaurantsbackend.dto.UniqueProduct;
 import net.saddam.restaurantsbackend.model.AllProduct;
 import net.saddam.restaurantsbackend.model.AllProduct_Data;
+import net.saddam.restaurantsbackend.model.Product_Model;
 import net.saddam.restaurantsbackend.model.RequestProduct;
+import net.saddam.restaurantsbackend.model.ResponseProductModel;
 
 /**
  * 
@@ -164,7 +166,7 @@ public class ProductController {
 				allProduct.setStatus_message("Successfully Authenticated");
 				allProduct.setRequest_Type("Add-New_Product");
 				// allProduct.setProductData(productList);
-				productDAO.addProduct(product);
+				//productDAO.addProduct(product);
 				return allProduct;
 			}
 
@@ -193,7 +195,7 @@ public class ProductController {
 			allProduct.setRequest_Type("Update_Product");
 			// allProduct.setProductData(productList);
 
-			productDAO.addProduct(product);
+			//productDAO.addProduct(product);
 
 			// ** set status OK *//*
 			// allProduct.setStatus_Code(JsonResponse.CODE__OK);
@@ -221,7 +223,7 @@ public class ProductController {
 	 * request,@PathVariable("shopId")String shopId ) {
 	 */
 	@RequestMapping(value = "/add/productsList", method = RequestMethod.POST)
-	public @ResponseBody AllProduct_Data addProductsList(@RequestBody RequestProduct allProductData) {
+	public @ResponseBody ResponseProductModel addProductsList(@RequestBody RequestProduct allProductData) {
 		logger.info("Entered addProductList()  - Save all the product ");
 
 		// String allP = allProductData.getRequest_Type();
@@ -229,26 +231,38 @@ public class ProductController {
 		// Product_Data productD = allProductData.getProductData();
 		// System.out.println(allP+" "+type1+""+productD.getProduct_ID());
 
-		Product_Data productData = allProductData.getProductData();
-		AllProduct_Data allProduct = new AllProduct_Data();
+		Product_Model productData = allProductData.getProductDataValue();
+		//AllProduct_Data allProduct = new AllProduct_Data();
+		ResponseProductModel allProduct = new ResponseProductModel();
 
 		String productName = "Product_";
-		int count = -1;
+		//int count = -1;
 
 		try {
-			if (allProductData.getShop_ID() == null && productData.getProduct_Name() == null ) {
-				// ** no products exist, error message *//
+			/*if (allProductData.getShop_ID() == null && productData.getProduct_Name() == null ) {
+				
 				allProduct.setStatus_code(JsonResponse.CODE__EMPTY);
 				allProduct.setStatus_message(JsonResponse.CODE__ERROR);
+				logger.error(ApiErrors.ERROR__NO_USER_ID_EXIST);
+				// allProduct.setProductData(null);
+				return allProduct;
+			}*/
+			if ( productData.getProduct_Name() == null ) {
+				// ** no products exist, error message *//
+				allProduct.setStatus_code(JsonResponse.CODE__EMPTY);
+				allProduct.setStatus_message("You have to add Product Name");
 				logger.error(ApiErrors.ERROR__NO_USER_ID_EXIST);
 				// allProduct.setProductData(null);
 				return allProduct;
 			}
 
 			List<Product_Data> listOfProduct = productDAO.addProductByShopId(allProductData.getShop_ID());
-
+			
+			//set the size of list 
+			int size = listOfProduct.size();
+			
 			// If list will be null then it will be execute
-			if (listOfProduct == null || listOfProduct.size() == 0) {
+			/*if (listOfProduct == null || listOfProduct.size() == 0) {
 
 				allProduct.setStatus_code(JsonResponse.CODE__EMPTY);
 				allProduct.setStatus_message(JsonResponse.CODE__ERROR);
@@ -256,22 +270,23 @@ public class ProductController {
 				// allProduct.setProductData(productData);
 				// productDAO.addProduct(listOfProduct);
 				return allProduct;
-			}
-
-			for (Product_Data entity : listOfProduct) {
+			}*/
+               
+			/*for (Product_Data entity : listOfProduct) {
 				count++;
-			}
-			/* When new shop id will come */
-			if (listOfProduct.get(count).getProduct_ID() == null || listOfProduct.size() == 0) {
+			}*/
+			
+			//when shop Keeper 1st time add the product
+			if ( listOfProduct.size() == 0) {
 				// ** no products exist, Add new product *//
-				int i = 0;
+				//int i = 0;
 				// product .setProduct_Name("Apple");
 				productData.setShop_ID(allProductData.getShop_ID());
 
-				productData.setProduct_ID(productName + i);
+				productData.setProduct_ID(productName + size);
 				allProduct.setStatus_code(JsonResponse.CODE__OK);
 				allProduct.setStatus_message("Successfully Authenticated");
-				allProduct.setRequest_Type("Add-New_Product");
+				allProduct.setRequest_Type("Add First Product");
 				allProduct.setProductData(productData);
 				productDAO.addProduct(productData);
 				return allProduct;
@@ -281,7 +296,7 @@ public class ProductController {
 
 			productData.setShop_ID(allProductData.getShop_ID());
 
-			productData.setProduct_ID(productName + count);
+			productData.setProduct_ID(productName + size);
 
 			// productList.add(productD);
 			allProduct.setProductData(productData);
@@ -290,11 +305,9 @@ public class ProductController {
 			allProduct.setStatus_code(JsonResponse.CODE__OK);
 			allProduct.setStatus_message("Successfully Authenticated");
 			allProduct.setRequest_Type("Add_New_Product");
-			
+			logger.info("Returning listOfProductByShopId()");
 
-			// ** set status OK *//*
-			// allProduct.setStatus_Code(JsonResponse.CODE__OK);
-			// allProduct.setStatus_Message("Successfully Authenticated");
+			return allProduct;
 
 		} catch (Exception e) {
 			logger.error("listOfProductByShopId(): Error - " + e);
@@ -302,9 +315,7 @@ public class ProductController {
 			allProduct.setStatus_message(JsonResponse.CODE__UNKNOWN_ERROR);
 			return allProduct;
 		}
-		logger.info("Returning listOfProductByShopId()");
-
-		return allProduct;
+		
 
 	}
 

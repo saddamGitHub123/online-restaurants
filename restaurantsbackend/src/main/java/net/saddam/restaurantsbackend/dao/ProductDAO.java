@@ -4,6 +4,7 @@ import java.util.List;
 
 import net.saddam.restaurantsbackend.dto.Product_Data;
 import net.saddam.restaurantsbackend.dto.UniqueProduct;
+import net.saddam.restaurantsbackend.model.Product_Model;
 
 /**
  * 
@@ -16,7 +17,8 @@ public interface ProductDAO {
 	/*
 	 * Add Product in the database
 	 * **/
-	boolean addProduct(Product_Data product);
+	//boolean addProduct(Product_Data product);
+	boolean addProduct(Product_Model product);
 	
 	
 	/**

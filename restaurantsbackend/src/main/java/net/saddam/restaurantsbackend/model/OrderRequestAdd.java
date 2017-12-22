@@ -17,14 +17,14 @@ public class OrderRequestAdd {
     private String Order_ID;
     
     public OrderRequestAdd() {
- 		 //this.Order_ID ="OID "+ UUID.randomUUID().toString().substring(26).toUpperCase();
-    	this.Order_ID ="OID"+ String.valueOf(sendOTP(8));
+ 		 this.Order_ID ="OID "+ UUID.randomUUID().toString().substring(26).toUpperCase();
+    	//this.Order_ID ="OID"+ String.valueOf(sendOTP(8));
  	 }
     
     List<Order> orderList;
 
 	//Generate automatic orderID
-	static char[] sendOTP(int length){
+	/*static char[] sendOTP(int length){
 		
 		String  number= "0123456789";
 		Random r = new Random();
@@ -35,7 +35,7 @@ public class OrderRequestAdd {
 		    otp[i] = number.charAt(r.nextInt((number.length())));
 		 } 
 		 return otp;
-		 }
+		 }*/
     
     
 
