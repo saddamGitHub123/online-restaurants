@@ -28,6 +28,8 @@ public class Order {
     private String Qty; 
     private String Order_ID;
     
+    private String Price;
+    
    /* @Column(name="TimeStamp")
     java.sql.Timestamp currentTimestamp = new java.sql.Timestamp(Calendar.getInstance().getTime().getTime());*/
     
@@ -43,10 +45,23 @@ public class Order {
 	public String toString() {
 		return "Order [ID=" + ID + ", code=" + code + ", Shop_ID=" + Shop_ID + ", User_ID=" + User_ID + ", Product_ID="
 				+ Product_ID + ", Product_Name=" + Product_Name + ", Units=" + Units + ", Qty=" + Qty + ", Order_ID="
-				+ Order_ID + ", currentTimestamp=" + currentTimestamp + "]";
+				+ Order_ID + ", Price=" + Price + ", currentTimestamp=" + currentTimestamp + "]";
 	}
 	
 	
+	
+	
+	
+
+	public String getPrice() {
+		return Price;
+	}
+
+
+	public void setPrice(String price) {
+		Price = price;
+	}
+
 
 	public int getID() {
 		return ID;

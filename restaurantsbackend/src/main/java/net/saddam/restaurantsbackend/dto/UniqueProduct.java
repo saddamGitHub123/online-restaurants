@@ -18,6 +18,8 @@ public class UniqueProduct {
 		 private boolean Availability ;
 		 private List<String> Product_Price;
 		 private List<String> Unit;
+		 private List<String> Stock;
+		 
 		 
 		 
 		 
@@ -26,9 +28,11 @@ public class UniqueProduct {
 		 }
 		 
 
-		public UniqueProduct( String product_ID, String shop_ID, String product_Name, String product_Image,
-				String product_Category, String product_Type, List<String> product_Price,
-				List<String> unit) {
+		
+
+		public UniqueProduct(String product_ID, String shop_ID, String product_Name, String product_Image,
+				String product_Category, String product_Type,List<String> product_Price,
+				List<String> unit, List<String> stock) {
 			super();
 			Product_ID = product_ID;
 			Shop_ID = shop_ID;
@@ -36,16 +40,35 @@ public class UniqueProduct {
 			Product_Image = product_Image;
 			Product_Category = product_Category;
 			Product_Type = product_Type;
+			//Availability = availability;
 			Product_Price = product_Price;
 			Unit = unit;
+			Stock = stock;
 		}
+
+
+
+
+		public List<String> getStock() {
+			return Stock;
+		}
+
+
+
+
+		public void setStock(List<String> stock) {
+			Stock = stock;
+		}
+
+
+
 
 		@Override
 		public String toString() {
 			return "UniqueProduct [ID=" + ID + ", Product_ID=" + Product_ID + ", Shop_ID=" + Shop_ID + ", Product_Name="
 					+ Product_Name + ", Product_Image=" + Product_Image + ", Product_Category=" + Product_Category
 					+ ", Product_Type=" + Product_Type + ", Availability=" + Availability + ", Product_Price="
-					+ Product_Price + ", Unit=" + Unit + "]";
+					+ Product_Price + ", Unit=" + Unit + ", Stock=" + Stock + "]";
 		}
 		
 		

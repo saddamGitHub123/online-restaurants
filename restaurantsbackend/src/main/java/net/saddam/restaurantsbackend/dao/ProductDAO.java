@@ -42,7 +42,8 @@ public interface ProductDAO {
      * **/
     
     
-    Product_Data updateProduct(String shop_ID,Product_Data productData);
+   // Product_Data updateProduct(String shop_ID,Product_Data productData);
+    Product_Model updateProduct(String shop_ID,Product_Model productData);
     
     
     

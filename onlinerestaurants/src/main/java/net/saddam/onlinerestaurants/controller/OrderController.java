@@ -22,6 +22,7 @@ import org.springframework.web.servlet.config.annotation.EnableWebMvc;
 import net.saddam.restaurantsbackend.common.ApiErrors;
 import net.saddam.restaurantsbackend.common.JsonResponse;
 import net.saddam.restaurantsbackend.dao.OrderDAO;
+import net.saddam.restaurantsbackend.model.DispatchRequest;
 import net.saddam.restaurantsbackend.model.OrderRequest;
 import net.saddam.restaurantsbackend.model.OrderRequestAdd;
 import net.saddam.restaurantsbackend.model.Ordered_List;
@@ -122,6 +123,60 @@ public class OrderController {
 		
 	}
 
+	
+	/**
+	 * 
+	 * Stock value update using shopID using orderList and price table
+	 * For dispatch order API
+	 * */
+	
+	
+
+	@RequestMapping(value = "/dispatch", method = RequestMethod.POST)
+	public @ResponseBody Response orderDispatch(@RequestBody DispatchRequest dispatchRequest) {
+
+		logger.info("Order Dispatch  Entered orderDispatch() in OrderController  - shopID,orderID");
+		
+		//orderDAO.
+		Response response = new Response();
+		
+		try {
+      if(orderDAO.orderDispatchOrderID(dispatchRequest)) {
+			
+			
+			
+			response.setStatus_code(JsonResponse.CODE__OK);
+			response.setStatus_message(JsonResponse.DISPATCH__SUCCESS);
+			return response;
+			
+			//System.out.println(shopid+" "+userid+" "+order);
+          }
+			
+      } catch (Exception e) {
+				
+				logger.error("orderDispatch(): Error - " + e);
+				response.setStatus_code(JsonResponse.CODE__UNKNOWN_ERROR);
+				response.setStatus_message(JsonResponse.CODE__UNKNOWN_ERROR);
+				return response;
+			}
+		
+		
+		return response;
+		
+		
+	}
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
 
 	 //push notification for the web page 
 	@RequestMapping(value = "/addNotificationtype", method = RequestMethod.GET)

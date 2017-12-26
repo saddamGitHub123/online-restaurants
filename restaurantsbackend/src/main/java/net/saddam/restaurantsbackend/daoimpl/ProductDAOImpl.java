@@ -242,6 +242,8 @@ public class ProductDAOImpl implements ProductDAO {
 				//create array list for unit and product price
 				ArrayList<String> Unit = new ArrayList<String>();
 				ArrayList<String> Product_Price = new ArrayList<String>();
+				
+				ArrayList<String> Stock = new ArrayList<String>();
 				for(int j=0;j<pricelist.size();j++) {
 					
 					     //get particular price 
@@ -252,12 +254,16 @@ public class ProductDAOImpl implements ProductDAO {
 				           Product_Price.add(priValue);				           
 				           String qtyPri = pri.getQty_Price();
 				           Unit.add(qtyPri);
-				           System.out.println(priValue+" "+qtyPri);
+				           
+				           String Stock_Value = pri.getStock();
+				           Stock.add(Stock_Value);
+				           
+				           System.out.println(priValue+" "+qtyPri+""+Stock_Value);
 	
 				}
 				
 				//call uniqueProduct constructor
-				product = new UniqueProduct(Product_ID,Shop_ID,Product_Name,Product_Image,Product_Category,Product_Type,Product_Price,Unit);
+				product = new UniqueProduct(Product_ID,Shop_ID,Product_Name,Product_Image,Product_Category,Product_Type,Product_Price,Unit,Stock);
 				
 				uniList.add(product);
 				
@@ -326,8 +332,10 @@ public class ProductDAOImpl implements ProductDAO {
 	 * only product list will be updated ,prices is not updated
 	 * ***/
 
+	/*@Override
+	public Product_Data updateProduct(String Shop_ID,Product_Data productData) {*/
 	@Override
-	public Product_Data updateProduct(String Shop_ID,Product_Data productData) {
+	public Product_Model updateProduct(String Shop_ID,Product_Model productData) {
 		
 		String Product_ID  = productData.getProduct_ID();
 		//String product_Name = productData.getProduct_Name();
@@ -370,6 +378,8 @@ public class ProductDAOImpl implements ProductDAO {
 				  
 				  List<String> unit = productData.getUnit();
 				  
+				  List<String> Stock_value = productData.getStock_Value();
+				  
 				  System.out.println(priceList.size());
 				  Price pri;
 				for(int i = 0 ;i< items.size();i++) {
@@ -379,9 +389,11 @@ public class ProductDAOImpl implements ProductDAO {
 					String Price = items.get(i);
 					String Qty_Price = unit.get(i);
 					
+					String Stock = Stock_value.get(i);
+					
 					
 					// update particular column using ID and productID and shopID
-					String updateSingleValu = "UPDATE Price SET Price = :Price , Qty_Price =:Qty_Price WHERE ID = :ID AND Product_ID = :Product_ID";
+					String updateSingleValu = "UPDATE Price SET Price = :Price , Qty_Price =:Qty_Price , Stock =:Stock WHERE ID = :ID AND Product_ID = :Product_ID";
 					
 					//set the data base value usign hibernat query
 					int updatedEntities = sessionFactory.getCurrentSession()
@@ -389,6 +401,7 @@ public class ProductDAOImpl implements ProductDAO {
 							 .setParameter( "ID", ID )
 					        .setParameter( "Price", Price )
 					        .setParameter( "Qty_Price", Qty_Price )
+					        .setParameter( "Stock", Stock )
 					        .setParameter( "Product_ID", Product_ID )
 					        .executeUpdate();
 					
@@ -474,6 +487,8 @@ public class ProductDAOImpl implements ProductDAO {
 					//String Unit = 
 					ArrayList<String> Unit = new ArrayList<String>();
 					ArrayList<String> Product_Price = new ArrayList<String>();
+					ArrayList<String> Stock = new ArrayList<String>();
+					
 					for(int j=0;j<pricelist.size();j++) {
 						pri = pricelist.get(j);
 						
@@ -484,7 +499,8 @@ public class ProductDAOImpl implements ProductDAO {
 					           String qtyPri = pri.getQty_Price();
 					           Unit.add(priValue);
 					           
-					           
+					           String Stock_Value = pri.getStock();
+					           Stock.add(Stock_Value);
 					           
 					           System.out.println(priValue+" "+qtyPri);
 					           //List<String> newList = new ArrayList<String>();   
@@ -495,7 +511,7 @@ public class ProductDAOImpl implements ProductDAO {
 						//System.out.println(list);
 					}
 					
-					product = new UniqueProduct(Product_ID,Shop_ID,Product_Name,Product_Image,Product_Category,Product_Type,Product_Price,Unit);
+					product = new UniqueProduct(Product_ID,Shop_ID,Product_Name,Product_Image,Product_Category,Product_Type,Product_Price,Unit,Stock);
 					
 					uniList.add(product);
 					

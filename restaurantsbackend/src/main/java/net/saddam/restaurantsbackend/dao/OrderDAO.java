@@ -2,6 +2,7 @@ package net.saddam.restaurantsbackend.dao;
 
 import java.util.List;
 
+import net.saddam.restaurantsbackend.model.DispatchRequest;
 import net.saddam.restaurantsbackend.model.OrderRequest;
 import net.saddam.restaurantsbackend.model.OrderRequestAdd;
 import net.saddam.restaurantsbackend.model.Ordered_List;
@@ -24,5 +25,12 @@ public interface OrderDAO {
 
 	// order list and user details by shopID
 	List<Ordered_List> userOrderListByShopId(String Shop_ID);
+	
+	
+  // Order Dispatch method
+	
+	boolean orderDispatchOrderID(DispatchRequest dispatchRequest);
+	
+
 
 }

@@ -13,6 +13,8 @@ import org.springframework.transaction.annotation.Transactional;
 import net.saddam.restaurantsbackend.dao.OrderDAO;
 import net.saddam.restaurantsbackend.dto.Address;
 import net.saddam.restaurantsbackend.dto.Order;
+import net.saddam.restaurantsbackend.dto.Price;
+import net.saddam.restaurantsbackend.model.DispatchRequest;
 import net.saddam.restaurantsbackend.model.OrderRequest;
 import net.saddam.restaurantsbackend.model.OrderRequestAdd;
 import net.saddam.restaurantsbackend.model.Ordered_List;
@@ -241,7 +243,123 @@ public class OrderDAOImpl implements OrderDAO {
 		
 	}
 
+   
+	/*
+	 * Order Dispatch method for dispatch the orderList
+	 * **/
+
+
+	@Override
+	public boolean orderDispatchOrderID(DispatchRequest dispatchRequest) {
+		
+		String Order_ID = dispatchRequest.getOrder_ID();
+		String Shop_ID = dispatchRequest.getShop_ID();
 	
+			
+  	try{
+	    log.debug("Entering orderDispatchOrderID() - at OrderDAOImpl class ");	
+	    
+	
+		
+		//getting list of order using shopID and orderID
+  	  String selectOrderByOrderID = "from Order where Shop_ID = :Shop_ID AND Order_ID = :Order_ID ";
+	    
+		     List<Order> orderList = sessionFactory
+					.getCurrentSession()
+						.createQuery(selectOrderByOrderID, Order.class)
+							.setParameter("Shop_ID", Shop_ID)
+							.setParameter("Order_ID", Order_ID)
+								.getResultList();
+		     
+		  //get one by one orderlist
+		     
+		     System.out.println(orderList.size());
+		     for(int i = 0 ;i<orderList.size();i++) {
+		    	 Price pri; 
+		    	 // Shop_ID = orderList.get(i).getShop_ID();
+		    	  String Product_ID = orderList.get(i).getProduct_ID();
+		    	  String Price = orderList.get(i).getPrice();
+		    	  String qty = orderList.get(i).getQty();
+		    	  String unit = orderList.get(i).getUnits();
+		    	  //String Stock = qty * unit;
+		    	  int integerNumber = Integer.parseInt(qty);
+		    	  int integerNumber1 = Integer.parseInt(unit);
+		    	  int stock1 = integerNumber*integerNumber1;
+		    	  
+		    	  //list of price using shopID and price and productID 
+		    	  
+		    	  String selectOrderByPrice = "from Price where Shop_ID = :Shop_ID AND Product_ID =:Product_ID AND Price =:Price ";
+		  	    
+				     List<Price> priceList = sessionFactory
+							.getCurrentSession()
+								.createQuery(selectOrderByPrice, Price.class)
+									.setParameter("Shop_ID", Shop_ID)
+									.setParameter("Product_ID", Product_ID)
+									.setParameter("Price", Price)
+										.getResultList();
+				     
+				     String Qty_Price = priceList.get(0).getQty_Price();
+				     int ID = priceList.get(0).getID();
+				     int Stock2 =Integer.parseInt(priceList.get(0).getStock());
+				     
+				     //Check stock is empty or less from order
+		    	    if(Stock2> stock1 ) {
+		    	    	int Stock3 = (Integer.parseInt(priceList.get(0).getStock()) - stock1) ;
+					     String Stock = String.valueOf(Stock3);
+					     
+					     //If qty_price is empty or not
+		    	    	if( Qty_Price != null) {
+						     
+						  // update particular column using ID and productID and shopID
+								String updateSingleValu = "UPDATE Price SET Price = :Price , Qty_Price =:Qty_Price , Stock =:Stock WHERE ID = :ID AND Product_ID = :Product_ID";
+								
+								//set the data base value usign hibernat query
+								int updatedEntities = sessionFactory.getCurrentSession()
+										 .createQuery( updateSingleValu )
+										 .setParameter( "ID", ID )
+								        .setParameter( "Price", Price )
+								        .setParameter( "Qty_Price", Qty_Price )
+								        .setParameter( "Stock", Stock )
+								        .setParameter( "Product_ID", Product_ID )
+								        .executeUpdate();
+		    	    	}else {
+		    	    	//pri = new Price(Product_ID,Shop_ID,Price, Stock);
+					     System.out.println(Stock);
+					     
+					     //If qty_price is empty
+					     
+					     String updateSingleValu = "UPDATE Price SET Price = :Price, Stock =:Stock WHERE ID = :ID AND Product_ID = :Product_ID";
+							
+							//set the data base value usign hibernat query
+							int updatedEntities = sessionFactory.getCurrentSession()
+									 .createQuery( updateSingleValu )
+									 .setParameter( "ID", ID )
+							        .setParameter( "Price", Price )
+							        //.setParameter( "Qty_Price", Qty_Price )
+							        .setParameter( "Stock", Stock )
+							        .setParameter( "Product_ID", Product_ID )
+							        .executeUpdate();
+
+		    	    	}
+		    	    	
+		    	    	return true;
+		    	    }
+		    	    else {
+		    	    	System.out.println("Stock is not avalible");
+		    	    	return false;
+		    	    }
+				     
+		    	  
+		     }		     
+		
+		return true;
+	   }catch (RuntimeException re)
+	   {
+		log.error("Returrning order list failed", re);
+		throw re;
+	   }
+
+ }
 	
 	
 	

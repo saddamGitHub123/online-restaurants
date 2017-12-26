@@ -26,6 +26,7 @@ public class JsonResponse {
     
     @JsonIgnore
     public static final String CODE__SUCCESS = "Your Order is Placed Successfully";
+    public static final String DISPATCH__SUCCESS = "Your Order is Dispatch Successfully";
     
 
     

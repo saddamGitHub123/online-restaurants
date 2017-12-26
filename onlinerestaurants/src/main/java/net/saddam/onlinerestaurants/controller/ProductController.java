@@ -324,11 +324,15 @@ public class ProductController {
 	 **/
 
 	@RequestMapping(value = "/update/productsList", method = RequestMethod.POST)
-	public @ResponseBody AllProduct_Data updateProductsList(@RequestBody RequestProduct allProductData) {
+	public @ResponseBody ResponseProductModel updateProductsList(@RequestBody RequestProduct allProductData) {
 		logger.info("Entered updateProductList()  - Update all the product ");
 
-		AllProduct_Data allProduct = new AllProduct_Data();
-		Product_Data checkProduct = allProductData.getProductData();
+		//AllProduct_Data allProduct = new AllProduct_Data();
+		ResponseProductModel allProduct = new ResponseProductModel();
+		
+		
+		Product_Model checkProduct = allProductData.getProductDataValue();
+		//Product_Data checkProduct = allProductData.getProductData();
 
 		try {
 			
@@ -342,8 +346,10 @@ public class ProductController {
 			}
 			
 
-			Product_Data updateData = productDAO.updateProduct(allProductData.getShop_ID(),
-					allProductData.getProductData());
+		/*	Product_Data updateData = productDAO.updateProduct(allProductData.getShop_ID(),
+					allProductData.getProductData());*/
+			Product_Model updateData = productDAO.updateProduct(allProductData.getShop_ID(),
+					allProductData.getProductDataValue());
 			
 
 			if (updateData == null) {
