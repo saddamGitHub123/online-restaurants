@@ -154,7 +154,7 @@ public class ProductController {
 				product.setProduct_Name("Apple");
 				product.setShop_ID(shopId);
 				//product.setProduct_Price("200,23");
-				product.setProduct_Image("image_1");
+				//product.setProduct_Image(5tr6);
 				product.setProduct_Category("Grocery");
 				product.setProduct_Type("L_01");
 				product.setAvailability(true);
@@ -175,7 +175,7 @@ public class ProductController {
 			product.setProduct_Name("Apple");
 			product.setShop_ID(shopId);
 		//	product.setProduct_Price("200");
-			product.setProduct_Image("image_1");
+			//product.setProduct_Image("image_1");
 			product.setProduct_Category("Grocery");
 			product.setProduct_Type("L_01");
 			product.setAvailability(true);

@@ -1,5 +1,7 @@
 package net.saddam.restaurantsbackend.daoimpl;
 
+import java.io.File;
+import java.io.FileInputStream;
 import java.util.List;
 
 import javax.xml.bind.DatatypeConverter;
@@ -31,10 +33,7 @@ public class TestDAOImpl implements TestDAO {
 	private SessionFactory sessionFactory;
 
 	@Override
-	public User saveOTPasPaswd(User user) {
-		// TODO Auto-generated method stub
-		
-		
+	public User saveOTPasPaswd(User user) {	
 		String Password = user.getPassword();
 		String Shop_ID = user.getShop_ID();
 		String User_Id = user.getUser_Id();
@@ -61,28 +60,32 @@ public class TestDAOImpl implements TestDAO {
 	@Override
 	public Test saveImage(Test test) {
 		
-	/*	  String url = test.getUrl();
+		  String url = test.getUrl();
+		 // byte[] image = test.getImage();
 		System.out.println(url);
 		//save image into database
     	File file = new File(url);
         byte[] bFile = new byte[(int) file.length()];
-
-        try {
+        
+        //System.out.println(bFile);
+        
+       /* try {
 	     FileInputStream fileInputStream = new FileInputStream(file);
 	     //convert file into array of bytes
 	     fileInputStream.read(bFile);
 	     fileInputStream.close();
         } catch (Exception e) {
 	     e.printStackTrace();
-        }
-        
-        Test test1 = new Test();
+        }*/
+        if(bFile != null && bFile.length != 0 ) {
+       Test test1 = new Test();
         test1.setImage(bFile);
         test1.setUrl(url);
-        sessionFactory.getCurrentSession().persist(test1);*/
+        sessionFactory.getCurrentSession().persist(test1);
         
-        
-        Integer test_ID = 2;
+        }
+
+        Integer test_ID = 14;
         
         String selectProductsByShopId = "FROM Test WHERE test_ID = :test_ID";
         List<Test> list= sessionFactory
@@ -106,9 +109,11 @@ public class TestDAOImpl implements TestDAO {
         String base64Encoded = DatatypeConverter.printBase64Binary(bAvatar);
         
         byte[] byteArray = DatatypeConverter.parseBase64Binary(base64Encoded);
+        System.out.println("image to byte"+bFile);
+        System.out.println("fro database blob to byte"+bAvatar);
+        System.out.println("byte to base64"+base64Encoded);
+        System.out.println("base64 to byte"+byteArray);
         
-        System.out.println(base64Encoded);
-        System.out.println(byteArray);
         
           Test t1 = list.get(0);
 

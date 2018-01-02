@@ -92,6 +92,8 @@ public class OrderDAOImpl implements OrderDAO {
 
 		    Order  order = new Order();
 		    
+		    boolean dispatchValue=true;
+		    
 		    //Get all the order list from OrderRequest class
 		    List<Order> orderList = orderRequest.getOrderList();
 		    
@@ -104,6 +106,7 @@ public class OrderDAOImpl implements OrderDAO {
 		    	order.setShop_ID(orderRequest.getShop_ID());
 		    	order.setUser_ID(orderRequest.getUser_ID());
 		    	order.setOrder_ID(orderRequest.getOrder_ID() );
+		    	order.setDispatch(dispatchValue);
 		    	
 		    	System.out.println(orderRequest.getOrder_ID());
 		    	
@@ -205,12 +208,13 @@ public class OrderDAOImpl implements OrderDAO {
 				     }
 				     
 				   //getting Address using userID
-			    	  String selectAddressByUserID = "from Address where User_ID = :User_ID ";
+			    	  String selectAddressByUserID = "from Address where User_ID = :User_ID AND Shop_ID = :Shop_ID";
 						
 					     List<Address> addressList = sessionFactory
 								.getCurrentSession()
 									.createQuery(selectAddressByUserID, Address.class)
 										.setParameter("User_ID", User_ID)
+										.setParameter("Shop_ID", Shop_ID)
 											.getResultList();
 					     
 					     //convert address list to object
@@ -276,6 +280,7 @@ public class OrderDAOImpl implements OrderDAO {
 		     System.out.println(orderList.size());
 		     for(int i = 0 ;i<orderList.size();i++) {
 		    	 Price pri; 
+		    	 //Set list of value 
 		    	 // Shop_ID = orderList.get(i).getShop_ID();
 		    	  String Product_ID = orderList.get(i).getProduct_ID();
 		    	  String Price = orderList.get(i).getPrice();
@@ -290,6 +295,7 @@ public class OrderDAOImpl implements OrderDAO {
 		    	  
 		    	  String selectOrderByPrice = "from Price where Shop_ID = :Shop_ID AND Product_ID =:Product_ID AND Price =:Price ";
 		  	    
+		    	  //Getting single price ,quty and stock 
 				     List<Price> priceList = sessionFactory
 							.getCurrentSession()
 								.createQuery(selectOrderByPrice, Price.class)
@@ -298,8 +304,10 @@ public class OrderDAOImpl implements OrderDAO {
 									.setParameter("Price", Price)
 										.getResultList();
 				     
+				     //getting that particular qty_price and id
 				     String Qty_Price = priceList.get(0).getQty_Price();
 				     int ID = priceList.get(0).getID();
+				     //convert stock price string to integer
 				     int Stock2 =Integer.parseInt(priceList.get(0).getStock());
 				     
 				     //Check stock is empty or less from order
@@ -310,6 +318,7 @@ public class OrderDAOImpl implements OrderDAO {
 					     //If qty_price is empty or not
 		    	    	if( Qty_Price != null) {
 						     
+		    	    		//Qty_Price not empty
 						  // update particular column using ID and productID and shopID
 								String updateSingleValu = "UPDATE Price SET Price = :Price , Qty_Price =:Qty_Price , Stock =:Stock WHERE ID = :ID AND Product_ID = :Product_ID";
 								
@@ -326,8 +335,8 @@ public class OrderDAOImpl implements OrderDAO {
 		    	    	//pri = new Price(Product_ID,Shop_ID,Price, Stock);
 					     System.out.println(Stock);
 					     
-					     //If qty_price is empty
-					     
+					     //If qty_price is  empty
+					  // update particular column using ID and productID and shopID
 					     String updateSingleValu = "UPDATE Price SET Price = :Price, Stock =:Stock WHERE ID = :ID AND Product_ID = :Product_ID";
 							
 							//set the data base value usign hibernat query
@@ -342,7 +351,7 @@ public class OrderDAOImpl implements OrderDAO {
 
 		    	    	}
 		    	    	
-		    	    	return true;
+		    	    	//return true;
 		    	    }
 		    	    else {
 		    	    	System.out.println("Stock is not avalible");

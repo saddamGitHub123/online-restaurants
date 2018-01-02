@@ -33,7 +33,7 @@ public class User_Data {
 	   @Column(name="password")
 	   private String Password;
 	   @Column(name="contact")
-	   private int Contact;
+	   private String Contact;
 	   @Column(name="email")
 	   private String Email;
 	   
@@ -73,11 +73,11 @@ public class User_Data {
 		Password = password;
 	}
 
-	public int getContact() {
+	public String getContact() {
 		return Contact;
 	}
 
-	public void setContact(int contact) {
+	public void setContact(String contact) {
 		Contact = contact;
 	}
 

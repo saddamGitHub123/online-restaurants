@@ -1,14 +1,15 @@
 How to kill particuler port id
  => netstat -a -o -n
- taskkill /F /PID 28344
-
+     =>taskkill /F /PID 28344
  
  Modify column and size :
+=> ALTER TABLE groceriesproduct.usershopkeeper MODIFY COLUMN email VARCHAR(100);
  
- ALTER TABLE groceriesproduct.usershopkeeper MODIFY COLUMN email VARCHAR(100);
-
-=> Add new column to existing Table :
-      ALTER TABLE groceriesproduct.orderlist ADD Order_ID varchar(200) NULL AFTER Product_ID;
+ Add new column to existing Table :
+ =>ALTER TABLE groceriesproduct.orderlist ADD Order_ID varchar(200) NULL AFTER Product_ID;
+ 
+ Change columne name in existing column :
+ => ALTER TABLE groceriesproduct.orderlist CHANGE Dispatch Price varchar(200);
       
       
  
@@ -132,7 +133,7 @@ CREATE TABLE Address (
     CONSTRAINT fk_UserOrder FOREIGN KEY (user_id)
     REFERENCES usershopkeeper(user_id)
 );
-
+ALTER TABLE groceriesproduct.address ADD Shop_ID varchar(200) NULL AFTER user_id;
 
 CREATE TABLE groceriesproduct.Address (
     ID INT NOT NULL AUTO_INCREMENT,
@@ -166,7 +167,7 @@ CREATE TABLE orderList (
     CONSTRAINT pk_order_id PRIMARY KEY (ID)
 
 );
-
+ALTER TABLE groceriesproduct.orderlist ADD Dispatch boolean NULL AFTER Price;
 
 CREATE TABLE prices (
 	

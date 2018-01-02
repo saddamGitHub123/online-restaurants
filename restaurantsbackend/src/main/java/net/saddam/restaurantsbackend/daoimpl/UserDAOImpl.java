@@ -61,7 +61,6 @@ public class UserDAOImpl implements UserDAO {
 
 	@Override
 	public List<Product> productsByShopId(String Shop_ID) {
-		// TODO Auto-generated method stub
 		
 			
 
@@ -95,12 +94,12 @@ public class UserDAOImpl implements UserDAO {
 		try{
 					
 		    log.debug("List all the user using shopId");	
-            String selectProductsByShopId = "FROM UserDetails WHERE Shop_ID = :Shop_ID AND active = :active";
+            String selectProductsByShopId = "FROM UserDetails WHERE Shop_ID = :Shop_ID ";
             List<UserDetails> list= sessionFactory
 					.getCurrentSession()
 					.createQuery(selectProductsByShopId, UserDetails.class)
 						.setParameter("Shop_ID", Shop_ID)
-						.setParameter("active", true)
+						//.setParameter("active", true)
 							.getResultList();
 
 		if ((list != null) && (list.size() > 0)) {
@@ -142,7 +141,7 @@ public class UserDAOImpl implements UserDAO {
 		
 	try{
 		    log.debug("Add all the product");
-		    address.setUser_ID(userDetails.getUser_Id());
+		   // address.setUser_ID(userDetails.getUser_Id());
 			sessionFactory.getCurrentSession().persist(userDetails);
 			sessionFactory.getCurrentSession().persist(address);
 			
@@ -198,13 +197,14 @@ public class UserDAOImpl implements UserDAO {
 				userData.setContact(userDataRequest.getContact());
 				userData.setEmail(userDataRequest.getEmail());
 
-				// update the database table
+				// update the user database table
 				sessionFactory.getCurrentSession().update(userData);
 
 				//
-				String selectAddressByuserId = "FROM Address WHERE  User_ID = :User_ID";
+				String selectAddressByuserId = "FROM Address WHERE  User_ID = :User_ID AND Shop_ID = :Shop_ID";
 				List<Address> addressList = sessionFactory.getCurrentSession()
 						.createQuery(selectAddressByuserId, Address.class).setParameter("User_ID", User_ID)
+						.setParameter("Shop_ID", Shop_ID)
 						.getResultList();
 
 				if ((addressList != null) && (addressList.size() > 0)) {
@@ -218,6 +218,7 @@ public class UserDAOImpl implements UserDAO {
 					address.setLandmark(addressRequest.getLandmark());
 					address.setLocality(addressRequest.getLocality());
 					address.setPinCode(addressRequest.getPinCode());
+					address.setShop_ID(Shop_ID);
 					sessionFactory.getCurrentSession().update(address);
 					userData.setUserAddress(address);
 

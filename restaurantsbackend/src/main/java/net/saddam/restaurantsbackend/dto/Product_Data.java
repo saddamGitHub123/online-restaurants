@@ -47,8 +47,11 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 		/*@Column(name="Stock")
 		private List<String> Stock_Value;*/
 		
-		@JsonIgnore
-		 private String Product_Image;
+		/*@JsonIgnore
+		 private String Product_Image;*/
+		
+		private byte[] Product_Image;
+		
 		@JsonIgnore
 		 private String Product_Category;
 		@JsonIgnore
@@ -105,7 +108,7 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 
 
 		public Product_Data(int iD, String code, String product_Name, String product_ID, String shop_ID,
-			List<String> product_Price, List<String> unit, List<String> stock_Value, String product_Image,
+			List<String> product_Price, List<String> unit, List<String> stock_Value, byte[] product_Image,
 			String product_Category, String product_Type, boolean availability) {
 		super();
 		ID = iD;
@@ -122,8 +125,7 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 		Availability = availability;
 	}
 
-		
-		
+
 
 
 		@Override
@@ -188,9 +190,7 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 			Product_Price = product_Price;
 		}
 		
-		public String getProduct_Image() {
-			return Product_Image;
-		}
+	
 		public String getProduct_ID() {
 			return Product_ID;
 		}
@@ -203,10 +203,21 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 		public void setShop_ID(String shop_ID) {
 			Shop_ID = shop_ID;
 		}
-		public void setProduct_Image(String product_Image) {
+	
+		
+		
+		public byte[] getProduct_Image() {
+			return Product_Image;
+		}
+
+
+
+		public void setProduct_Image(byte[] product_Image) {
 			Product_Image = product_Image;
 		}
-		
+
+
+
 		public String getProduct_Category() {
 			return Product_Category;
 		}

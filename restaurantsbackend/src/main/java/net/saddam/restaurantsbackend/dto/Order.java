@@ -30,6 +30,8 @@ public class Order {
     
     private String Price;
     
+    private boolean Dispatch;
+    
    /* @Column(name="TimeStamp")
     java.sql.Timestamp currentTimestamp = new java.sql.Timestamp(Calendar.getInstance().getTime().getTime());*/
     
@@ -40,18 +42,24 @@ public class Order {
 		 this.code = UUID.randomUUID().toString().substring(26).toUpperCase();
 	 }
 
-
 	@Override
 	public String toString() {
 		return "Order [ID=" + ID + ", code=" + code + ", Shop_ID=" + Shop_ID + ", User_ID=" + User_ID + ", Product_ID="
 				+ Product_ID + ", Product_Name=" + Product_Name + ", Units=" + Units + ", Qty=" + Qty + ", Order_ID="
-				+ Order_ID + ", Price=" + Price + ", currentTimestamp=" + currentTimestamp + "]";
+				+ Order_ID + ", Price=" + Price + ", Dispatch=" + Dispatch + ", currentTimestamp=" + currentTimestamp
+				+ "]";
 	}
+
 	
 	
-	
-	
-	
+    @JsonIgnore
+	public boolean isDispatch() {
+		return Dispatch;
+	}
+
+	public void setDispatch(boolean dispatch) {
+		Dispatch = dispatch;
+	}
 
 	public String getPrice() {
 		return Price;
@@ -63,7 +71,7 @@ public class Order {
 	}
 
 
-	public int getID() {
+	int getID() {
 		return ID;
 	}
 

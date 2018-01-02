@@ -41,7 +41,7 @@ public class ProductTestCase {
 		product.setProduct_ID("product006");
 		product.setProduct_Name("apple4");
 		//product.setProduct_Price(30);
-		product.setProduct_Image("image02");
+		//product.setProduct_Image("image02");
 		product.setProduct_Category("Grocery");
 		product.setProduct_Type("l_001");
 		product.setAvailability(true);

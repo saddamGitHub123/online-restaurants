@@ -27,8 +27,10 @@ public class Product_Model {
 
 		private List<String> Stock_Value;
 		
-		@JsonIgnore
-		 private String Product_Image;
+		/*@JsonIgnore
+		 private String Product_Image;*/
+		
+		private byte[] Product_Image;
 		@JsonIgnore
 		 private String Product_Category;
 		@JsonIgnore
@@ -107,10 +109,11 @@ public class Product_Model {
 		public void setStock_Value(List<String> stock_Value) {
 			Stock_Value = stock_Value;
 		}
-		public String getProduct_Image() {
+		
+		public byte[] getProduct_Image() {
 			return Product_Image;
 		}
-		public void setProduct_Image(String product_Image) {
+		public void setProduct_Image(byte[] product_Image) {
 			Product_Image = product_Image;
 		}
 		public String getProduct_Category() {

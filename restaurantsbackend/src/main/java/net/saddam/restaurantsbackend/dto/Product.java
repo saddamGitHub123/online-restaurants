@@ -21,7 +21,9 @@ public class Product {
 	private String Product_ID;
 	private String Shop_ID;
 	// private int Product_Price;
-	 private String Product_Image;
+	 //private String Product_Image;
+	
+	private byte[] Product_Image;
 	 private String Product_Category;
 	 private String Product_Type;
 	 private boolean Availability ;
@@ -37,7 +39,7 @@ public class Product {
 	
 	
 	public Product(int iD, String code, String product_Name, String product_ID, String shop_ID, 
-			String product_Image, String product_Category, String product_Type, boolean availability) {
+			byte[] product_Image, String product_Category, String product_Type, boolean availability) {
 		super();
 		ID = iD;
 		this.code = code;
@@ -100,12 +102,32 @@ public class Product {
 	/*public void setProduct_Price(int product_Price) {
 		Product_Price = product_Price;
 	}*/
-	public String getProduct_Image() {
-		return Product_Image;
-	}
+
+	
+	
+	
+	
 	public String getProduct_ID() {
 		return Product_ID;
 	}
+	public byte[] getProduct_Image() {
+		return Product_Image;
+	}
+
+
+
+
+
+
+	public void setProduct_Image(byte[] product_Image) {
+		Product_Image = product_Image;
+	}
+
+
+
+
+
+
 	public void setProduct_ID(String product_ID) {
 		Product_ID = product_ID;
 	}
@@ -115,9 +137,7 @@ public class Product {
 	public void setShop_ID(String shop_ID) {
 		Shop_ID = shop_ID;
 	}
-	public void setProduct_Image(String product_Image) {
-		Product_Image = product_Image;
-	}
+
 	public String getProduct_Category() {
 		return Product_Category;
 	}

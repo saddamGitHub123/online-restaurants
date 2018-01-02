@@ -35,7 +35,7 @@ public class UserDetails {
 	   private String Password;
 	   @JsonIgnore
 	   @Column(name="contact")
-	   private int Contact;
+	   private String Contact;
 	   @JsonIgnore
 	   @Column(name="email")
 	   private String Email;
@@ -104,11 +104,11 @@ public class UserDetails {
 		Password = password;
 	}
 	@JsonIgnore
-	public int getContact() {
+	public String getContact() {
 		return Contact;
 	}
 
-	public void setContact(int contact) {
+	public void setContact(String contact) {
 		Contact = contact;
 	}
 	@JsonIgnore

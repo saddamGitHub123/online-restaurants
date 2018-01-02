@@ -74,7 +74,7 @@ public class ProductDAOImpl implements ProductDAO {
 			 String Product_ID = product.getProduct_ID();
 			 String Shop_ID = product.getShop_ID();
 			// private int Product_Price;
-			 String Product_Image = product.getProduct_Image();
+			 byte[] Product_Image = product.getProduct_Image();
 			 String Product_Category = product.getProduct_Category();
 			  String Product_Type = product.getProduct_Type();
 			  boolean Availability =product.isAvailability();
@@ -233,7 +233,7 @@ public class ProductDAOImpl implements ProductDAO {
 				System.out.println(pricelist.size());
 				//Set all data 
 				String Product_Name = uniqProduct.getProduct_Name();
-				String Product_Image = uniqProduct.getProduct_Image();
+				byte[] Product_Image = uniqProduct.getProduct_Image();
 				String Product_Category =uniqProduct.getProduct_Category();
 				String Product_Type = uniqProduct.getProduct_Type();
 				//String Product_Price = uniqProduct.get
@@ -480,7 +480,7 @@ public class ProductDAOImpl implements ProductDAO {
 							.getResultList();
 					System.out.println(pricelist.size());
 					String Product_Name = uniqProduct.getProduct_Name();
-					String Product_Image = uniqProduct.getProduct_Image();
+					byte[] Product_Image = uniqProduct.getProduct_Image();
 					String Product_Category =uniqProduct.getProduct_Category();
 					String Product_Type = uniqProduct.getProduct_Type();
 					//String Product_Price = uniqProduct.get
@@ -511,7 +511,10 @@ public class ProductDAOImpl implements ProductDAO {
 						//System.out.println(list);
 					}
 					
+					//product = new UniqueProduct(Product_ID,Shop_ID,Product_Name,Product_Image,Product_Category,Product_Type,Product_Price,Unit,Stock);
+					
 					product = new UniqueProduct(Product_ID,Shop_ID,Product_Name,Product_Image,Product_Category,Product_Type,Product_Price,Unit,Stock);
+					
 					
 					uniList.add(product);
 					

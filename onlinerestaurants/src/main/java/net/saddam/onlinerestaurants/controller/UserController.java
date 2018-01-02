@@ -58,11 +58,12 @@ private static final Logger logger = LoggerFactory.getLogger(UserController.clas
 		
 		//parent model for user
 		UserDetails userDetails = userRequest.getUserDetails();
-        //child model for the add user 
+		Address userAddress = userRequest.getUserAddress();
+         //child model for the add user 
 		UserResponse userResponse = new UserResponse();
 		//hard coded username
         String userName = "User_";
-		int count = -1;
+		//int count = -1;
 		
 		try {
 			if (userRequest.getShop_ID() == null || userDetails.getName()== null || userDetails.getPassword() == null) {
@@ -89,8 +90,10 @@ private static final Logger logger = LoggerFactory.getLogger(UserController.clas
 				return userResponse;
 			}
 			
+			int size = listOfUser.size();
+			
 			//UserDetails userDetails1 =new UserDetails();
-			for (UserDetails entity : listOfUser) {
+			/*for (UserDetails entity : listOfUser) {
 				System.out.println("The value of database: "+ entity);
 				count++;
 				
@@ -101,10 +104,10 @@ private static final Logger logger = LoggerFactory.getLogger(UserController.clas
 					return userResponse;	
 				  }				   
 					
-			  }
+			  }*/
 			
 			
-			if (listOfUser.get(count).getUser_Id() == null || listOfUser.size() == 0) {
+			if (listOfUser.get(0).getUser_Id() == null || listOfUser.size() == 0) {
 				/* When user id is null and automatic increase the userid */
 				int i = 0;
 				userDetails.setShop_ID(userRequest.getShop_ID());
@@ -114,6 +117,11 @@ private static final Logger logger = LoggerFactory.getLogger(UserController.clas
 				userResponse.setStatus_message("Successfully Authenticated");
 				//userResponse.setRequest_Type("Add-New_Product");
 				userResponse.setUserDetails(userDetails);
+				
+				userAddress.setShop_ID(userRequest.getShop_ID());
+				userAddress.setUser_ID(userName + i);
+				userResponse.setUserAddress(userAddress);
+				//userResponse.setUserDetails(address);
 				
 				//Save all detail to user data base and userID save into address database
 				userDAO.addUser(userDetails,address);
@@ -125,15 +133,20 @@ private static final Logger logger = LoggerFactory.getLogger(UserController.clas
 			userDetails.setShop_ID(userRequest.getShop_ID());
 			
 			//added user and id
-			userDetails.setUser_Id(userName + count);
+			userDetails.setUser_Id(userName + size);
 
-			userResponse.setStatus_code(JsonResponse.CODE__OK);
-			userResponse.setStatus_message("Successfully Authenticated");
+			
 			//userResponse.setRequest_Type("Update_Product_Id");
 			userResponse.setUserDetails(userDetails);
 			
+			userAddress.setShop_ID(userRequest.getShop_ID());
+			userAddress.setUser_ID(userName + size);
+			userResponse.setUserAddress(userAddress);
 			//Save all detail to user data base and userID save into address database
-			userDAO.addUser(userDetails,address);
+			userDAO.addUser(userDetails,userAddress);
+			
+			userResponse.setStatus_code(JsonResponse.CODE__OK);
+			userResponse.setStatus_message("Successfully Authenticated");
 			return userResponse;
 		} catch (Exception e) {
 			logger.error("listOfProductByShopId(): Error - " + e);

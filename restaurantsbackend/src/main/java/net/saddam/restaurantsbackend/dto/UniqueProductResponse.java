@@ -18,7 +18,8 @@ public class UniqueProductResponse {
 	private String Shop_ID;
 	private String Product_Name;
 	 //private int Product_Price;
-	 private String Product_Image;
+	// private String Product_Image;
+	private byte[] Product_Image;
 	 private String Product_Category;
 	 private String Product_Type;
 	 private boolean Availability ;
@@ -31,7 +32,7 @@ public class UniqueProductResponse {
 	 
 	 
 	 
-	public UniqueProductResponse(int iD, String product_ID, String shop_ID, String product_Name, String product_Image,
+	public UniqueProductResponse(int iD, String product_ID, String shop_ID, String product_Name, byte[] product_Image,
 			String product_Category, String product_Type, boolean availability) {
 		super();
 		ID = iD;
@@ -91,15 +92,28 @@ public class UniqueProductResponse {
 	public void setProduct_Price(int product_Price) {
 		Product_Price = product_Price;
 	}*/
-	public String getProduct_Image() {
-		return Product_Image;
-	}
-	public void setProduct_Image(String product_Image) {
-		Product_Image = product_Image;
-	}
+	
+	
+	
 	public String getProduct_Category() {
 		return Product_Category;
 	}
+	public byte[] getProduct_Image() {
+		return Product_Image;
+	}
+
+
+
+
+
+	public void setProduct_Image(byte[] product_Image) {
+		Product_Image = product_Image;
+	}
+
+
+
+
+
 	public void setProduct_Category(String product_Category) {
 		Product_Category = product_Category;
 	}

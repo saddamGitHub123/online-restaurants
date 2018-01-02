@@ -22,6 +22,18 @@ public class Address {
 	private String PinCode;
 	private String Area;
 	private String City;
+	@Column(name="shop_id")
+	   private String Shop_ID;
+	
+	
+	
+	
+	public String getShop_ID() {
+		return Shop_ID;
+	}
+	public void setShop_ID(String shop_ID) {
+		Shop_ID = shop_ID;
+	}
 	public int getID() {
 		return ID;
 	}
