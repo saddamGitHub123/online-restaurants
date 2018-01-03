@@ -6,16 +6,18 @@ public class DispatchRequest {
 	 private String Shop_ID;
 	 private String Order_ID;
 	 
-	 
-	 
-	 
+	 private  boolean Dispatch;
+
 	@Override
 	public String toString() {
-		return "DispatchRequest [Shop_ID=" + Shop_ID + ", Order_ID=" + Order_ID + "]";
+		return "DispatchRequest [Shop_ID=" + Shop_ID + ", Order_ID=" + Order_ID + ", Dispatch=" + Dispatch + "]";
 	}
-	
-	
-	
+	public boolean isDispatch() {
+		return Dispatch;
+	}
+	public void setDispatch(boolean dispatch) {
+		Dispatch = dispatch;
+	}
 	public String getShop_ID() {
 		return Shop_ID;
 	}

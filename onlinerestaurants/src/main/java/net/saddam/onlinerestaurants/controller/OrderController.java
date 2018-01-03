@@ -5,6 +5,7 @@ import java.io.InputStreamReader;
 import java.io.OutputStreamWriter;
 import java.net.HttpURLConnection;
 import java.net.URL;
+import java.util.Collections;
 import java.util.List;
 
 import org.json.simple.JSONObject;
@@ -98,16 +99,57 @@ public class OrderController {
 		ShopkeeperOrderResponse response = null ;
 		
 		try {
+			
+			 String Shop_ID = orderRequest.getShop_ID();
+		     String User_ID = orderRequest.getUser_ID();
+		     int Page_Value = orderRequest.getPage_Value();
+		     boolean Dispatch = orderRequest.isDispatch();
+			
+			    
 		     
-		     List<Ordered_List>  orderList =  orderDAO.userOrderListByShopId(orderRequest.getShop_ID());		
-		     response = new ShopkeeperOrderResponse(orderList);
+		     List<Ordered_List>  orderList =  orderDAO.userOrderListByShopId(Shop_ID,User_ID,Dispatch);
 		     
-		     if(orderList == null ) {
-		    	
+		     System.out.println("orderlist size"+orderList.size());
+		     
+		     if(orderList.size() == 0 ) {
+		    	 response = new ShopkeeperOrderResponse(orderList);
 		    	 response.setStatus_code(JsonResponse.CODE__EMPTY);
 					response.setStatus_message(ApiErrors.ERROR__ORDER_LIST_EMPTY);
 					return response;
 		     }
+		     //Foe paging
+		     
+		     int pageValue = orderRequest.getPage_Value();
+		     int low_index = 3*pageValue;
+		     int higest_index = low_index+3;
+		     
+		     
+		     if(higest_index < orderList.size()) {
+		     List<Ordered_List>  orderListValue = orderList.subList(low_index, higest_index);
+		     response = new ShopkeeperOrderResponse(orderListValue);
+		     }
+		     else
+		     {   
+		    	 
+		    	 if(orderList.size() <= low_index) {
+		    		 
+		    		 //when list is empty 
+		                   	 List<Ordered_List> myEmptyList = Collections.<Ordered_List>emptyList();
+		    	             response = new ShopkeeperOrderResponse(myEmptyList);
+		    	             response.setStatus_code("200");
+			                 response.setStatus_message("Order List Is Empty");
+			                 return response;
+		                    }
+		    	 //for last list value 
+		    	 List<Ordered_List>  orderListValue = orderList.subList(low_index, orderList.size());
+			     response = new ShopkeeperOrderResponse(orderListValue); 
+		     }
+		     
+		    
+		     
+		    // response = new ShopkeeperOrderResponse(orderList);
+		     
+		   
 		     
 		     response.setStatus_code(JsonResponse.CODE__OK);
 		     response.setStatus_message("Successfully Authenticated");

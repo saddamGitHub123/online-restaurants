@@ -143,7 +143,7 @@ public class OrderDAOImpl implements OrderDAO {
 	 * ***/
 	
 	@Override
-	public List<Ordered_List> userOrderListByShopId(String Shop_ID) {
+	public List<Ordered_List> userOrderListByShopId(String Shop_ID,String User_ID1,boolean Dispatch) {
 		
 		
 		try{
@@ -155,6 +155,7 @@ public class OrderDAOImpl implements OrderDAO {
 		    
 		   // int count = 0;
 		    List<Ordered_List> orderAddList = new ArrayList();
+		   // List<Order> userList = new ArrayList();;
 		    Address address =new Address();
 		    
 		    //getting userID List from user Table
@@ -167,16 +168,108 @@ public class OrderDAOImpl implements OrderDAO {
 								.getResultList();*/
 		    
 		   // String selectUserByShopId = "from Order where Shop_ID = :Shop_ID "; 
-		    
+		    String selectUserByShopId = null;
 		    //getting unique order_id from order table
+			if(Dispatch == true && User_ID1 == null) {
+				
+				//this is return only active orderList
+		     selectUserByShopId = "from Order where Shop_ID = :Shop_ID AND Dispatch = :Dispatch GROUP BY Order_ID ";
+			}
+			else if(Dispatch == false && User_ID1 == null)
+			{
+				//this is return dispatch orderList
+				selectUserByShopId = "from Order where Shop_ID = :Shop_ID AND Dispatch = :Dispatch GROUP BY Order_ID ";	
+			}
+			else {
+				
+				
+				//this is for particular user order details
+				String User_ID = User_ID1;
+				selectUserByShopId = "from Order where Shop_ID = :Shop_ID AND User_ID = :User_ID GROUP BY Order_ID ";
+				
+				   List<Order> userList = sessionFactory
+							.getCurrentSession()
+								.createQuery(selectUserByShopId, Order.class)
+									.setParameter("Shop_ID", Shop_ID)
+									.setParameter("User_ID", User_ID)
+										.getResultList();
+					
+				   if (userList == null) {
+					   
+					   log.debug("Returrning empty order list"); 
+					   return orderAddList;
+				   }
+				     
+				    // for (Order entity : userList) {
+				    
+
+					     for (int count = 0 ; count<userList.size();count++) {
+				    	 //getting userID from user table using shopID
+				    	  User_ID = userList.get(count).getUser_ID();
+				    	 String Order_ID = userList.get(count).getOrder_ID();
+				    	 
+				    	 //getting list of order using userID and orderID
+				    	  String selectOrderByUserID = "from Order where User_ID = :User_ID AND Order_ID = :Order_ID ";
+							
+						     List<Order> orderList = sessionFactory
+									.getCurrentSession()
+										.createQuery(selectOrderByUserID, Order.class)
+											.setParameter("User_ID", User_ID)
+											.setParameter("Order_ID", Order_ID)
+												.getResultList();
+						     
+						     //set timeStamp and OrderID 
+						     if((orderList != null) && (orderList.size() > 0)) {
+						      timeStamp = orderList.get(0).getCurrentTimestamp();
+						      orderID = orderList.get(0).getOrder_ID();
+						      
+						     }
+						     else {
+						    	 timeStamp = null;
+						    	 orderID = null;
+						     }
+						     
+						   //getting Address using userID
+					    	  String selectAddressByUserID = "from Address where User_ID = :User_ID AND Shop_ID = :Shop_ID";
+								
+							     List<Address> addressList = sessionFactory
+										.getCurrentSession()
+											.createQuery(selectAddressByUserID, Address.class)
+												.setParameter("User_ID", User_ID)
+												.setParameter("Shop_ID", Shop_ID)
+													.getResultList();
+							     
+							     //convert address list to object
+							     if ((addressList != null) && (addressList.size() > 0)) {
+							    	 address = addressList.get(0);
+
+									}
+							     else {
+							    	 address = null;
+							     }
+
+							     
+							     orderedList = new Ordered_List(User_ID,address,orderList,timeStamp,orderID);
+							     orderAddList.add(orderedList);
+							    // count++;
+				     }
+					     log.debug("Returrning order list");  
+				
+					     return orderAddList;
+			}
 			
-		    String selectUserByShopId = "from Order where Shop_ID = :Shop_ID GROUP BY Order_ID ";
+		
+	
+        //if dispatch will come true or false then run this part
+			
+			
 		     List<Order> userList = sessionFactory
 					.getCurrentSession()
 						.createQuery(selectUserByShopId, Order.class)
 							.setParameter("Shop_ID", Shop_ID)
+							.setParameter("Dispatch", Dispatch)
 								.getResultList();
-		    
+			
 		     
 		    // for (Order entity : userList) {
 		    
@@ -232,7 +325,7 @@ public class OrderDAOImpl implements OrderDAO {
 					    // count++;
 		     }
 		     
-		     log.error("Returrning order list");  
+		     log.debug("Returrning order list");  
     
 		   // System.out.println(orderedList);
  
@@ -258,6 +351,7 @@ public class OrderDAOImpl implements OrderDAO {
 		
 		String Order_ID = dispatchRequest.getOrder_ID();
 		String Shop_ID = dispatchRequest.getShop_ID();
+		boolean Dispatch = dispatchRequest.isDispatch();
 	
 			
   	try{
@@ -290,6 +384,19 @@ public class OrderDAOImpl implements OrderDAO {
 		    	  int integerNumber = Integer.parseInt(qty);
 		    	  int integerNumber1 = Integer.parseInt(unit);
 		    	  int stock1 = integerNumber*integerNumber1;
+		    	  
+		    	  //update dispatch value using productID,shopID and orderID and price
+		    	  
+					String updateDispatch = "UPDATE Order SET Dispatch = :Dispatch WHERE Product_ID = :Product_ID AND Order_ID = :Order_ID AND Price =:Price";
+			
+					int updatedDispatch = sessionFactory.getCurrentSession()
+							 .createQuery( updateDispatch )
+							 .setParameter( "Dispatch", Dispatch )
+					        .setParameter( "Price", Price )
+					        .setParameter( "Order_ID", Order_ID )
+					        .setParameter( "Product_ID", Product_ID )
+					        .executeUpdate();
+		    	  System.out.println("Dispatch update"+updatedDispatch);
 		    	  
 		    	  //list of price using shopID and price and productID 
 		    	  
@@ -331,6 +438,9 @@ public class OrderDAOImpl implements OrderDAO {
 								        .setParameter( "Stock", Stock )
 								        .setParameter( "Product_ID", Product_ID )
 								        .executeUpdate();
+								
+								 System.out.println("Price update"+updatedEntities);
+								
 		    	    	}else {
 		    	    	//pri = new Price(Product_ID,Shop_ID,Price, Stock);
 					     System.out.println(Stock);
@@ -348,6 +458,8 @@ public class OrderDAOImpl implements OrderDAO {
 							        .setParameter( "Stock", Stock )
 							        .setParameter( "Product_ID", Product_ID )
 							        .executeUpdate();
+							
+							System.out.println("Price update"+updatedEntities);
 
 		    	    	}
 		    	    	

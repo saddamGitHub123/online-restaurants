@@ -35,10 +35,10 @@ public class UserDetails {
 	   private String Password;
 	   @JsonIgnore
 	   @Column(name="contact")
-	   private String Contact;
+	   private String User_Contact;
 	   @JsonIgnore
 	   @Column(name="email")
-	   private String Email;
+	   private String User_Email;
 	   
 	   @JsonIgnore
 	   @Column(name="is_active")
@@ -49,11 +49,13 @@ public class UserDetails {
 	   
 
 
+	
+
 	@Override
 	public String toString() {
-		return "User [id=" + id + ", Shop_ID=" + Shop_ID + ", User_Id=" + User_Id + ", Name=" + Name + ", Username="
-				+ Username + ", Password=" + Password + ", Contact=" + Contact + ", Email=" + Email + ", active=" + active
-				+ "]";
+		return "UserDetails [id=" + id + ", Shop_ID=" + Shop_ID + ", User_Id=" + User_Id + ", Name=" + Name
+				+ ", Username=" + Username + ", Password=" + Password + ", User_Contact=" + User_Contact
+				+ ", User_Email=" + User_Email + ", active=" + active + "]";
 	}
 
 	public int getId() {
@@ -103,23 +105,24 @@ public class UserDetails {
 	public void setPassword(String password) {
 		Password = password;
 	}
-	@JsonIgnore
-	public String getContact() {
-		return Contact;
+	
+
+	public String getUser_Contact() {
+		return User_Contact;
 	}
 
-	public void setContact(String contact) {
-		Contact = contact;
-	}
-	@JsonIgnore
-	public String getEmail() {
-		return Email;
+	public void setUser_Contact(String user_Contact) {
+		User_Contact = user_Contact;
 	}
 
-	public void setEmail(String email) {
-		Email = email;
+	public String getUser_Email() {
+		return User_Email;
 	}
-	@JsonIgnore
+
+	public void setUser_Email(String user_Email) {
+		User_Email = user_Email;
+	}
+
 	public boolean isActive() {
 		return active;
 	}

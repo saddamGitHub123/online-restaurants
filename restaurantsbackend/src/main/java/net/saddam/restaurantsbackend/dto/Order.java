@@ -1,6 +1,5 @@
 package net.saddam.restaurantsbackend.dto;
 
-import java.util.Calendar;
 import java.util.UUID;
 
 import javax.persistence.Column;
