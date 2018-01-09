@@ -32,6 +32,27 @@ public class UniqueProduct {
 
 		
 
+		 
+		public UniqueProduct(String product_ID, String shop_ID, String product_Name, byte[] product_Image,
+				String product_Category, String product_Type, boolean availability, List<String> product_Price,
+				List<String> unit, List<String> stock) {
+			super();
+			Product_ID = product_ID;
+			Shop_ID = shop_ID;
+			Product_Name = product_Name;
+			Product_Image = product_Image;
+			Product_Category = product_Category;
+			Product_Type = product_Type;
+			Availability = availability;
+			Product_Price = product_Price;
+			Unit = unit;
+			Stock = stock;
+		}
+
+
+
+
+
 		public UniqueProduct(String product_ID, String shop_ID, String product_Name, byte[] product_Image,
 				String product_Category, String product_Type,List<String> product_Price,
 				List<String> unit, List<String> stock) {

@@ -96,13 +96,17 @@ public class OrderController {
 	public @ResponseBody ShopkeeperOrderResponse userOrderListByShopID(@RequestBody OrderRequest orderRequest) {
 
 		logger.info("User & Shopkeeper Entered userOrderListByShopID() in OrderController  - Post only shopID");
+		
+		
+		
+		
 		ShopkeeperOrderResponse response = null ;
 		
 		try {
 			
 			 String Shop_ID = orderRequest.getShop_ID();
 		     String User_ID = orderRequest.getUser_ID();
-		     int Page_Value = orderRequest.getPage_Value();
+		   ///  int Page_Value = orderRequest.getPage_Value();
 		     boolean Dispatch = orderRequest.isDispatch();
 			
 			    
@@ -120,8 +124,9 @@ public class OrderController {
 		     //Foe paging
 		     
 		     int pageValue = orderRequest.getPage_Value();
-		     int low_index = 3*pageValue;
-		     int higest_index = low_index+3;
+		     System.out.println("page value :"+pageValue);
+		     int low_index = 20*pageValue;
+		     int higest_index = low_index+20;
 		     
 		     
 		     if(higest_index < orderList.size()) {
@@ -140,7 +145,7 @@ public class OrderController {
 			                 response.setStatus_message("Order List Is Empty");
 			                 return response;
 		                    }
-		    	 //for last list value 
+		    	 //for last list of orderList from list 
 		    	 List<Ordered_List>  orderListValue = orderList.subList(low_index, orderList.size());
 			     response = new ShopkeeperOrderResponse(orderListValue); 
 		     }
@@ -153,6 +158,7 @@ public class OrderController {
 		     
 		     response.setStatus_code(JsonResponse.CODE__OK);
 		     response.setStatus_message("Successfully Authenticated");
+		     response.setOrderSize(orderList.size());
 		     return response;
 
 		} catch (Exception e) {

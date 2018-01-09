@@ -230,10 +230,20 @@ public class ProductController {
 		// String type1 = allProductData.getShop_ID();
 		// Product_Data productD = allProductData.getProductData();
 		// System.out.println(allP+" "+type1+""+productD.getProduct_ID());
+		//boolean ava = true;
 
 		Product_Model productData = allProductData.getProductDataValue();
 		//AllProduct_Data allProduct = new AllProduct_Data();
 		ResponseProductModel allProduct = new ResponseProductModel();
+		
+		if ( allProductData.getShop_ID() == null || allProductData.getShop_ID().isEmpty()) {
+			// ** no products exist, error message *//
+			allProduct.setStatus_code(JsonResponse.CODE__EMPTY);
+			allProduct.setStatus_message("shop_ID is empty");
+			logger.error(ApiErrors.ERROR__NO_USER_ID_EXIST);
+			// allProduct.setProductData(null);
+			return allProduct;
+		}
 
 		String productName = "Product_";
 		//int count = -1;
@@ -284,11 +294,13 @@ public class ProductController {
 				productData.setShop_ID(allProductData.getShop_ID());
 
 				productData.setProduct_ID(productName + size);
+				productData.setAvailability(true);
+				allProduct.setProductData(productData);
+				productDAO.addProduct(productData);
 				allProduct.setStatus_code(JsonResponse.CODE__OK);
 				allProduct.setStatus_message("Successfully Authenticated");
 				allProduct.setRequest_Type("Add First Product");
-				allProduct.setProductData(productData);
-				productDAO.addProduct(productData);
+				
 				return allProduct;
 			}
 
@@ -297,10 +309,9 @@ public class ProductController {
 			productData.setShop_ID(allProductData.getShop_ID());
 
 			productData.setProduct_ID(productName + size);
-
+			productData.setAvailability(true);
 			// productList.add(productD);
 			allProduct.setProductData(productData);
-
 			productDAO.addProduct(productData);
 			allProduct.setStatus_code(JsonResponse.CODE__OK);
 			allProduct.setStatus_message("Successfully Authenticated");

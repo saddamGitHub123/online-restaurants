@@ -429,7 +429,7 @@ public class OrderDAOImpl implements OrderDAO {
 						  // update particular column using ID and productID and shopID
 								String updateSingleValu = "UPDATE Price SET Price = :Price , Qty_Price =:Qty_Price , Stock =:Stock WHERE ID = :ID AND Product_ID = :Product_ID";
 								
-								//set the data base value usign hibernat query
+								//set the data base value using hibernate query
 								int updatedEntities = sessionFactory.getCurrentSession()
 										 .createQuery( updateSingleValu )
 										 .setParameter( "ID", ID )
@@ -481,10 +481,5 @@ public class OrderDAOImpl implements OrderDAO {
 	   }
 
  }
-	
-	
-	
-	
-	
 	
 }

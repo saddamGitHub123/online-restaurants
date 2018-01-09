@@ -69,7 +69,7 @@ private static final Logger logger = LoggerFactory.getLogger(UserController.clas
 			if (userRequest.getShop_ID() == null || userDetails.getName()== null || userDetails.getPassword() == null) {
 				// ** no users exist, error message *//
 				userResponse.setStatus_code(JsonResponse.CODE__EMPTY);
-				userResponse.setStatus_message(JsonResponse.CODE__ERROR);
+				userResponse.setStatus_message("Shopid is empty");
 				logger.error(ApiErrors.ERROR__NO_USER_ID_EXIST);
 				//allProduct.setProductData(null);
 				return userResponse;
@@ -179,10 +179,10 @@ private static final Logger logger = LoggerFactory.getLogger(UserController.clas
         //call the update method
 		User_Data user = userDAO.updateUser(updateRequest);
 
-		if (user.getUser_ID() == null) {
+		if (updateRequest.getUser_ID()== null || updateRequest.getShop_ID() == null || updateRequest.getUser_ID().isEmpty()) {
 
 			updateResponse.setStatus_code(JsonResponse.CODE__EMPTY);
-			updateResponse.setStatus_message("CODE__ERROR");
+			updateResponse.setStatus_message("UserID and ShopId is empty");
 			// updateResponse.setRequest_Type("Product Is Not Exist ");
 			// allProduct.setProductData(updateData);
 			return updateResponse;
@@ -216,7 +216,7 @@ private static final Logger logger = LoggerFactory.getLogger(UserController.clas
 		if (user.getShop_ID() == null || user.getUser_ID() == null) {
 
 			updateResponse.setStatus_code(JsonResponse.CODE__EMPTY);
-			updateResponse.setStatus_message("CODE__ERROR");
+			updateResponse.setStatus_message("shopid and userid is empty");
 			// updateResponse.setRequest_Type("Product Is Not Exist ");
 			// allProduct.setProductData(updateData);
 			return updateResponse;

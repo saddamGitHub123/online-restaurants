@@ -236,6 +236,7 @@ public class ProductDAOImpl implements ProductDAO {
 				byte[] Product_Image = uniqProduct.getProduct_Image();
 				String Product_Category =uniqProduct.getProduct_Category();
 				String Product_Type = uniqProduct.getProduct_Type();
+				boolean Availability = uniqProduct.isAvailability();
 				//String Product_Price = uniqProduct.get
 				//String Unit = 
 				
@@ -263,7 +264,7 @@ public class ProductDAOImpl implements ProductDAO {
 				}
 				
 				//call uniqueProduct constructor
-				product = new UniqueProduct(Product_ID,Shop_ID,Product_Name,Product_Image,Product_Category,Product_Type,Product_Price,Unit,Stock);
+				product = new UniqueProduct(Product_ID,Shop_ID,Product_Name,Product_Image,Product_Category,Product_Type,Availability,Product_Price,Unit,Stock);
 				
 				uniList.add(product);
 				
@@ -361,7 +362,7 @@ public class ProductDAOImpl implements ProductDAO {
 				product.setProduct_Category(productData.getProduct_Category());
 				product.setProduct_Image(productData.getProduct_Image());
 				product.setProduct_Type(productData.getProduct_Type());
-				product.setAvailability(true);
+				product.setAvailability(productData.isAvailability());
 				//update product
 				sessionFactory.getCurrentSession().update(product);
 				

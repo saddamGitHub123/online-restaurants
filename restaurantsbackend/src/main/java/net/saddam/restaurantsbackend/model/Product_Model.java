@@ -36,7 +36,7 @@ public class Product_Model {
 		@JsonIgnore
 		 private String Product_Type;
 		@JsonIgnore
-		 private boolean Availability ;
+		 private boolean Availability  ;
 		
 	/*	public String toString() {
 			return "Product_Model [ID=" + ID + ", code=" + code + ", Product_Name=" + Product_Name + ", Product_ID="
