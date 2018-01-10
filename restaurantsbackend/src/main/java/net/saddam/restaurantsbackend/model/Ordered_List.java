@@ -16,21 +16,43 @@ public class Ordered_List {
 	
 	private String Order_ID;
 	
-	
+	private double Total_Amount;
 	
 
-	public Ordered_List(String user_ID, Address address, List<Order> order, Timestamp timeStamp, String order_ID) {
+	/*public Ordered_List(String user_ID, Address address, List<Order> order, Timestamp timeStamp, String order_ID) {
 		super();
 		User_ID = user_ID;
 		this.address = address;
 		this.order = order;
 		TimeStamp = timeStamp;
 		Order_ID = order_ID;
+	}*/
+	
+	
+	public Ordered_List(String user_ID, Address address, List<Order> order, Timestamp timeStamp, String order_ID,
+			double total_Amount) {
+		super();
+		User_ID = user_ID;
+		this.address = address;
+		this.order = order;
+		TimeStamp = timeStamp;
+		Order_ID = order_ID;
+		Total_Amount = total_Amount;
 	}
+
+
 	@Override
 	public String toString() {
 		return "Ordered_List [User_ID=" + User_ID + ", address=" + address + ", order=" + order + ", TimeStamp="
-				+ TimeStamp + ", Order_ID=" + Order_ID + "]";
+				+ TimeStamp + ", Order_ID=" + Order_ID + ", Total_Amount=" + Total_Amount + "]";
+	}
+	
+	
+	public double getTotal_Amount() {
+		return Total_Amount;
+	}
+	public void setTotal_Amount(double total_Amount) {
+		Total_Amount = total_Amount;
 	}
 	public String getUser_ID() {
 		return User_ID;

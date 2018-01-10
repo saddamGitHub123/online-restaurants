@@ -15,6 +15,7 @@ public class OrderRequestAdd {
     java.sql.Timestamp TimeStamp;
     
     private String Order_ID;
+    private double Total_Amount;
     
     public OrderRequestAdd() {
  		 this.Order_ID ="OID "+ UUID.randomUUID().toString().substring(26).toUpperCase();
@@ -41,6 +42,14 @@ public class OrderRequestAdd {
 
 	public String getShop_ID() {
 		return Shop_ID;
+	}
+
+	public double getTotal_Amount() {
+		return Total_Amount;
+	}
+
+	public void setTotal_Amount(double total_Amount) {
+		Total_Amount = total_Amount;
 	}
 
 	public void setShop_ID(String shop_ID) {

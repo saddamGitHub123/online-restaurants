@@ -27,6 +27,8 @@ public class Order {
     private String Qty; 
     private String Order_ID;
     
+    private double Total_Amount;
+    
     private String Price;
     
     private boolean Dispatch;
@@ -45,8 +47,8 @@ public class Order {
 	public String toString() {
 		return "Order [ID=" + ID + ", code=" + code + ", Shop_ID=" + Shop_ID + ", User_ID=" + User_ID + ", Product_ID="
 				+ Product_ID + ", Product_Name=" + Product_Name + ", Units=" + Units + ", Qty=" + Qty + ", Order_ID="
-				+ Order_ID + ", Price=" + Price + ", Dispatch=" + Dispatch + ", currentTimestamp=" + currentTimestamp
-				+ "]";
+				+ Order_ID + ", Total_Amount=" + Total_Amount + ", Price=" + Price + ", Dispatch=" + Dispatch
+				+ ", currentTimestamp=" + currentTimestamp + "]";
 	}
 
 	
@@ -87,6 +89,7 @@ public class Order {
 		this.code = code;
 	}
 
+	@JsonIgnore
 	public String getShop_ID() {
 		return Shop_ID;
 	}
@@ -95,6 +98,7 @@ public class Order {
 		Shop_ID = shop_ID;
 	}
 
+	@JsonIgnore
 	public String getUser_ID() {
 		return User_ID;
 	}
@@ -152,6 +156,15 @@ public class Order {
 
 	public void setOrder_ID(String order_ID) {
 		Order_ID = order_ID;
+	}
+    
+	@JsonIgnore
+	public double getTotal_Amount() {
+		return Total_Amount;
+	}
+	
+	public void setTotal_Amount(double total_Amount) {
+		Total_Amount = total_Amount;
 	}
 
     

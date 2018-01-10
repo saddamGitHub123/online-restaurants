@@ -1,5 +1,6 @@
 package net.saddam.restaurantsbackend.daoimpl;
 
+import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -17,6 +18,8 @@ import net.saddam.restaurantsbackend.dto.Price;
 import net.saddam.restaurantsbackend.model.DispatchRequest;
 import net.saddam.restaurantsbackend.model.OrderRequest;
 import net.saddam.restaurantsbackend.model.OrderRequestAdd;
+import net.saddam.restaurantsbackend.model.OrderSizeModel;
+import net.saddam.restaurantsbackend.model.OrderSizeRequest;
 import net.saddam.restaurantsbackend.model.Ordered_List;
 
 /**
@@ -107,6 +110,7 @@ public class OrderDAOImpl implements OrderDAO {
 		    	order.setUser_ID(orderRequest.getUser_ID());
 		    	order.setOrder_ID(orderRequest.getOrder_ID() );
 		    	order.setDispatch(dispatchValue);
+		    	order.setTotal_Amount(orderRequest.getTotal_Amount());
 		    	
 		    	System.out.println(orderRequest.getOrder_ID());
 		    	
@@ -152,6 +156,7 @@ public class OrderDAOImpl implements OrderDAO {
 		    Ordered_List orderedList;
 		    java.sql.Timestamp timeStamp ;
 		    String orderID;
+		    double Total_Amount;
 		    
 		   // int count = 0;
 		    List<Ordered_List> orderAddList = new ArrayList();
@@ -222,11 +227,13 @@ public class OrderDAOImpl implements OrderDAO {
 						     if((orderList != null) && (orderList.size() > 0)) {
 						      timeStamp = orderList.get(0).getCurrentTimestamp();
 						      orderID = orderList.get(0).getOrder_ID();
+						      Total_Amount = orderList.get(0).getTotal_Amount();
 						      
 						     }
 						     else {
 						    	 timeStamp = null;
 						    	 orderID = null;
+						    	 Total_Amount = 0;
 						     }
 						     
 						   //getting Address using userID
@@ -249,7 +256,7 @@ public class OrderDAOImpl implements OrderDAO {
 							     }
 
 							     
-							     orderedList = new Ordered_List(User_ID,address,orderList,timeStamp,orderID);
+							     orderedList = new Ordered_List(User_ID,address,orderList,timeStamp,orderID,Total_Amount);
 							     orderAddList.add(orderedList);
 							    // count++;
 				     }
@@ -293,11 +300,12 @@ public class OrderDAOImpl implements OrderDAO {
 				     if((orderList != null) && (orderList.size() > 0)) {
 				      timeStamp = orderList.get(0).getCurrentTimestamp();
 				      orderID = orderList.get(0).getOrder_ID();
-				      
+				      Total_Amount = orderList.get(0).getTotal_Amount();				      
 				     }
 				     else {
 				    	 timeStamp = null;
 				    	 orderID = null;
+				    	 Total_Amount = 0;
 				     }
 				     
 				   //getting Address using userID
@@ -320,7 +328,7 @@ public class OrderDAOImpl implements OrderDAO {
 					     }
 
 					     
-					     orderedList = new Ordered_List(User_ID,address,orderList,timeStamp,orderID);
+					     orderedList = new Ordered_List(User_ID,address,orderList,timeStamp,orderID,Total_Amount);
 					     orderAddList.add(orderedList);
 					    // count++;
 		     }
@@ -481,5 +489,115 @@ public class OrderDAOImpl implements OrderDAO {
 	   }
 
  }
+
+
+  /**
+   * for mobile app 
+   * returring orderList for orderID ,order size,total amount and timeStamp
+   * */
+
+	@Override
+	public List<OrderSizeModel> orderSizeList(OrderSizeRequest orderSizeRequest) {
+		
+		String Shop_ID = orderSizeRequest.getShop_ID();
+		String User_ID = orderSizeRequest.getUser_ID();
+		
+		List<OrderSizeModel> orderAddList = new ArrayList();
+		
+		OrderSizeModel orderSizeModel = null ;
+		
+		try{
+		    log.debug("Add all the order list ");	
+		    
+		    //getting unique orderList using shopid and userid
+			String selectUserByShopId = "from Order where Shop_ID = :Shop_ID AND User_ID = :User_ID GROUP BY Order_ID ";
+			
+			   List<Order> userList = sessionFactory
+						.getCurrentSession()
+							.createQuery(selectUserByShopId, Order.class)
+								.setParameter("Shop_ID", Shop_ID)
+								.setParameter("User_ID", User_ID)
+									.getResultList();
+			   
+			   System.out.println(userList.size());
+			   
+			   //se
+			   for (int i=0 ; i<userList.size();i++) {
+				   
+				  //  int listSize;
+					
+				     String Order_ID = userList.get(i).getOrder_ID();
+				    
+				      double Total_Amount = userList.get(i).getTotal_Amount();
+				    
+				     java.sql.Timestamp TimeStamp = userList.get(i).getCurrentTimestamp();
+				     
+				   //getting list of order using shopID and orderID
+				  	  String selectOrderByOrderID = "from Order where Shop_ID = :Shop_ID AND Order_ID = :Order_ID ";
+					    
+						     List<Order> orderList = sessionFactory
+									.getCurrentSession()
+										.createQuery(selectOrderByOrderID, Order.class)
+											.setParameter("Shop_ID", Shop_ID)
+											.setParameter("Order_ID", Order_ID)
+												.getResultList();
+				     
+						     int listSize = orderList.size();
+						     orderSizeModel =new OrderSizeModel(listSize,Order_ID,Total_Amount, TimeStamp);
+						     
+						     orderAddList.add(orderSizeModel);
+				   
+			   }
+		    
+			
+			return orderAddList;
+			
+		}catch (RuntimeException re)
+		{
+			log.error("Save product failed", re);
+			throw re;
+		}
+    }
+
+
+/**
+ * Greeting orderList using orderID for mobile application 
+ * **/
+
+@Override
+public List<Order> orderList(OrderSizeRequest orderSizeReques) {
+	try{
+	    log.debug("Add all the order list ");	
+	    
+	    // int count = 0;
+	    
+	    String Shop_ID = orderSizeReques.getShop_ID();
+	    String Order_ID = orderSizeReques.getOrder_ID();
+	    String User_ID = orderSizeReques.getUser_ID();
+	    
+	    //Order  order = new Order();
+	    
+		//getting list of order using shopID and orderID
+	  	  String selectOrderByOrderID = "from Order where User_ID = :User_ID AND Shop_ID = :Shop_ID AND Order_ID = :Order_ID ";
+		    
+			     List<Order> orderList = sessionFactory
+						.getCurrentSession()
+							.createQuery(selectOrderByOrderID, Order.class)
+								.setParameter("Shop_ID", Shop_ID)
+								.setParameter("Order_ID", Order_ID)
+								.setParameter("User_ID", User_ID)
+									.getResultList();
+			     
+			     
+	    
+		
+		return orderList;
+		
+	}catch (RuntimeException re)
+	{
+		log.error("Save product failed", re);
+		throw re;
+	}
+}
 	
 }

@@ -23,9 +23,14 @@ import org.springframework.web.servlet.config.annotation.EnableWebMvc;
 import net.saddam.restaurantsbackend.common.ApiErrors;
 import net.saddam.restaurantsbackend.common.JsonResponse;
 import net.saddam.restaurantsbackend.dao.OrderDAO;
+import net.saddam.restaurantsbackend.dto.Order;
 import net.saddam.restaurantsbackend.model.DispatchRequest;
+import net.saddam.restaurantsbackend.model.OrderListResponse;
 import net.saddam.restaurantsbackend.model.OrderRequest;
 import net.saddam.restaurantsbackend.model.OrderRequestAdd;
+import net.saddam.restaurantsbackend.model.OrderSizeModel;
+import net.saddam.restaurantsbackend.model.OrderSizeRequest;
+import net.saddam.restaurantsbackend.model.OrderSizeResponse;
 import net.saddam.restaurantsbackend.model.Ordered_List;
 import net.saddam.restaurantsbackend.model.Response;
 import net.saddam.restaurantsbackend.model.ShopkeeperOrderResponse;
@@ -121,7 +126,7 @@ public class OrderController {
 					response.setStatus_message(ApiErrors.ERROR__ORDER_LIST_EMPTY);
 					return response;
 		     }
-		     //Foe paging
+		     //For paging
 		     
 		     int pageValue = orderRequest.getPage_Value();
 		     System.out.println("page value :"+pageValue);
@@ -218,10 +223,108 @@ public class OrderController {
 	
 	
 	
+	/**
+	 * 
+	 * returing timestamp,orderid and total amount and orderlist size using
+	 * shopid and userid 
+	 * for mobile application
+	 * */
 	
 	
+
+	@RequestMapping(value = "/orderSize", method = RequestMethod.POST)
+	public @ResponseBody OrderSizeResponse orderSizeStructure(@RequestBody OrderSizeRequest orderSizeRequest) {
+
+		logger.info("Order Size orderSizeStructere() in OrderController  - shopID,userID");
+		
+		//orderDAO.
+		OrderSizeResponse orderSizeResponse = null;
+		
+		try {
+			
+			
+			List<OrderSizeModel> orderSize = orderDAO.orderSizeList(orderSizeRequest);
+			System.out.println(orderSize);
+			
+			if(orderSize.size() == 0) {
+				orderSizeResponse = new OrderSizeResponse(orderSize);
+				orderSizeResponse.setStatus_code(JsonResponse.CODE__EMPTY);
+				orderSizeResponse.setStatus_message(JsonResponse.LIST__ERRORE);
+				return orderSizeResponse;
+				
+			}
+			
+			orderSizeResponse = new OrderSizeResponse(orderSize);
+			orderSizeResponse.setStatus_code(JsonResponse.CODE__OK);
+			orderSizeResponse.setStatus_message("Successfully Authenticated");
+			return orderSizeResponse;
+	
+		
+      } catch (Exception e) {
+				
+				logger.error("orderDispatch(): Error - " + e);
+				orderSizeResponse.setStatus_code(JsonResponse.CODE__UNKNOWN_ERROR);
+				orderSizeResponse.setStatus_message(JsonResponse.CODE__UNKNOWN_ERROR);
+				return orderSizeResponse;
+			}
+		
+		
+		
+		
+		
+	}
 	
 	
+	/**
+	 * 
+	 * returing orderlist using orderid and userid and shopid 
+	 * for mobile app
+	 * */
+	
+	
+
+	@RequestMapping(value = "/orderId/orderList", method = RequestMethod.POST)
+	public @ResponseBody OrderListResponse listOfOrder(@RequestBody OrderSizeRequest orderSizeRequest) {
+
+		logger.info("Order List listOfOrder() in OrderController  - shopID,userID");
+		
+		//orderDAO.
+		OrderListResponse orderListResponse = null;
+		
+		try {
+			
+			
+			List<Order> orderSize = orderDAO. orderList(orderSizeRequest);
+			System.out.println(orderSize);
+			
+			if(orderSize.size() == 0) {
+				//orderSizeResponse = new OrderSizeResponse(orderSize);
+				orderListResponse = new OrderListResponse(orderSize);
+				orderListResponse.setStatus_code(JsonResponse.CODE__EMPTY);
+				orderListResponse.setStatus_message(JsonResponse.LIST__ERRORE);
+				return orderListResponse;
+				
+			}
+			
+			orderListResponse = new OrderListResponse(orderSize);
+			orderListResponse.setStatus_code(JsonResponse.CODE__OK);
+			orderListResponse.setStatus_message("Successfully Authenticated");
+			return orderListResponse;
+	
+		
+      } catch (Exception e) {
+				
+				logger.error("orderDispatch(): Error - " + e);
+				orderListResponse.setStatus_code(JsonResponse.CODE__UNKNOWN_ERROR);
+				orderListResponse.setStatus_message(JsonResponse.CODE__UNKNOWN_ERROR);
+				return orderListResponse;
+			}
+		
+		
+		
+		
+		
+	}
 	
 	
 	

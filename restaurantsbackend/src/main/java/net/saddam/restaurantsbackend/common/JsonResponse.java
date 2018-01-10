@@ -28,6 +28,9 @@ public class JsonResponse {
     public static final String CODE__SUCCESS = "Your Order is Placed Successfully";
     public static final String DISPATCH__SUCCESS = "Your Order is Dispatch Successfully";
     
+    
+    public static final String LIST__ERRORE = "List is Empty";
+    
 
     
     private String code;
