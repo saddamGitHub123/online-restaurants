@@ -42,11 +42,12 @@ public class LoginDAOImpl implements LoginDAO {
 
 		try {
 			LoginUser loginUser = null;
-			String selectActiveCategory = "FROM LoginUser WHERE Username = ? AND Password = ?";
+			String selectActiveCategory = "FROM LoginUser WHERE Username = ? AND Password = ? AND is_active =:is_active";
 			Query query = sessionFactory.getCurrentSession().createQuery(selectActiveCategory);
 
 			query.setParameter(0, Username);
 			query.setParameter(1, Password);
+			query.setParameter("is_active", true);
 			List<LoginUser> list = query.getResultList();
 
 			if ((list != null) && (list.size() > 0)) {

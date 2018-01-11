@@ -62,4 +62,9 @@ public interface UserDAO {
 	
 	List<User_Data> userDetailsByShopID(UpdateRequest updateRequest);
 	
+	
+	//delete particuler user
+	
+	boolean deleteUser(UpdateRequest updateRequest);
+	
 }

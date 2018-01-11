@@ -110,7 +110,7 @@ public class PageController {
 		 users.setUsername("TouchCor");
 		 users.setName("Mr. TouchCor");
 		 users.setPassword("rr");
-		 users.setContact(2);
+		 users.setContact("2");
 		 users.setEmail("tochCore@gmail.com");
 		 
 		 //Add users element to userList

@@ -311,7 +311,7 @@ public User_Data userDetailByShopIdAndUserId(UpdateRequest updateRequest) {
 		try{
 			
 		    log.debug("Entering userDAOImpl class - in userDetailsByShopID()");
-	        int count = 0;
+	        //int count = 0;
 	        //getting shopID from user
 		    String Shop_ID = updateRequest.getShop_ID();		
 			User_Data userData = new User_Data();
@@ -321,9 +321,11 @@ public User_Data userDetailByShopIdAndUserId(UpdateRequest updateRequest) {
 
 			
 			// select the list of a user data using shopID in user table
-						String selectUserDetailsByShopId = "FROM User_Data WHERE Shop_ID = :Shop_ID ";
+						String selectUserDetailsByShopId = "FROM User_Data WHERE Shop_ID = :Shop_ID AND is_active =:is_active";
 						List<User_Data> list = sessionFactory.getCurrentSession()
-								.createQuery(selectUserDetailsByShopId, User_Data.class).setParameter("Shop_ID", Shop_ID)
+								.createQuery(selectUserDetailsByShopId, User_Data.class)
+								.setParameter("Shop_ID", Shop_ID)
+								.setParameter("is_active", true)
 								.getResultList();
 		
 			// checking the null value of the user table list
@@ -331,7 +333,10 @@ public User_Data userDetailByShopIdAndUserId(UpdateRequest updateRequest) {
 				log.debug("get successful,User details ShopID is found");
 				
 				//counting for one by one userList
-				for (User_Data entity : list) {
+			//	for (User_Data entity : list) {
+				for( int count= 0; count<list.size();count++) {
+					
+					if(list.get(count).getUser_ID() != null) {
 					userData = list.get(count);
 					
 					String User_ID = userData.getUser_ID();
@@ -360,7 +365,8 @@ public User_Data userDetailByShopIdAndUserId(UpdateRequest updateRequest) {
 						//Add the all object to array list
 						userList.add(userData);
 					}
-					count++;
+					
+				}
 				}
 				
 				return userList;
@@ -382,6 +388,33 @@ public User_Data userDetailByShopIdAndUserId(UpdateRequest updateRequest) {
 		
 	    }
 	}
+
+
+
+@Override
+public boolean deleteUser(UpdateRequest updateRequest) {
+	try{
+		
+		String Shop_ID = updateRequest.getShop_ID();
+	    String User_ID = updateRequest.getUser_ID();
+		
+		
+		String updateDispatch = "UPDATE User SET is_active = :is_active WHERE Shop_ID = :Shop_ID AND User_ID = :User_ID";
+		
+		int deleteUser = sessionFactory.getCurrentSession()
+				 .createQuery( updateDispatch )
+				 .setParameter( "is_active", false )
+		        .setParameter( "Shop_ID", Shop_ID )
+		        .setParameter( "User_ID", User_ID )
+		        .executeUpdate();
+		System.out.println(deleteUser);
+		return true;
+		
+	}catch(Exception ex){
+		ex.printStackTrace();
+		return false;
+	}
+}
 
 	
 	/**

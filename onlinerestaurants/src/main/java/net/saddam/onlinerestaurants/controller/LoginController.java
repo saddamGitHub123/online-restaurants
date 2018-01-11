@@ -146,22 +146,22 @@ public class LoginController {
 		   // public static final String AUTH_TOKEN = "50420a58d72b94576f8a9d854d07ff55";
 		    //public static final String TWILIO_NUMBER = "+19295002280";
 			
-			/*
+			
 			 //this is kiora company credential 
 			 String ACCOUNT_SID = "AC82908b6852b609b75dae53cfecf5d92c";
 		    String AUTH_TOKEN = "9beaa9551c8669c6e977a3a4bfffd1c2";
-		    String TWILIO_NUMBER = "+14844986253";*/
+		    String TWILIO_NUMBER = "+14844986253";
 		    
-		    String ACCOUNT_SID = "ACb984ebe5fa98b08b29f21139b7edd152";
+		    /*String ACCOUNT_SID = "ACb984ebe5fa98b08b29f21139b7edd152";
 		    String AUTH_TOKEN = "50420a58d72b94576f8a9d854d07ff55";
-		    String TWILIO_NUMBER = "+19295002280";
+		    String TWILIO_NUMBER = "+19295002280";*/
 			
 		        TwilioRestClient client = new TwilioRestClient(ACCOUNT_SID, AUTH_TOKEN);
 		 
 		        // Build a filter for the MessageList
 		        List<NameValuePair> params = new ArrayList<NameValuePair>();
 		        params.add(new BasicNameValuePair("Body", "Order1 Dispatch"));
-		        params.add(new BasicNameValuePair("To", "+917204414827")); //Add real number here
+		        params.add(new BasicNameValuePair("To", "+919740092365")); //Add real number here
 		       // params.add(new BasicNameValuePair("To", "+919740092365"));
 		        params.add(new BasicNameValuePair("From", TWILIO_NUMBER));
 

@@ -15,6 +15,7 @@ import net.saddam.restaurantsbackend.dao.OrderDAO;
 import net.saddam.restaurantsbackend.dto.Address;
 import net.saddam.restaurantsbackend.dto.Order;
 import net.saddam.restaurantsbackend.dto.Price;
+import net.saddam.restaurantsbackend.dto.User;
 import net.saddam.restaurantsbackend.model.DispatchRequest;
 import net.saddam.restaurantsbackend.model.OrderRequest;
 import net.saddam.restaurantsbackend.model.OrderRequestAdd;
@@ -592,6 +593,36 @@ public List<Order> orderList(OrderSizeRequest orderSizeReques) {
 	    
 		
 		return orderList;
+		
+	}catch (RuntimeException re)
+	{
+		log.error("Save product failed", re);
+		throw re;
+	}
+}
+
+
+
+
+@Override
+public List<User> userPhoneNumber(DispatchRequest dispatchRequest) {
+	try{
+	    log.debug("getting user deatails using shopid and userid ");	
+	    
+	    String Shop_ID = dispatchRequest.getShop_ID();
+	    String User_ID = dispatchRequest.getUser_ID();
+	   
+	    String selectOrderByOrderID = "from User where User_ID = :User_ID AND Shop_ID = :Shop_ID AND is_active = :is_active";
+	    
+	    List<User> listUser = sessionFactory
+				.getCurrentSession()
+					.createQuery(selectOrderByOrderID, User.class)
+						.setParameter("Shop_ID", Shop_ID)
+						.setParameter("is_active", true)
+						.setParameter("User_ID", User_ID)
+							.getResultList();
+	    
+		return listUser;
 		
 	}catch (RuntimeException re)
 	{

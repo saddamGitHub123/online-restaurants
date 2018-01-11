@@ -3,6 +3,7 @@ package net.saddam.restaurantsbackend.dao;
 import java.util.List;
 
 import net.saddam.restaurantsbackend.dto.Order;
+import net.saddam.restaurantsbackend.dto.User;
 import net.saddam.restaurantsbackend.model.DispatchRequest;
 import net.saddam.restaurantsbackend.model.OrderRequest;
 import net.saddam.restaurantsbackend.model.OrderRequestAdd;
@@ -44,6 +45,11 @@ public interface OrderDAO {
 	//orderList for mobile app using orderid
 	
 	List<Order> orderList(OrderSizeRequest orderSizeReques);
+	
+	
+	//getting phone number for dispatch controller sms intrgation 
+	
+	List<User> userPhoneNumber(DispatchRequest dispatchRequest);
 	
 
 

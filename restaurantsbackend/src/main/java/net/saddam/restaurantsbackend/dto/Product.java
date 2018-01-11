@@ -1,5 +1,6 @@
 package net.saddam.restaurantsbackend.dto;
 
+import java.io.Serializable;
 import java.util.UUID;
 
 import javax.persistence.Entity;
@@ -10,8 +11,13 @@ import javax.persistence.Table;
 
 @Entity
 @Table(name = "Productlist")
-public class Product {
+public class Product implements Serializable{
 	
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
+
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
     private int ID;	

@@ -21,6 +21,7 @@ import net.saddam.restaurantsbackend.dao.UserDAO;
 import net.saddam.restaurantsbackend.dto.Address;
 import net.saddam.restaurantsbackend.dto.UserDetails;
 import net.saddam.restaurantsbackend.dto.User_Data;
+import net.saddam.restaurantsbackend.model.Response;
 import net.saddam.restaurantsbackend.model.UpdateRequest;
 import net.saddam.restaurantsbackend.model.UpdateResponse;
 import net.saddam.restaurantsbackend.model.UserDetailsResponse;
@@ -54,7 +55,7 @@ private static final Logger logger = LoggerFactory.getLogger(UserController.clas
 	public @ResponseBody UserResponse addUserList(@RequestBody UserRequest userRequest) {
 		logger.info("Entered addUserList()  - Add all user ");
 		
-		Address address = new Address();
+		//Address address = new Address();
 		
 		//parent model for user
 		UserDetails userDetails = userRequest.getUserDetails();
@@ -107,40 +108,39 @@ private static final Logger logger = LoggerFactory.getLogger(UserController.clas
 			  }*/
 			
 			
-			if (listOfUser.get(0).getUser_Id() == null || listOfUser.size() == 0) {
+			if (listOfUser.get(size-1).getUser_Id() == null || listOfUser.size() == 0) {
 				/* When user id is null and automatic increase the userid */
 				int i = 0;
 				userDetails.setShop_ID(userRequest.getShop_ID());
 
 				userDetails.setUser_Id(userName + i);
-				userResponse.setStatus_code(JsonResponse.CODE__OK);
-				userResponse.setStatus_message("Successfully Authenticated");
+
 				//userResponse.setRequest_Type("Add-New_Product");
-				userResponse.setUserDetails(userDetails);
-				
+				userResponse.setUserDetails(userDetails);				
 				userAddress.setShop_ID(userRequest.getShop_ID());
 				userAddress.setUser_ID(userName + i);
 				userResponse.setUserAddress(userAddress);
-				//userResponse.setUserDetails(address);
 				
 				//Save all detail to user data base and userID save into address database
-				userDAO.addUser(userDetails,address);
+				userDAO.addUser(userDetails,userAddress);
+				userResponse.setStatus_code(JsonResponse.CODE__OK);
+				userResponse.setStatus_message("Successfully Authenticated");
 				return userResponse;
 			}
-
-			// Add new user id of existing product
+			else {
+			// Add new user id of existing user
 
 			userDetails.setShop_ID(userRequest.getShop_ID());
 			
 			//added user and id
-			userDetails.setUser_Id(userName + size);
+			userDetails.setUser_Id(userName + (size-1));
 
 			
-			//userResponse.setRequest_Type("Update_Product_Id");
+			
 			userResponse.setUserDetails(userDetails);
 			
 			userAddress.setShop_ID(userRequest.getShop_ID());
-			userAddress.setUser_ID(userName + size);
+			userAddress.setUser_ID(userName + (size-1));
 			userResponse.setUserAddress(userAddress);
 			//Save all detail to user data base and userID save into address database
 			userDAO.addUser(userDetails,userAddress);
@@ -148,10 +148,11 @@ private static final Logger logger = LoggerFactory.getLogger(UserController.clas
 			userResponse.setStatus_code(JsonResponse.CODE__OK);
 			userResponse.setStatus_message("Successfully Authenticated");
 			return userResponse;
+			}
 		} catch (Exception e) {
 			logger.error("listOfProductByShopId(): Error - " + e);
-			userResponse.setStatus_code(JsonResponse.CODE__UNKNOWN_ERROR);
-			userResponse.setStatus_message(JsonResponse.CODE__UNKNOWN_ERROR);
+			userResponse.setStatus_code(JsonResponse.CODE__EMPTY);
+			userResponse.setStatus_message("userDAOImpl throwing exception");
 			return userResponse;
 		}
 
@@ -277,6 +278,46 @@ private static final Logger logger = LoggerFactory.getLogger(UserController.clas
 			return updateResponse;
 		}
 	}
+	
+	/**
+	 * user delete using shopID and userID
+	 * **/
+	
+	@RequestMapping(value = "/deleteUser/details", method = RequestMethod.POST)
+	public @ResponseBody Response userDelete(@RequestBody UpdateRequest updateRequest,
+			HttpServletRequest request) {
+		
+		logger.info("Entered getUserDetails()  - one user details ");
+		
+		
+		Response response = new Response();
+		try {
+		
+
+			
+			if(userDAO.deleteUser(updateRequest)) {
+				
+				
+				
+				response.setStatus_code(JsonResponse.CODE__OK);
+				response.setStatus_message("User Successfully deleted");
+				return response;
+				}
+				else {
+					response.setStatus_code(JsonResponse.CODE__EMPTY);
+					response.setStatus_message("Something wrong!! user is not delted");
+					return response;
+				}
+
+		} catch (Exception e) {
+			logger.error("listOfProductByShopId(): Error - " + e);
+			response.setStatus_code(JsonResponse.CODE__EMPTY);
+			response.setStatus_message("Something wrong!! userDAOImpl  ");
+			return response;
+		}
+	}
+	
+	
 	
 	
 

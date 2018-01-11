@@ -5,9 +5,12 @@ import java.io.InputStreamReader;
 import java.io.OutputStreamWriter;
 import java.net.HttpURLConnection;
 import java.net.URL;
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
+import org.apache.http.NameValuePair;
+import org.apache.http.message.BasicNameValuePair;
 import org.json.simple.JSONObject;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -20,10 +23,16 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.config.annotation.EnableWebMvc;
 
+import com.twilio.sdk.TwilioRestClient;
+import com.twilio.sdk.TwilioRestException;
+import com.twilio.sdk.resource.factory.MessageFactory;
+import com.twilio.sdk.resource.instance.Message;
+
 import net.saddam.restaurantsbackend.common.ApiErrors;
 import net.saddam.restaurantsbackend.common.JsonResponse;
 import net.saddam.restaurantsbackend.dao.OrderDAO;
 import net.saddam.restaurantsbackend.dto.Order;
+import net.saddam.restaurantsbackend.dto.User;
 import net.saddam.restaurantsbackend.model.DispatchRequest;
 import net.saddam.restaurantsbackend.model.OrderListResponse;
 import net.saddam.restaurantsbackend.model.OrderRequest;
@@ -193,7 +202,59 @@ public class OrderController {
 		//orderDAO.
 		Response response = new Response();
 		
+		/*try {
+			logger.info("Entered forgottenPassword()  - Send password in your mobile");
+			
+			
+			
+             //getting phone number using userID and shopID
+			
+			List<User> userDeatails = orderDAO.userPhoneNumber(dispatchRequest);
+			
+			String  phoneNumber = userDeatails.get(0).getContact();
+			
+			String name = userDeatails.get(0).getName();
+			
+			//String phoneNumber = "+91"+phone;
+			System.out.println(phoneNumber);
+			
+			
+			// Find your Account Sid and Token at twilio.com/user/account
+		   // public static final String ACCOUNT_SID = "ACb984ebe5fa98b08b29f21139b7edd152";
+		   // public static final String AUTH_TOKEN = "50420a58d72b94576f8a9d854d07ff55";
+		    //public static final String TWILIO_NUMBER = "+19295002280";
+			
+			
+			 //this is kiora company credential 
+			 String ACCOUNT_SID = "AC82908b6852b609b75dae53cfecf5d92c";
+		    String AUTH_TOKEN = "9beaa9551c8669c6e977a3a4bfffd1c2";
+		    String TWILIO_NUMBER = "+14844986253";
+		    
+		    String ACCOUNT_SID = "ACb984ebe5fa98b08b29f21139b7edd152";
+		    String AUTH_TOKEN = "50420a58d72b94576f8a9d854d07ff55";
+		    String TWILIO_NUMBER = "+19295002280";
+			
+		        TwilioRestClient client = new TwilioRestClient(ACCOUNT_SID, AUTH_TOKEN);
+		 
+		        // Build a filter for the MessageList
+		        List<NameValuePair> params = new ArrayList<NameValuePair>();
+		        params.add(new BasicNameValuePair("Body", "Your Order Successfully Dispatch "));
+		        params.add(new BasicNameValuePair("To", phoneNumber)); //Add real number here
+		       // params.add(new BasicNameValuePair("To", "+919740092365"));
+		        params.add(new BasicNameValuePair("From", TWILIO_NUMBER));
+
+		        MessageFactory messageFactory = client.getAccount().getMessageFactory();
+		        Message message = messageFactory.create(params);
+		        System.out.println(message.getSid());
+		        
+		       // return 
+		    
+		}   catch (TwilioRestException e) {
+	        System.out.println(e.getErrorMessage());
+	    }*/
+		
 		try {
+
       if(orderDAO.orderDispatchOrderID(dispatchRequest)) {
 			
 			
@@ -204,6 +265,8 @@ public class OrderController {
 			
 			//System.out.println(shopid+" "+userid+" "+order);
           }
+      
+      return response;
 			
       } catch (Exception e) {
 				
@@ -211,11 +274,7 @@ public class OrderController {
 				response.setStatus_code(JsonResponse.CODE__UNKNOWN_ERROR);
 				response.setStatus_message(JsonResponse.CODE__UNKNOWN_ERROR);
 				return response;
-			}
-		
-		
-		return response;
-		
+			}	
 		
 	}
 	

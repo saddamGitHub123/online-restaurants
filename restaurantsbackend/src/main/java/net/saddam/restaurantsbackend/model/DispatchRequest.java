@@ -8,10 +8,31 @@ public class DispatchRequest {
 	 
 	 private  boolean Dispatch;
 
+	 private String User_ID;
+	 
 	@Override
 	public String toString() {
-		return "DispatchRequest [Shop_ID=" + Shop_ID + ", Order_ID=" + Order_ID + ", Dispatch=" + Dispatch + "]";
+		return "DispatchRequest [Shop_ID=" + Shop_ID + ", Order_ID=" + Order_ID + ", Dispatch=" + Dispatch
+				+ ", User_ID=" + User_ID + "]";
 	}
+	
+	
+	
+	
+	public String getUser_ID() {
+		return User_ID;
+	}
+
+
+
+
+	public void setUser_ID(String user_ID) {
+		User_ID = user_ID;
+	}
+
+
+
+
 	public boolean isDispatch() {
 		return Dispatch;
 	}
