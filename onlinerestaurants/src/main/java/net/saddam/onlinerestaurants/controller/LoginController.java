@@ -130,10 +130,92 @@ public class LoginController {
 	}
 	
 	
+
 	
 	/**
-	 * SMS integration with Twilio
+	 * Forgotten User Name and Password
 	 */
+
+	@RequestMapping(value = "/forgotten/password", method = RequestMethod.POST)
+	public @ResponseBody LoginUserResponse forgottenPassword(@RequestBody LoginUser loginuser, HttpServletRequest request) {
+
+		try {
+			logger.info("Entered forgottenPassword()  - Send User Name and password in your mobile");
+			
+			// Create main class Object
+						LoginUserResponse loginUseRes = new LoginUserResponse();
+						
+			// Find your Account Sid and Token at twilio.com/user/account
+		   // public static final String ACCOUNT_SID = "ACb984ebe5fa98b08b29f21139b7edd152";
+		   // public static final String AUTH_TOKEN = "50420a58d72b94576f8a9d854d07ff55";
+		    //public static final String TWILIO_NUMBER = "+19295002280";
+			
+			
+			/* //this is kiora company credential 
+			 String ACCOUNT_SID = "AC82908b6852b609b75dae53cfecf5d92c";
+		    String AUTH_TOKEN = "9beaa9551c8669c6e977a3a4bfffd1c2";
+		    String TWILIO_NUMBER = "+14844986253";*/
+						
+						
+			 String ACCOUNT_SID = "ACb984ebe5fa98b08b29f21139b7edd152";
+			  String AUTH_TOKEN = "50420a58d72b94576f8a9d854d07ff55";
+			 String TWILIO_NUMBER = "+19295002280";
+						
+			LoginUser loginUser = loginDAO.getUserDataValue(loginuser);
+
+			//LoginUser loginUserObject = loginUser.get(0);
+			
+			//checking null 
+			if(loginUser == null || loginUser.getContact() == null) {
+			
+				
+				loginUseRes.setStatus_code(JsonResponse.CODE__EMPTY);
+				loginUseRes.setStatus_message("Phone number not registry ");
+				logger.error(ApiErrors.ERROR__NO_USERS_EXIST);
+				return loginUseRes;
+			}
+			else {
+				
+				String phonenumber = loginUser.getContact();
+				String username = loginUser.getUserName();
+				String password = loginUser.getUser_password();
+		
+
+			
+		        TwilioRestClient client = new TwilioRestClient(ACCOUNT_SID, AUTH_TOKEN);
+		 
+		        // Build a filter for the MessageList
+		        List<NameValuePair> params = new ArrayList<NameValuePair>();
+		        params.add(new BasicNameValuePair("Body", "User Name: "+username+"\nPassword: "+password));
+		        params.add(new BasicNameValuePair("To",phonenumber )); //Add real number here
+		       // params.add(new BasicNameValuePair("To", "+919740092365"));
+		        params.add(new BasicNameValuePair("From", TWILIO_NUMBER));
+
+		        MessageFactory messageFactory = client.getAccount().getMessageFactory();
+		        Message message = messageFactory.create(params);
+		        System.out.println(message.getSid());
+		        
+		        loginUseRes.setStatus_code(JsonResponse.CODE__EMPTY);
+				loginUseRes.setStatus_message("User Name And Phone Number Successufully Send");
+				//logger.error(ApiErrors.ERROR__NO_USERS_EXIST);
+				loginUseRes.setLoginUser(loginUser);
+		        return loginUseRes; 
+			}
+		    
+		}   catch (TwilioRestException e) {
+	        System.out.println(e.getErrorMessage());
+	        return null;
+	    }
+
+	}
+	
+	
+	
+	/*
+	
+	*//**
+	 * SMS integration with Twilio
+	 *//*
 
 	@RequestMapping(value = "/forgotten/password", method = RequestMethod.GET)
 	public @ResponseBody void forgottenPassword(HttpServletRequest request) {
@@ -152,15 +234,17 @@ public class LoginController {
 		    String AUTH_TOKEN = "9beaa9551c8669c6e977a3a4bfffd1c2";
 		    String TWILIO_NUMBER = "+14844986253";
 		    
-		    /*String ACCOUNT_SID = "ACb984ebe5fa98b08b29f21139b7edd152";
+		    String ACCOUNT_SID = "ACb984ebe5fa98b08b29f21139b7edd152";
 		    String AUTH_TOKEN = "50420a58d72b94576f8a9d854d07ff55";
-		    String TWILIO_NUMBER = "+19295002280";*/
+		    String TWILIO_NUMBER = "+19295002280";
+		    String username = "xyz";
+		    String password = "1234";
 			
 		        TwilioRestClient client = new TwilioRestClient(ACCOUNT_SID, AUTH_TOKEN);
 		 
 		        // Build a filter for the MessageList
 		        List<NameValuePair> params = new ArrayList<NameValuePair>();
-		        params.add(new BasicNameValuePair("Body", "Order1 Dispatch"));
+		        params.add(new BasicNameValuePair("Body", "User Name: "+username+"\nPassword: "+password));
 		        params.add(new BasicNameValuePair("To", "+919740092365")); //Add real number here
 		       // params.add(new BasicNameValuePair("To", "+919740092365"));
 		        params.add(new BasicNameValuePair("From", TWILIO_NUMBER));
@@ -175,6 +259,6 @@ public class LoginController {
 	        System.out.println(e.getErrorMessage());
 	    }
 
-	}
+	}*/
 
 }

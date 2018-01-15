@@ -25,7 +25,11 @@ public interface LoginDAO {
      * **/
     List<User> checkLoginBoth(String userName, String userPassword);
 
+    /**
+     * getting particular user or shopkeepr details
+     * **/
 
+    LoginUser getUserDataValue(LoginUser loginuser);	
 
 
 }

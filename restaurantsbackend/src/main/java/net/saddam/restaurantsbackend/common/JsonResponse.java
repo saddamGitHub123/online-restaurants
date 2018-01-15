@@ -17,6 +17,9 @@ public class JsonResponse {
     public static final String CODE__ERROR = "ERROR";
     @JsonIgnore
     public static final String CODE__EMPTY = "400";
+    
+    @JsonIgnore
+    public static final String CODE__EXCEPTION = "Exception";
     @JsonIgnore
     public static final String CODE__INVALID_REQUEST = "INVALID_REQUEST";
     @JsonIgnore

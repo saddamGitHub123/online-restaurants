@@ -87,16 +87,16 @@ public class OrderController {
 			//System.out.println(shopid+" "+userid+" "+order);
 			}
 			else {
-				response.setStatus_code(JsonResponse.CODE__UNKNOWN_ERROR);
-				response.setStatus_message(JsonResponse.CODE__UNKNOWN_ERROR);
+				response.setStatus_code(JsonResponse.CODE__EMPTY);
+				response.setStatus_message("Something wrong!! addOrderAndOrderID() in orderDAO");
 				return response;
 			}
 
 		} catch (Exception e) {
 			
 			logger.error("addOrderListByShopID(): Error - " + e);
-			response.setStatus_code(JsonResponse.CODE__UNKNOWN_ERROR);
-			response.setStatus_message(JsonResponse.CODE__UNKNOWN_ERROR);
+			response.setStatus_code(JsonResponse.CODE__EMPTY);
+			response.setStatus_message("Something wrong!! throwing Exception");
 			return response;
 		}
 	}
@@ -178,8 +178,8 @@ public class OrderController {
 		} catch (Exception e) {
 			
 			logger.error("userOrderListByShopID(): Error - " + e);
-			response.setStatus_code(JsonResponse.CODE__UNKNOWN_ERROR);
-			response.setStatus_message(JsonResponse.CODE__UNKNOWN_ERROR);
+			response.setStatus_code(JsonResponse.CODE__EMPTY);
+			response.setStatus_message("Something worng!! throwing Exception");
 			return response;
 		}
 		
@@ -271,8 +271,8 @@ public class OrderController {
       } catch (Exception e) {
 				
 				logger.error("orderDispatch(): Error - " + e);
-				response.setStatus_code(JsonResponse.CODE__UNKNOWN_ERROR);
-				response.setStatus_message(JsonResponse.CODE__UNKNOWN_ERROR);
+				response.setStatus_code(JsonResponse.CODE__EMPTY);
+				response.setStatus_message("Something worng!! throwing Exception");
 				return response;
 			}	
 		
@@ -322,8 +322,8 @@ public class OrderController {
       } catch (Exception e) {
 				
 				logger.error("orderDispatch(): Error - " + e);
-				orderSizeResponse.setStatus_code(JsonResponse.CODE__UNKNOWN_ERROR);
-				orderSizeResponse.setStatus_message(JsonResponse.CODE__UNKNOWN_ERROR);
+				orderSizeResponse.setStatus_code(JsonResponse.CODE__EMPTY);
+				orderSizeResponse.setStatus_message("Something Wrong!! throwing Exception");
 				return orderSizeResponse;
 			}
 		
@@ -374,8 +374,8 @@ public class OrderController {
       } catch (Exception e) {
 				
 				logger.error("orderDispatch(): Error - " + e);
-				orderListResponse.setStatus_code(JsonResponse.CODE__UNKNOWN_ERROR);
-				orderListResponse.setStatus_message(JsonResponse.CODE__UNKNOWN_ERROR);
+				orderListResponse.setStatus_code(JsonResponse.CODE__EXCEPTION);
+				orderListResponse.setStatus_message("Something Wrong!! throwing Exception");
 				return orderListResponse;
 			}
 		

@@ -79,6 +79,18 @@ private static final Logger logger = LoggerFactory.getLogger(UserController.clas
 			List<UserDetails> listOfUser = userDAO.listUserByShopId(userRequest.getShop_ID());
 			
 			
+			//check user name already save into database or not
+			for(int j = 0;j<listOfUser.size();j++) {
+			if(listOfUser.get(j).getUsername() == userDetails.getUsername()) {
+				userResponse.setStatus_code(JsonResponse.CODE__EMPTY);
+				userResponse.setStatus_message("User Name already Exisit");
+				logger.error(ApiErrors.ERROR__NO_USER_ID_EXIST);
+				//allProduct.setProductData(null);
+				return userResponse;
+				
+			  }
+			}
+			
 			
 			// If list will be null then it will be execute 
 			if (listOfUser == null || listOfUser.size() == 0) {
@@ -222,16 +234,17 @@ private static final Logger logger = LoggerFactory.getLogger(UserController.clas
 			// allProduct.setProductData(updateData);
 			return updateResponse;
 		}
-
+		else {
 		updateResponse.setStatus_code(JsonResponse.CODE__OK);
 		updateResponse.setStatus_message("Successfully Authenticated");
 		updateResponse.setUserData(user);
 		logger.info("Returning updateUserList and Address");
 		return updateResponse;
+		}
 		} catch (Exception e) {
 			logger.error("listOfProductByShopId(): Error - " + e);
-			updateResponse.setStatus_code(JsonResponse.CODE__UNKNOWN_ERROR);
-			updateResponse.setStatus_message(JsonResponse.CODE__UNKNOWN_ERROR);
+			updateResponse.setStatus_code(JsonResponse.CODE__EMPTY);
+			updateResponse.setStatus_message("Something wrong!! userDetailByShopIdAndUserId() in userDAOImpl");
 			return updateResponse;
 		}
 
@@ -293,6 +306,11 @@ private static final Logger logger = LoggerFactory.getLogger(UserController.clas
 		Response response = new Response();
 		try {
 		
+			if(updateRequest.getShop_ID() == null || updateRequest.getUser_ID() == null) {
+				response.setStatus_code(JsonResponse.CODE__EMPTY);
+				response.setStatus_message("ShopID and UserID Empty");
+				return response;
+			}
 
 			
 			if(userDAO.deleteUser(updateRequest)) {

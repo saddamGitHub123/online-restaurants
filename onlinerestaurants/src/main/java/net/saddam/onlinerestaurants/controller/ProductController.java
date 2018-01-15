@@ -110,7 +110,7 @@ public class ProductController {
 
 			} catch (Exception e) {
 				logger.error("listOfProductByShopId(): Error - " + e);
-				allProduct.setStatus_code(JsonResponse.CODE__UNKNOWN_ERROR);
+				allProduct.setStatus_code(JsonResponse.CODE__EXCEPTION);
 				allProduct.setStatus_message(JsonResponse.CODE__UNKNOWN_ERROR);
 				return allProduct;
 			}
@@ -322,7 +322,7 @@ public class ProductController {
 
 		} catch (Exception e) {
 			logger.error("listOfProductByShopId(): Error - " + e);
-			allProduct.setStatus_code(JsonResponse.CODE__UNKNOWN_ERROR);
+			allProduct.setStatus_code(JsonResponse.CODE__EXCEPTION);
 			allProduct.setStatus_message(JsonResponse.CODE__UNKNOWN_ERROR);
 			return allProduct;
 		}
@@ -381,7 +381,7 @@ public class ProductController {
 			return allProduct;
 		} catch (Exception e) {
 			logger.error("listOfProductByShopId(): Error - " + e);
-			allProduct.setStatus_code(JsonResponse.CODE__UNKNOWN_ERROR);
+			allProduct.setStatus_code(JsonResponse.CODE__EXCEPTION);
 			allProduct.setStatus_message(JsonResponse.CODE__UNKNOWN_ERROR);
 			return allProduct;
 		}
