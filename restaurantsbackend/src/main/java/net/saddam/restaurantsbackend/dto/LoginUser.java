@@ -91,7 +91,7 @@ public class LoginUser {
 	}
      
 	
-	
+	@JsonIgnore
 	public String getUser_password() {
 		return User_password;
 	}

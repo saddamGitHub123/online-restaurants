@@ -60,7 +60,7 @@ public class TestDAOImpl implements TestDAO {
 	@Override
 	public Test saveImage(Test test) {
 		
-		  String url = test.getUrl();
+		  String url = test.getId();
 		 // byte[] image = test.getImage();
 		System.out.println(url);
 		//save image into database
@@ -80,7 +80,7 @@ public class TestDAOImpl implements TestDAO {
         if(bFile != null && bFile.length != 0 ) {
        Test test1 = new Test();
         test1.setImage(bFile);
-        test1.setUrl(url);
+        test1.setId(url);
         sessionFactory.getCurrentSession().persist(test1);
         
         }
@@ -127,6 +127,55 @@ public class TestDAOImpl implements TestDAO {
 
 		
 		return t1;
+	}
+
+	/* (non-Javadoc)
+	 * @see net.saddam.restaurantsbackend.dao.TestDAO#saveImageByByte(net.saddam.restaurantsbackend.dto.Test)
+	 */
+	@Override
+	public boolean saveImageByByte(Test test) {
+		// TODO Auto-generated method stub
+		
+		if(test.getImage() != null ) {
+		       Test test1 = new Test();
+		        test1.setImage(test.getImage());
+		        test1.setId(test.getId());
+		        
+		        sessionFactory.getCurrentSession().persist(test1);
+		        return true;
+		        }
+		
+		return false;
+	}
+
+	/* (non-Javadoc)
+	 * @see net.saddam.restaurantsbackend.dao.TestDAO#getImageByByte(java.lang.String)
+	 */
+	@Override
+	public List<Test> getImageByByte(String id) {
+		// TODO Auto-generated method stub
+		
+		
+		
+		  String selectProductsByShopId = "FROM Test WHERE id = :id";
+	        List<Test> list= sessionFactory
+					.getCurrentSession()
+					.createQuery(selectProductsByShopId, Test.class)
+						.setParameter("id", id)
+					//	.setParameter("Availability", true)
+							.getResultList();
+	        
+	        if ((list != null) && (list.size() > 0)) {
+				//userFound= true;
+				log.debug("get successful,Product list is found");
+				return list;
+			}
+			else {
+				log.debug("get successful,Product List is not found ");
+				return null;
+			 }
+	        
+		
 	}
 
 }

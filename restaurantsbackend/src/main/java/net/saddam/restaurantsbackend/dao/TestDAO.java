@@ -1,5 +1,7 @@
 package net.saddam.restaurantsbackend.dao;
 
+import java.util.List;
+
 import net.saddam.restaurantsbackend.dto.Test;
 import net.saddam.restaurantsbackend.dto.User;
 
@@ -21,5 +23,9 @@ public interface TestDAO {
 	
 	// save image to database usign blob file
 	Test saveImage(Test test);
+	
+	
+	boolean saveImageByByte(Test test);
+	List<Test> getImageByByte(String id);
 
 }

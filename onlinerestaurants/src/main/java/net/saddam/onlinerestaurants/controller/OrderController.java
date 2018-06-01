@@ -103,7 +103,7 @@ public class OrderController {
 
 
 	/**
-	 * returning all the details using shopID list of user and details 
+	 * returning all the order details using shopID list of user and details 
 	 * **/
 	
 	@RequestMapping(value = "/shopkeeper/user/details", method = RequestMethod.POST)

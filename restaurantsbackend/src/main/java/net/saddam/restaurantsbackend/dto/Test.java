@@ -1,5 +1,6 @@
 package net.saddam.restaurantsbackend.dto;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -14,7 +15,8 @@ public class Test {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Integer test_ID;
-	private String url;
+	@Column(name="url")
+	private String Id;
 	
     @Lob
 	private byte[] image;
@@ -29,12 +31,14 @@ public class Test {
 	}
 
     
-	public String getUrl() {
-		return url;
+
+
+	public String getId() {
+		return Id;
 	}
 
-	public void setUrl(String url) {
-		this.url = url;
+	public void setId(String id) {
+		Id = id;
 	}
 
 	public Integer getTest_ID() {

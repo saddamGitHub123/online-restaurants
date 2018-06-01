@@ -1,6 +1,7 @@
 package net.saddam.onlinerestaurants.controller;
 
 import java.io.UnsupportedEncodingException;
+import java.util.List;
 import java.util.Properties;
 import java.util.Random;
 
@@ -24,7 +25,6 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.mail.SimpleMailMessage;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -35,6 +35,8 @@ import org.springframework.web.servlet.config.annotation.EnableWebMvc;
 import net.saddam.restaurantsbackend.dao.TestDAO;
 import net.saddam.restaurantsbackend.dto.Test;
 import net.saddam.restaurantsbackend.dto.User;
+import net.saddam.restaurantsbackend.model.ImageRequest;
+import net.saddam.restaurantsbackend.model.Response;
 
 /**
  * 
@@ -361,25 +363,73 @@ public class TestController {
 	
 	
 	@RequestMapping(value = "/image/save/blob", method = RequestMethod.POST)
-	public Test  imageSave(HttpServletRequest request, @RequestBody Test test ) {
+	public @ResponseBody Response  imageSave(HttpServletRequest request, @RequestBody Test test ) {
 		
 		  //String shopid = "";
 		 // String userid = "";
 		System.out.println("Entering imageSave method");
+		Response response = new Response();
+		
+		ImageRequest imageRequest = new ImageRequest();
+		if(testDAO.saveImageByByte(test)) {
+			
+			
+			response.setStatus_code("200");
+			response.setStatus_message("Succssufully upload");
+			return response;
+			
+		}
+		else {
+			response.setStatus_code("400");
+			response.setStatus_message("Succssufully upload");
+			return  response; 
+		}
 		  
-		  Test testValue = testDAO.saveImage(test);
+		  //System.out.println("image to blob file is done");
 		  
-		  System.out.println("image to blob file is done");
-		  
-		  
+	
          
 		
-		  System.out.println(testValue);
+		  //System.out.println("the value is :" +testValue);
 		
-		return testValue;
+		
 	}
 	
 	
+	
+	@RequestMapping(value = "/image/get", method = RequestMethod.POST)
+	public @ResponseBody Response  imageGet(HttpServletRequest request, @RequestBody Test test ) {
+		
+		  //String shopid = "";
+		 // String userid = "";
+		System.out.println("Entering imageSave method");
+		String id = test.getId();
+		Response response = new Response();
+		
+		//ImageRequest imageRequest = new ImageRequest();
+		List<Test> tesValue = testDAO.getImageByByte(id) ;
+			
+			
+			response.setStatus_code("200");
+			response.setStatus_message("Succssufully upload");
+			//return response;
+			
+	
+		
+			response.setStatus_code("400");
+			response.setStatus_message("Succssufully upload");
+			return  response; 
+	
+		  
+		  //System.out.println("image to blob file is done");
+		  
+	
+         
+		
+		  //System.out.println("the value is :" +testValue);
+		
+		
+	}
 	
 	
 	

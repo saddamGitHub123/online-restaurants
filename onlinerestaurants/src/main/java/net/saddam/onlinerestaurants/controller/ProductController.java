@@ -267,7 +267,17 @@ public class ProductController {
 			}
 
 			List<Product_Data> listOfProduct = productDAO.addProductByShopId(allProductData.getShop_ID());
-			
+			//check user name already save into database or not
+			for(int j = 0;j<listOfProduct.size();j++) {
+			if(listOfProduct.get(j).getProduct_Name() .equals(productData.getProduct_Name())) {
+				allProduct.setStatus_code(JsonResponse.CODE__EMPTY);
+				allProduct.setStatus_message("Product Name already Exisit");
+				logger.error(ApiErrors.ERROR__NO_USER_ID_EXIST);
+				allProduct.setProductData(null);
+				return allProduct;
+				
+			  }
+			}
 			//set the size of list 
 			int size = listOfProduct.size();
 			
@@ -297,6 +307,7 @@ public class ProductController {
 				productData.setAvailability(true);
 				allProduct.setProductData(productData);
 				productDAO.addProduct(productData);
+				
 				allProduct.setStatus_code(JsonResponse.CODE__OK);
 				allProduct.setStatus_message("Successfully Authenticated");
 				allProduct.setRequest_Type("Add First Product");
@@ -312,13 +323,20 @@ public class ProductController {
 			productData.setAvailability(true);
 			// productList.add(productD);
 			allProduct.setProductData(productData);
-			productDAO.addProduct(productData);
-			allProduct.setStatus_code(JsonResponse.CODE__OK);
+			if(productDAO.addProduct(productData)) {
+				allProduct.setStatus_code(JsonResponse.CODE__OK);
+				allProduct.setStatus_message("Successfully Authenticated");
+				allProduct.setRequest_Type("Add_New_Product");
+				logger.info("Returning listOfProductByShopId()");
+				return allProduct;
+			}else {
+			allProduct.setStatus_code(JsonResponse.CODE__EMPTY);
 			allProduct.setStatus_message("Successfully Authenticated");
 			allProduct.setRequest_Type("Add_New_Product");
 			logger.info("Returning listOfProductByShopId()");
-
+			allProduct.setProductData(null);
 			return allProduct;
+			}
 
 		} catch (Exception e) {
 			logger.error("listOfProductByShopId(): Error - " + e);

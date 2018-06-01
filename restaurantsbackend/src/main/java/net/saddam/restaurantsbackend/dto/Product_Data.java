@@ -16,7 +16,7 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 
 
 	@Entity
-	@Table(name = "Productlist")
+	@Table(name = "productlist")
 	public class Product_Data implements Serializable {
 		
 		/**

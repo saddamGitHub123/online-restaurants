@@ -21,11 +21,20 @@ public class HibernateConfig {
 	
 	     //Change the below based on the DBMS you choose
 		//for H2 database
+
+//	private final static String DATABASE_URL = "jdbc:mysql://localhost:3306/groceriesproduct";
+//	private final static String DATABASE_DRIVER = "com.mysql.jdbc.Driver";
+//	private final static String DATABASE_DIALECT = "org.hibernate.dialect.MySQLDialect";
+//	private final static String DATABASE_USERNAME = "root";
+//	private final static String DATABASE_PASSWORD = "root";
+	
+	//private final static String DATABASE_URL = "jdbc:mysql://groceriesproduct.cnlcor4m9eod.us-east-2.rds.amazonaws.com:3306/groceriesproduct";
 	private final static String DATABASE_URL = "jdbc:mysql://localhost:3306/groceriesproduct";
 	private final static String DATABASE_DRIVER = "com.mysql.jdbc.Driver";
 	private final static String DATABASE_DIALECT = "org.hibernate.dialect.MySQLDialect";
 	private final static String DATABASE_USERNAME = "root";
 	private final static String DATABASE_PASSWORD = "root";
+	
 	
 	/*private final static String DATABASE_URL = "jdbc:h2:tcp://localhost/~/groceriesproduct";
 	private final static String DATABASE_DRIVER = "org.h2.Driver";
